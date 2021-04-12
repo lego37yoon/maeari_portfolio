@@ -1,0 +1,148 @@
+/* 웹 글꼴 : 닉스곤*/
+
+@font-face { 
+        font-family: 'NIXGONM-Vb';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+}
+
+/* 헤더 부분 UI CSS */
+
+header {
+    font-family: 'NIXGONM-Vb', 'Noto Sans CJK KR Light', sans-serif;
+    font-weight: lighter;
+    margin-left: 1em;
+    margin-right: 1em;
+    color: cadetblue;
+    font-size: 1.5em;
+    height: 3em;
+    border-bottom: solid 2px cadetblue;
+}
+
+ul {
+    list-style: none;
+    display: inline;
+    padding: 0;
+}
+
+li {
+    font-family: 'NIXGONM-Vb', 'Noto Sans CJK KR Light', sans-serif;
+    font-weight: lighter;
+    color: cadetblue;
+}
+
+.title {
+    margin: 1em 1em 0.5em 1em;
+    float: left;
+}
+.rightMenu {
+    margin: 1em 1em 0.5em 1em;
+    display: inline;
+    float: right;
+}
+.rightMenu li {
+    display: inline;
+    font-size: 0.8em;
+}
+
+.rightMenu a {
+    color: cadetblue;
+    text-decoration: none;
+}
+
+/* teaser 공간 CSS */
+#teaserArea {
+    padding: 1em;
+    background: linear-gradient(45deg, cadetblue, cornflowerblue);
+}
+
+.teaserText {
+    color: white;
+}
+
+.teaserLink {
+    text-decoration: none;
+    margin: 0 5px 0 5px;
+    color: white;
+    border-bottom: solid 2px white;
+}
+.teaserLink:visited {
+    text-decoration: none;
+    color: white;
+}
+
+h1 {
+    font-family: 'NIXGONM-Vb', 'Noto Sans CJK KR Light', sans-serif;
+    font-weight: lighter;
+    color: cadetblue;
+}
+
+/* 글꼴 크기 조절 CSS */
+
+.smallText {
+    font-size: 0.6em;
+}
+
+/* 그룹 CSS */
+
+section,
+nav {
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 1.5em;
+}
+
+nav {
+    display: block;
+    text-align: center;
+    color: cadetblue;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 1em 1em 0.5em 1em;
+}
+
+nav ul li a:active,
+nav ul li a:hover {
+    border-bottom: solid 2px cadetblue;
+}
+
+h2 {
+    font-family: 'NIXGONM-Vb', 'Noto Sans CJK KR Light', sans-serif;
+    font-weight: lighter;
+    color: cadetblue;
+    font-size: 0.9em;
+}
+
+/* 각 항목 구성 UI CSS */
+
+.project li {
+    display: inline-block;
+    padding: 0.3em;
+    margin: 0.3em;
+    width: 10.5em;
+    height: 12em;
+    box-shadow: 2px 2px 8px gray;
+    border-radius: 10px;
+    font-size: 0.8em;
+}
+
+a {
+    text-decoration: none;
+    color: cadetblue;
+}
+
+svg {
+    font-size: 3em !important;
+    margin: 1.1em 1.2em 1.1em 1.2em;
+}
+
+p {
+    font-family: 'NIXGONM-Vb', 'Noto Sans CJK KR Light', sans-serif;
+    font-weight: lighter;
+    color: cadetblue;
+    font-size: 0.8em;
+}
+
