@@ -7,13 +7,25 @@
         font-style: normal;
 }
 
+/* 전체 UI */
+
+body {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    }
+}
+
 /* 헤더 부분 UI CSS */
 
 header {
     font-family: 'NIXGONM-Vb', 'Noto Sans CJK KR Light', sans-serif;
     font-weight: lighter;
-    margin-left: 1em;
-    margin-right: 1em;
     color: cadetblue;
     font-size: 1.5em;
     height: 3em;
@@ -88,9 +100,13 @@ h1 {
 
 section,
 nav {
-    margin-left: 1em;
-    margin-right: 1em;
     font-size: 1.5em;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        border-bottom: solid 2px cadetblue;
+    }
 }
 
 nav {
@@ -102,6 +118,12 @@ nav {
 nav ul li {
     display: inline-block;
     margin: 1em 1em 0.5em 1em;
+}
+
+@media screen and (max-width: 768px) {
+    nav ul li {
+        display: block;
+    }
 }
 
 nav ul li a:active,
