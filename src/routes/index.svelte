@@ -1,2 +1,27 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<style>
+
+</style>
+
+<script>
+    import {
+        TabPanel,
+        TabPanels,
+    } from "@rgossiaux/svelte-headlessui"
+</script>
+
+<TabPanels as="main">
+    <TabPanel as="section">
+    </TabPanel>
+    <TabPanel as="section">
+
+    </TabPanel>
+    <TabPanel as="section">
+
+    </TabPanel>
+    <TabPanel as="section">
+
+    </TabPanel>
+    <TabPanel as="section">
+
+    </TabPanel>
+</TabPanels>
