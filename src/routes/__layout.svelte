@@ -93,7 +93,7 @@
 </style>
 
 <script>
-
+    import {TabGroup, TabList, Tab} from "@rgossiaux/svelte-headlessui";
 </script>
 
 <header>
@@ -113,7 +113,16 @@
     <p class="teaserText smallText">&lowast; latiosOSC는 더이상 운영되지 않으며, pbspace와 통합되었습니다.</p>
 </section>
 
-<slot></slot>
+<TabGroup as="nav" defaultIndex={1}>
+    <TabList>
+        <Tab>전체</Tab>
+        <Tab>하고 있는 것</Tab>
+        <Tab>했던 것</Tab>
+        <Tab>해보고 싶은 것</Tab>
+        <Tab>그 밖에</Tab>
+    </TabList>
+    <slot></slot>
+</TabGroup>
 
 <footer>
     <p>copyright by 2022 종이상자. Made with Svelte + SvelteKit</p>

@@ -100,6 +100,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rgossiaux/svelte-headlessui@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@rgossiaux/svelte-headlessui@npm:1.0.2"
+  peerDependencies:
+    svelte: ^3.44.0
+  checksum: 54c256923a29beaa70dd271332ca89fc7dd251cd53da42f12fa8ff73f1abf7c82a90266d50fd40442a476c74466908f2a77e3aa086f9ad1073bb46d167f04504
+  languageName: node
+  linkType: hard
+
 "@rollup/pluginutils@npm:^4.2.1":
   version: 4.2.1
   resolution: "@rollup/pluginutils@npm:4.2.1"
@@ -1822,6 +1831,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pbspace@workspace:."
   dependencies:
+    "@rgossiaux/svelte-headlessui": ^1.0.2
     "@sveltejs/adapter-auto": ^1.0.0-next.61
     "@sveltejs/kit": next
     eslint: ^8.16.0
