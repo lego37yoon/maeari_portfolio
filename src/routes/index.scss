@@ -1,0 +1,25 @@
+/* 공통 CSS */
+	
+body {
+    margin: 0 0 0 0;
+    --mdc-typography-font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
+}
+
+.svelte-main {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+@media screen and (max-width: 768px) {
+    .svelte-main {
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    }
+}
+
+p {
+    font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
+    font-weight: normal;
+    color: cadetblue;
+    font-size: 1.0em;
+}
