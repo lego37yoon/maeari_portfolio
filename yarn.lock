@@ -769,6 +769,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@material/list@npm:=14.0.0-canary.53b3cad2f.0":
+  version: 14.0.0-canary.53b3cad2f.0
+  resolution: "@material/list@npm:14.0.0-canary.53b3cad2f.0"
+  dependencies:
+    "@material/base": 14.0.0-canary.53b3cad2f.0
+    "@material/density": 14.0.0-canary.53b3cad2f.0
+    "@material/dom": 14.0.0-canary.53b3cad2f.0
+    "@material/feature-targeting": 14.0.0-canary.53b3cad2f.0
+    "@material/ripple": 14.0.0-canary.53b3cad2f.0
+    "@material/rtl": 14.0.0-canary.53b3cad2f.0
+    "@material/shape": 14.0.0-canary.53b3cad2f.0
+    "@material/theme": 14.0.0-canary.53b3cad2f.0
+    "@material/typography": 14.0.0-canary.53b3cad2f.0
+    tslib: ^2.1.0
+  checksum: 6c977f518d8869b9a4bb6cf498dabb2d45179048cc529f5358365229a851b715ded99b341161b6500f9c472c0d1506f44e5ea57b10f90084d63107616d626cf2
+  languageName: node
+  linkType: hard
+
 "@material/mwc-base@npm:^0.26.1":
   version: 0.26.1
   resolution: "@material/mwc-base@npm:0.26.1"
@@ -790,6 +808,18 @@ __metadata:
     lit: ^2.0.0
     tslib: ^2.0.1
   checksum: 09e13bfaf3973ed86fd88ce37ed0d4539175c6ef403558243b89d9fe8523b0a53f024de56881af35cafd535ff7bc016860520c0ab0ce3433b1ee1da9fa7f13e4
+  languageName: node
+  linkType: hard
+
+"@material/mwc-checkbox@npm:^0.26.1":
+  version: 0.26.1
+  resolution: "@material/mwc-checkbox@npm:0.26.1"
+  dependencies:
+    "@material/mwc-base": ^0.26.1
+    "@material/mwc-ripple": ^0.26.1
+    lit: ^2.0.0
+    tslib: ^2.0.1
+  checksum: 9eff92457f7008cdab401a669b3ff46c4ed3fd8ad0c3a8c6ee8ab248fb96f692641e9d6311a3d95ff71c0421f0a62c6fa37490b7342c651f92282e5239d2de9d
   languageName: node
   linkType: hard
 
@@ -816,6 +846,36 @@ __metadata:
     lit: ^2.0.0
     tslib: ^2.0.1
   checksum: ac95eebb27e633afbc08d65438393a7a2118ec81a1c0e1d0677d0f22cb5f7ae97cbb644adcff2adea4236ea86d4673b792dd8e69579e7aaa51bd8f0ac425030a
+  languageName: node
+  linkType: hard
+
+"@material/mwc-list@npm:^0.26.1":
+  version: 0.26.1
+  resolution: "@material/mwc-list@npm:0.26.1"
+  dependencies:
+    "@material/base": =14.0.0-canary.53b3cad2f.0
+    "@material/dom": =14.0.0-canary.53b3cad2f.0
+    "@material/list": =14.0.0-canary.53b3cad2f.0
+    "@material/mwc-base": ^0.26.1
+    "@material/mwc-checkbox": ^0.26.1
+    "@material/mwc-radio": ^0.26.1
+    "@material/mwc-ripple": ^0.26.1
+    lit: ^2.0.0
+    tslib: ^2.0.1
+  checksum: 5e33c08750f3fbd7fdb1769804231ca1f80799695e8c684b51b2e8bf0e472f4277a3d6bafad6811ee43d9a39fc992bed48edbfa7735d3cae99772eab1b7e3f57
+  languageName: node
+  linkType: hard
+
+"@material/mwc-radio@npm:^0.26.1":
+  version: 0.26.1
+  resolution: "@material/mwc-radio@npm:0.26.1"
+  dependencies:
+    "@material/mwc-base": ^0.26.1
+    "@material/mwc-ripple": ^0.26.1
+    "@material/radio": =14.0.0-canary.53b3cad2f.0
+    lit: ^2.0.0
+    tslib: ^2.0.1
+  checksum: cef73cabbd6b4777e16de2af24e28b6a5959d3aebf42d49b855339c3771878a233e03f67e00e1c3911d80e4f660f2f555384ce1820e3e4d4069e220904dc529f
   languageName: node
   linkType: hard
 
@@ -883,6 +943,24 @@ __metadata:
     lit: ^2.0.0
     tslib: ^2.0.1
   checksum: 2a64d5e205a87bfa9b8af691fe69de78f4fb15748c783ba1ef59aeb408737c54ffedb786d95077f4e6139ed8c26a70fb7e1dce449a2ebd9d72ceb59c6b11e328
+  languageName: node
+  linkType: hard
+
+"@material/radio@npm:=14.0.0-canary.53b3cad2f.0":
+  version: 14.0.0-canary.53b3cad2f.0
+  resolution: "@material/radio@npm:14.0.0-canary.53b3cad2f.0"
+  dependencies:
+    "@material/animation": 14.0.0-canary.53b3cad2f.0
+    "@material/base": 14.0.0-canary.53b3cad2f.0
+    "@material/density": 14.0.0-canary.53b3cad2f.0
+    "@material/dom": 14.0.0-canary.53b3cad2f.0
+    "@material/feature-targeting": 14.0.0-canary.53b3cad2f.0
+    "@material/focus-ring": 14.0.0-canary.53b3cad2f.0
+    "@material/ripple": 14.0.0-canary.53b3cad2f.0
+    "@material/theme": 14.0.0-canary.53b3cad2f.0
+    "@material/touch-target": 14.0.0-canary.53b3cad2f.0
+    tslib: ^2.1.0
+  checksum: 898554f2b37a36c5daf7716cef4d26272cf7d668cbedd51c5d0805901754d7ee83b45ce67a4e9a67941efc04f0e5c58f6ebc82736ef4f1631a5799be06877c92
   languageName: node
   linkType: hard
 
@@ -3064,6 +3142,7 @@ __metadata:
   dependencies:
     "@material/mwc-dialog": ^0.26.1
     "@material/mwc-icon": ^0.26.1
+    "@material/mwc-list": ^0.26.1
     "@material/mwc-tab": ^0.26.1
     "@material/mwc-tab-bar": ^0.26.1
     "@sveltejs/adapter-auto": ^1.0.0-next.61
