@@ -2,22 +2,15 @@
     import { onMount } from 'svelte';
     import { initializeApp } from "firebase/app";
     import { getFirestore } from "firebase/firestore";
+    import { firebaseConfig } from "./secrets.js";
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
 
     onMount(async () => {
         await import("@material/mwc-tab-bar");
         await import("@material/mwc-tab");
     });
-
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
-    
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    
 </script>
 
 <section id="teaserArea">

@@ -4,7 +4,7 @@
 
 <header>
     <ul>
-        <li class="title">paperbox</li>
+        <li class="title"><a href="./">paperbox</a></li>
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
@@ -45,7 +45,13 @@
     .title {
         margin: 1em 1em 0.5em 1em;
         font-weight: 600;
-        float: left;
+        float: left;   
+    }
+    .title a {
+        text-decoration: none;
+    }
+    .title a:visited {
+        color: cadetblue;
     }
     .rightMenu {
         margin: 1em 1em 0.5em 1em;
