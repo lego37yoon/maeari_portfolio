@@ -1,5 +1,7 @@
 <script>
     import "./index.scss";
+
+    const currentYear = new Date().getFullYear();
 </script>
 
 <header>
@@ -15,7 +17,7 @@
 <slot></slot>
 
 <footer>
-    <p>copyright by 2022 종이상자. Made with Svelte + SvelteKit</p>
+    <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="./oss" target="_blank">OSS Notice</a></p>
 </footer>
 
 <style>
