@@ -9,14 +9,14 @@
     let maxTeaserContentCount = "02";
     let teaserTitle="안녕하세요, 종이상자입니다.";
     let teaserText="오픈소스를 좋아하고, 다양한 웹 기술에 관심이 많은 순천향대학교 컴퓨터소프트웨어공학과 2학년 휴학생이에요."
-    let teaserNotice="* latiosOSC는 더이상 운영되지 않으며, pbspace와 통합되었습니다.";
+    let teaserNotice="latiosOSC는 더이상 운영되지 않으며, pbspace와 통합되었습니다.";
     let teaserLinkText="과거 모습 >";
     let teaserLink="https://space.pbdiary.pw"
-    let teaserFlowBtnStatus = "pause";
-
+    
     onMount(async () => {
         await import("@material/mwc-tab-bar");
         await import("@material/mwc-tab");
+        await import("@material/mwc-icon")
         await import("@material/mwc-icon-button-toggle");
     });
 </script>
@@ -24,11 +24,11 @@
 <section id="teaserArea">
     <section id="teaserContent">
         <h1 class="teaserTitle">{teaserTitle}</h1>
-        <p class="teaserText">{teaserText}</p>
-        <p class="teaserText">
+        <p class="teaserText normalBannerText">{teaserText}</p>
+        <p class="smallBannerText teaserText"><mwc-icon>announcement</mwc-icon>{teaserNotice}</p>
+        <p class="smallBannerText teaserText">
             <a class="teaserLink" href="{teaserLink}">{teaserLinkText}</a>
         </p>
-        <p class="smallText teaserText">{teaserNotice}</p>
     </section>
     <section id="teaserCount">
         <h1 id="currentCount">01</h1>
@@ -50,8 +50,12 @@
 </main>
 
 <style>
-    .smallText {
+    .smallBannerText {
         font-size: 1.0rem;
+    }
+
+    .normalBannerText {
+        font-size: 1.2rem;
     }
 
     /* teaser 공간 CSS */
@@ -68,7 +72,6 @@
 
     .teaserText {
         font-weight: 300;
-        font-size: 1.2rem;
         color: white;
     }
 
@@ -115,5 +118,10 @@
     mwc-tab {
         --mdc-typography-button-font-size: 1.0rem;
         --mdc-typography-button-font-weight: 300;
+    }
+
+    mwc-icon {
+        margin-right: 0.5rem;
+        --mdc-icon-size: 16px;
     }
 </style>
