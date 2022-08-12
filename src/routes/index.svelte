@@ -28,6 +28,12 @@
         </p>
         <p class="smallText teaserText">{teaserNotice}</p>
     </section>
+    <section id="teaserCount">
+        <h1 id="currentCount">01</h1>
+        <p></p>
+        <h1 id="maxCount">{maxTeaserContentCount}</h1>
+        <button></button>
+    </section>
 </section>
 
 <mwc-tab-bar activeIndex="1">
@@ -78,6 +84,19 @@
         font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
         font-size: 2rem;
         font-weight: 200;
+    }
+
+    #teaserCount {
+        font-size: 1.0rem;
+    }
+
+    #maxCount {
+        color: gainsboro;
+    }
+
+    #teaserCount p {
+        height: calc(100% - 10rem);
+        border-right: 3px solid white;
     }
 
     /* navigation bar CSS */
