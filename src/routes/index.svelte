@@ -6,6 +6,12 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    let maxTeaserContentCount = "02";
+    let teaserTitle="안녕하세요, 종이상자입니다.";
+    let teaserText="오픈소스를 좋아하고, 다양한 웹 기술에 관심이 많은 순천향대학교 컴퓨터소프트웨어공학과 2학년 휴학생이에요."
+    let teaserNotice="* latiosOSC는 더이상 운영되지 않으며, pbspace와 통합되었습니다.";
+    let teaserLinkText="과거 모습 >";
+    let teaserLink="https://space.pbdiary.pw"
 
     onMount(async () => {
         await import("@material/mwc-tab-bar");
@@ -14,10 +20,14 @@
 </script>
 
 <section id="teaserArea">
-    <h1 class="teaserTitle">안녕하세요, <br>종이상자입니다.</h1>
-    <p class="teaserText">오픈소스를 좋아하고, 다양한 웹 기술에 관심이 많은 순천향대학교 컴퓨터소프트웨어공학과 2학년 휴학생이에요.</p>
-    <p><a class="teaserLink" href="https://latios.pbdiary.pw">latiosOSC&nbsp;&gt;</a><a class="teaserLink" href="https://space.pbdiary.pw">과거 모습&nbsp;&gt;</a></p>
-    <p class="teaserText smallText">&lowast; latiosOSC는 더이상 운영되지 않으며, pbspace와 통합되었습니다.</p>
+    <section id="teaserContent">
+        <h1 class="teaserTitle">{teaserTitle}</h1>
+        <p class="teaserText">{teaserText}</p>
+        <p class="teaserText">
+            <a class="teaserLink" href="{teaserLink}">{teaserLinkText}</a>
+        </p>
+        <p class="smallText teaserText">{teaserNotice}</p>
+    </section>
 </section>
 
 <mwc-tab-bar activeIndex="1">
@@ -32,29 +42,31 @@
 </main>
 
 <style>
-
-    /* 글꼴 크기 조절 CSS */
-
     .smallText {
-        font-size: 0.8em;
+        font-size: 1.0rem;
     }
 
     /* teaser 공간 CSS */
     #teaserArea {
-        padding: 1em;
+        color: white;
+        padding: 1rem;
         background: linear-gradient(45deg, cadetblue, cornflowerblue);
+        display: flex;
+        justify-content: space-between;
         word-break: keep-all;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
     }
 
     .teaserText {
-        color: white;
         font-weight: 300;
+        font-size: 1.2rem;
+        color: white;
     }
 
     .teaserLink {
         text-decoration: none;
         margin: 0 5px 0 5px;
-        color: white;
         border-bottom: solid 2px white;
     }
     .teaserLink:visited {
@@ -64,13 +76,12 @@
 
     .teaserTitle {
         font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
-        font-size: 2em;
+        font-size: 2rem;
         font-weight: 200;
-        color: white;
     }
 
     /* navigation bar CSS */
     section {
-        font-size: 1.5em;
+        font-size: 1.5rem;
     }
 </style>
