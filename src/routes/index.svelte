@@ -12,10 +12,12 @@
     let teaserNotice="* latiosOSC는 더이상 운영되지 않으며, pbspace와 통합되었습니다.";
     let teaserLinkText="과거 모습 >";
     let teaserLink="https://space.pbdiary.pw"
+    let teaserFlowBtnStatus = "pause";
 
     onMount(async () => {
         await import("@material/mwc-tab-bar");
         await import("@material/mwc-tab");
+        await import("@material/mwc-icon-button");
     });
 </script>
 
@@ -32,7 +34,7 @@
         <h1 id="currentCount">01</h1>
         <p></p>
         <h1 id="maxCount">{maxTeaserContentCount}</h1>
-        <button></button>
+        <mwc-icon-button icon="pause" aria-label="teaser play or pause button"></mwc-icon-button>
     </section>
 </section>
 
@@ -86,8 +88,9 @@
         font-weight: 200;
     }
 
-    #teaserCount {
-        font-size: 1.0rem;
+    #teaserCount h1 {
+        font-size: 1.1rem;
+        text-align: end;
     }
 
     #maxCount {
@@ -97,6 +100,11 @@
     #teaserCount p {
         height: calc(100% - 10rem);
         border-right: 3px solid white;
+    }
+
+    #teaserCount mwc-icon-button {
+        margin-top: -1rem;
+        margin-right: -1rem;
     }
 
     /* navigation bar CSS */
