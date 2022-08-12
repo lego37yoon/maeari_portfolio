@@ -1,5 +1,4 @@
 /* 공통 CSS */
-	
 body {
     margin: 0 0 0 0;
     --mdc-theme-primary: cadetblue;
@@ -9,14 +8,15 @@ body {
 }
 
 .svelte-main {
-    margin-left: 1em;
-    margin-right: 1em;
+    margin: 1rem;
+    border-radius: 10px;
+    border: 1px solid solid gray;
+    box-shadow: 1px 1px 3px 1px gray;
 }
 
 @media screen and (max-width: 768px) {
     .svelte-main {
-        margin-left: 0.5em;
-        margin-right: 0.5em;
+        margin: 0.5rem;
     }
 }
 
@@ -29,5 +29,5 @@ p {
     font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
     font-weight: normal;
     color: cadetblue;
-    font-size: 1.0em;
+    font-size: 1.0rem;
 }

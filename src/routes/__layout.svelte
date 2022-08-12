@@ -22,13 +22,12 @@
 
 <style>
     /* 헤더 부분 UI CSS */
-
     header {
         font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
         font-weight: lighter;
         color: cadetblue;
-        font-size: 1.5em;
-        height: 3em;
+        font-size: 1.5rem;
+        height: 4rem;
         border-bottom: solid 2px cadetblue;
     }
 
@@ -45,7 +44,7 @@
     }
 
     .title {
-        margin: 1em 1em 0.5em 1em;
+        margin: 1.5rem 1rem 0.5rem 1rem;
         font-weight: 600;
         float: left;   
     }
@@ -56,17 +55,22 @@
         color: cadetblue;
     }
     .rightMenu {
-        margin: 1em 1em 0.5em 1em;
+        padding: 1.5rem 1rem 0.5rem 1rem;
         display: inline;
         float: right;
     }
     .rightMenu li {
         display: inline;
-        font-size: 0.8em;
+        font-size: 1.0em;
     }
 
     .rightMenu a {
         color: cadetblue;
         text-decoration: none;
+    }
+
+    /* 푸터 부분 CSS */
+    footer p {
+        padding: 1rem 1rem 0.5rem 1rem;
     }
 </style>
