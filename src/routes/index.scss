@@ -3,7 +3,7 @@ body {
     margin: 0 0 0 0;
     --mdc-theme-primary: cadetblue;
     --mdc-theme-secondary: cornflowerblue;
-    --mdc-ripple-fg-opacity: 0.00;
+    --mdc-ripple-focus-opacity: 0.00;
     --mdc-typography-font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
 }
 
@@ -17,6 +17,16 @@ body {
 @media screen and (max-width: 768px) {
     .svelte-main {
         margin: 0.5rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .svelte-main {
+        background: black;
+    }
+    
+    body {
+        background: gray;
     }
 }
 
