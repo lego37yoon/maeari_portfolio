@@ -1,45 +1,62 @@
 <script>
     import { onMount } from 'svelte';
 
+    const ossAddressList = ["https://github.com/sveltejs/svelte/blob/master/LICENSE.md", "https://github.com/sveltejs/kit/blob/master/LICENSE", "https://raw.githubusercontent.com/material-components/material-web/mwc/LICENSE", "https://raw.githubusercontent.com/material-icons/material-icons/master/LICENSE", "https://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=OFL_plaintext&filename=OFL.txt"]
+
     onMount(async () => {
         await import("@material/mwc-list");
         await import("@material/mwc-dialog");
-    });
+        const ossContainer = document.querySelector("#listContainer");
+        
+        ossContainer.addEventListener('selected', function() {
+            console.log(ossContainer.index);
+        })
+    });    
 </script>
 
 <main id="oss">
     <section id="teaserArea">
-        <h1 class="teaserTitle">오픈소스 소프트웨어 안내</h1>
-        <p class="teaserText">메아리 for 포트폴리오에 사용된 오픈소스 소프트웨어를 소개합니다.</p>
-        <p class="teaserText">본 소프트웨어에 사용된 오픈소스 소프트웨어에 대해 문의사항이 있는 경우 <a href="mailto:lego37yoon@outlook.com" class="teaserLink">이메일</a>로 연락주세요.</p>
+        <h1 class="teaserTitle">OSS Notice | maeari for portfolio</h1>
+        <p class="teaserText">Find open-source software used in this software below.</p>
+        <p class="teaserText">Please contact to<a href="mailto:lego37yoon@outlook.com" class="teaserLink">this email</a>if you have any question.</p>
     </section>
     <section id="ossList">
-        <mwc-list multi>
-            <mwc-list-item twoline>
-                <span>Svelte</span>
-                <span slot="secondary">MIT License</span>
-            </mwc-list-item>
-            <mwc-list-item twoline>
-                <span>SvelteKit</span>
-                <span slot="secondary">MIT License</span>
-            </mwc-list-item>
-            <mwc-list-item twoline>
-                <span>Material Web Components</span>
-                <span slot="secondary">Apache License 2.0</span>
-            </mwc-list-item>
-            <mwc-list-item twoline>
-                <span>Material Icons</span>
-                <span slot="secondary">Apache License 2.0</span>
-            </mwc-list-item>
-            <mwc-list-item twoline>
-                <span>SUIT</span>
-                <span slot="secondary">SIL Open Font License</span>
-            </mwc-list-item>
+        <mwc-list multi id="listContainer">
+            <a href="https://github.com/sveltejs/svelte/blob/master/LICENSE.md" target="_blank">
+                <mwc-list-item twoline>
+                    <span>Svelte</span>
+                    <span slot="secondary">MIT License</span>
+                </mwc-list-item>
+            </a>
+            <a href="https://github.com/sveltejs/kit/blob/master/LICENSE" target="_blank">
+                <mwc-list-item twoline>
+                    <span>SvelteKit</span>
+                    <span slot="secondary">MIT License</span>
+                </mwc-list-item>
+            </a>
+            <a href="https://github.com/material-components/material-web/blob/mwc/LICENSE" target="_blank">
+                <mwc-list-item twoline>
+                    <span>Material Web Components</span>
+                    <span slot="secondary">Apache License 2.0</span>
+                </mwc-list-item>
+            </a>
+            <a href="https://github.com/material-icons/material-icons/blob/master/LICENSE" target="_blank">
+                <mwc-list-item twoline>
+                    <span>Material Icons</span>
+                    <span slot="secondary">Apache License 2.0</span>
+                </mwc-list-item>
+            </a>
+            <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL" target="_blank">
+                <mwc-list-item twoline>
+                    <span>SUIT</span>
+                    <span slot="secondary">SIL Open Font License</span>
+                </mwc-list-item>
+            </a>
         </mwc-list>
     </section>
     <section id="ossDialog">
         <mwc-dialog id="svelte" heading="Svelte">
-            <p class="oss-md-file"></p>
+            <code id="ossFile"></code>
             <mwc-button slot="primaryAction" dialogAction="close">닫기</mwc-button>
         </mwc-dialog>
     </section>
@@ -48,9 +65,11 @@
 <style>
     /* teaser 공간 CSS */
     #teaserArea {
-        padding: 1em;
+        padding: 1rem;
         background: linear-gradient(45deg, cadetblue, cornflowerblue);
         word-break: keep-all;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
     }
 
     .teaserText {
@@ -71,17 +90,25 @@
 
     .teaserTitle {
         font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
-        font-size: 2em;
+        font-size: 2rem;
         font-weight: 200;
         color: white;
     }
 
     /* navigation bar CSS */
     section {
-        font-size: 1.5em;
+        font-size: 1.5rem;
     }
 
     mwc-list-item {
         border-radius: 10px;
+    }
+
+    mwc-list a {
+        text-decoration: none;
+    }
+
+    mwc-list a:visited {
+        text-decoration: none;
     }
 </style>
