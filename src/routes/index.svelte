@@ -17,7 +17,7 @@
     onMount(async () => {
         await import("@material/mwc-tab-bar");
         await import("@material/mwc-tab");
-        await import("@material/mwc-icon-button");
+        await import("@material/mwc-icon-button-toggle");
     });
 </script>
 
@@ -34,7 +34,7 @@
         <h1 id="currentCount">01</h1>
         <p></p>
         <h1 id="maxCount">{maxTeaserContentCount}</h1>
-        <mwc-icon-button icon="pause" aria-label="teaser play or pause button"></mwc-icon-button>
+        <mwc-icon-button-toggle onIcon="play_arrow" offIcon="pause" aria-label="teaser play or pause button"></mwc-icon-button-toggle>
     </section>
 </section>
 
@@ -102,7 +102,7 @@
         border-right: 3px solid white;
     }
 
-    #teaserCount mwc-icon-button {
+    #teaserCount mwc-icon-button-toggle {
         margin-top: -1rem;
         margin-right: -1rem;
     }
@@ -110,5 +110,10 @@
     /* navigation bar CSS */
     section {
         font-size: 1.5rem;
+    }
+
+    mwc-tab {
+        --mdc-typography-button-font-size: 1.0rem;
+        --mdc-typography-button-font-weight: 300;
     }
 </style>

@@ -839,6 +839,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@material/mwc-icon-button-toggle@npm:^0.26.1":
+  version: 0.26.1
+  resolution: "@material/mwc-icon-button-toggle@npm:0.26.1"
+  dependencies:
+    "@material/mwc-base": ^0.26.1
+    "@material/mwc-icon-button": ^0.26.1
+    "@material/mwc-ripple": ^0.26.1
+    lit: ^2.0.0
+    tslib: ^2.0.1
+  checksum: 84814dc942e80e7e8621fe8df79ccce828c961638e4584bcd10e4e485f505fb93171170fc4890842c3a0151b5886816314f08e2fbe4658d827a49058143cb11e
+  languageName: node
+  linkType: hard
+
+"@material/mwc-icon-button@npm:^0.26.1":
+  version: 0.26.1
+  resolution: "@material/mwc-icon-button@npm:0.26.1"
+  dependencies:
+    "@material/mwc-ripple": ^0.26.1
+    lit: ^2.0.0
+    tslib: ^2.0.1
+  checksum: cf77b3ea7e05e9c5ff2c697a22e86aec76f25ccf43b3116310cb1954cc70b657f1f320d203a6bdc4046fbf28bb750b28d26eb69516f46dcb71eeea53f3a5bcbc
+  languageName: node
+  linkType: hard
+
 "@material/mwc-icon@npm:^0.26.1":
   version: 0.26.1
   resolution: "@material/mwc-icon@npm:0.26.1"
@@ -3140,8 +3164,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pbspace@workspace:."
   dependencies:
+    "@material/mwc-base": ^0.26.1
     "@material/mwc-dialog": ^0.26.1
     "@material/mwc-icon": ^0.26.1
+    "@material/mwc-icon-button-toggle": ^0.26.1
     "@material/mwc-list": ^0.26.1
     "@material/mwc-tab": ^0.26.1
     "@material/mwc-tab-bar": ^0.26.1

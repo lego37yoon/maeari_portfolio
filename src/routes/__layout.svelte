@@ -1,7 +1,15 @@
 <script>
     import "./index.scss";
+    import { onMount } from 'svelte';
 
     const currentYear = new Date().getFullYear();
+    let themeChange = "clear_night";
+
+    onMount(async () => {
+        await import("@material/mwc-tab-bar");
+        await import("@material/mwc-tab");
+        await import("@material/mwc-icon-button-toggle");
+    });
 </script>
 
 <header>
@@ -10,6 +18,7 @@
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
+            <li><mwc-icon-button-toggle onIcon="light_mode" offIcon="dark_mode" aria-label="toggle dark or light mode"></mwc-icon-button-toggle></li> 
         </ul>
     </ul>
 </header>
@@ -67,6 +76,11 @@
     .rightMenu a {
         color: cadetblue;
         text-decoration: none;
+    }
+
+    .rightMenu mwc-icon-button-toggle {
+        margin-top: -0.5rem;
+        margin-bottom: -0.5rem;
     }
 
     /* 푸터 부분 CSS */
