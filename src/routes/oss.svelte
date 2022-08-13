@@ -1,16 +1,10 @@
 <script>
     import { onMount } from 'svelte';
-
-    const ossAddressList = ["https://github.com/sveltejs/svelte/blob/master/LICENSE.md", "https://github.com/sveltejs/kit/blob/master/LICENSE", "https://raw.githubusercontent.com/material-components/material-web/mwc/LICENSE", "https://raw.githubusercontent.com/material-icons/material-icons/master/LICENSE", "https://scripts.sil.org/cms/scripts/render_download.php?format=file&media_id=OFL_plaintext&filename=OFL.txt"]
-
+    
     onMount(async () => {
         await import("@material/mwc-list");
         await import("@material/mwc-dialog");
-        const ossContainer = document.querySelector("#listContainer");
-        
-        ossContainer.addEventListener('selected', function() {
-            console.log(ossContainer.index);
-        })
+
     });    
 </script>
 
@@ -63,6 +57,7 @@
 </main>
 
 <style>
+
     /* teaser 공간 CSS */
     #teaserArea {
         padding: 1rem;

@@ -6,12 +6,14 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    let maxTeaserContentCount = "02";
+    let currentTeaserContentCount = 1;
+    let maxTeaserContentCount = 2;
     let teaserTitle="안녕하세요, 종이상자입니다.";
     let teaserText="오픈소스를 좋아하고, 다양한 웹 기술에 관심이 많은 순천향대학교 컴퓨터소프트웨어공학과 2학년 휴학생이에요."
     let teaserNotice="latiosOSC는 더이상 운영되지 않으며, pbspace와 통합되었습니다.";
     let teaserLinkText="과거 모습 >";
     let teaserLink="https://space.pbdiary.pw"
+    let teaserBackground="linear-gradient(45deg, cadetblue, cornflowerblue)"
     
     onMount(async () => {
         await import("@material/mwc-tab-bar");
@@ -21,7 +23,7 @@
     });
 </script>
 
-<section id="teaserArea">
+<section id="teaserArea" style:background={teaserBackground}>
     <section id="teaserContent">
         <h1 class="teaserTitle">{teaserTitle}</h1>
         <p class="teaserText normalBannerText">{teaserText}</p>
@@ -30,12 +32,18 @@
             <a class="teaserLink" href="{teaserLink}">{teaserLinkText}</a>
         </p>
     </section>
+    {#if maxTeaserContentCount > 1}
     <section id="teaserCount">
-        <h1 id="currentCount">01</h1>
+        <h1 id="currentCount">
+            {#if currentTeaserContentCount < 10}0{/if}{currentTeaserContentCount}
+        </h1>
         <p></p>
-        <h1 id="maxCount">{maxTeaserContentCount}</h1>
+        <h1 id="maxCount">
+            {#if maxTeaserContentCount < 10}0{/if}{maxTeaserContentCount}
+        </h1>
         <mwc-icon-button-toggle onIcon="play_arrow" offIcon="pause" aria-label="teaser play or pause button"></mwc-icon-button-toggle>
     </section>
+    {/if}
 </section>
 
 <mwc-tab-bar activeIndex="1">
@@ -62,7 +70,6 @@
     #teaserArea {
         color: white;
         padding: 1rem;
-        background: linear-gradient(45deg, cadetblue, cornflowerblue);
         display: flex;
         justify-content: space-between;
         word-break: keep-all;

@@ -20,14 +20,21 @@ body {
     }
 }
 
-@media (prefers-color-scheme: dark) {
+.dark {
     .svelte-main {
-        background: black;
+        background: #333333;
+        box-shadow: none;
     }
-    
-    body {
-        background: gray;
+
+    #oss {
+        mwc-list {
+            --mdc-theme-text-primary-on-background: #F0F0F0;
+            --mdc-theme-text-secondary-on-background: #D6D6D6;
+        }
     }
+
+    background: #404040;
+    --mdc-tab-text-label-color-default: #F0F0F0;
 }
 
 a {
