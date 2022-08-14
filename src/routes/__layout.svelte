@@ -3,20 +3,24 @@
     import { onMount } from 'svelte';
 
     const currentYear = new Date().getFullYear();
-    let darkModeToggle = false;
     
     onMount(async () => {
         await import("@material/mwc-tab-bar");
         await import("@material/mwc-tab");
         await import("@material/mwc-icon-button-toggle");
 
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            darkModeButton.setAttribute("on", "");
+            document.body.classList.add("dark");
+        }
+
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
             let colorSet = event.matches ? "dark":"light";
             if (colorSet == "dark") {
-                darkModeToggle = true;
+                darkModeButton.setAttribute("on", "");
                 document.body.classList.add("dark");
             } else {
-                darkModeToggle = false;
+                darkModeButton.removeAttribute("on");
                 document.body.classList.remove("dark");
             }
         });
@@ -37,7 +41,7 @@
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-            <li><mwc-icon-button-toggle id="darkModeButton" onIcon="dark_mode" offIcon="light_mode" aria-label="toggle dark or light mode" on={darkModeToggle}></mwc-icon-button-toggle></li> 
+            <li><mwc-icon-button-toggle id="darkModeButton" onIcon="light_mode" offIcon="dark_mode" aria-label="toggle dark or light mode"></mwc-icon-button-toggle></li> 
         </ul>
     </ul>
 </header>
