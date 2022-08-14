@@ -1,5 +1,6 @@
 /* 공통 CSS */
 body {
+    background: #EDF3F7;
     margin: 0 0 0 0;
     --mdc-theme-primary: cadetblue;
     --mdc-theme-secondary: cornflowerblue;
@@ -8,10 +9,9 @@ body {
 }
 
 .svelte-main {
+    background: white;
     margin: 1rem;
     border-radius: 10px;
-    border: 1px solid solid gray;
-    box-shadow: 1px 1px 3px 1px gray;
 }
 
 @media screen and (max-width: 768px) {

@@ -3,6 +3,14 @@
     import { onMount } from 'svelte';
 
     const currentYear = new Date().getFullYear();
+
+    function darkToggleEvent() {
+        if (darkModeButton.on) {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+    }
     
     onMount(async () => {
         await import("@material/mwc-tab-bar");
@@ -24,14 +32,6 @@
                 document.body.classList.remove("dark");
             }
         });
-
-        darkModeButton.addEventListener("icon-button-toggle-change", function() {
-            if (darkModeButton.on) {
-                document.body.classList.add("dark");
-            } else {
-                document.body.classList.remove("dark");
-            }
-        });
     });
 </script>
 
@@ -41,7 +41,7 @@
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-            <li><mwc-icon-button-toggle id="darkModeButton" onIcon="light_mode" offIcon="dark_mode" aria-label="toggle dark or light mode"></mwc-icon-button-toggle></li> 
+            <li><mwc-icon-button-toggle id="darkModeButton" onIcon="light_mode" offIcon="dark_mode" aria-label="toggle dark or light mode" on:icon-button-toggle-change="{darkToggleEvent}"></mwc-icon-button-toggle></li> 
         </ul>
     </ul>
 </header>
