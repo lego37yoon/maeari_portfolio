@@ -10,14 +10,6 @@
         experimentalAutoDetectLongPolling: true,
     });
 
-    enableIndexedDbPersistence(data).catch((err) => {
-        if (err.code == 'failed-precondition') {
-            console.log("탭이 여러 개인 경우 오프라인 데이터가 지원되지 않아 불안정할 수 있습니다.");
-        } else if (err.code == 'unimplemented') {
-            console.log("지원하지 않는 브라우저입니다. 제대로 오프라인 데이터가 캐시되지 않을 수 있습니다.");
-        }
-  });
-
     
     // Initialize variables
     let currentNoticeCount = 1;

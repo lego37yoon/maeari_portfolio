@@ -10,6 +10,10 @@
     });
 </script>
 
+<svelte:head>
+    <title>종이상자 공간</title>
+</svelte:head>
+
 <Teaser></Teaser>
 
 <mwc-tab-bar activeIndex="1">
