@@ -2,13 +2,22 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { fireApp } from "./backend.js";
-    import { initializeFirestore, onSnapshot, doc } from "firebase/firestore";
+    import { enableIndexedDbPersistence, initializeFirestore, onSnapshot, doc } from "firebase/firestore";
     
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     
     const data = initializeFirestore(fireApp, {
         experimentalAutoDetectLongPolling: true,
     });
+
+    enableIndexedDbPersistence(data).catch((err) => {
+        if (err.code == 'failed-precondition') {
+            console.log("탭이 여러 개인 경우 오프라인 데이터가 지원되지 않아 불안정할 수 있습니다.");
+        } else if (err.code == 'unimplemented') {
+            console.log("지원하지 않는 브라우저입니다. 제대로 오프라인 데이터가 캐시되지 않을 수 있습니다.");
+        }
+  });
+
     
     // Initialize variables
     let currentNoticeCount = 1;
