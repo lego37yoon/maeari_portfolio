@@ -2,11 +2,14 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { fireApp } from "./backend.js";
-    import { getFirestore, onSnapshot, doc } from "firebase/firestore";
+    import { enableIndexedDbPersistence, initializeFirestore, onSnapshot, doc } from "firebase/firestore";
     
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     
-    const data = getFirestore(fireApp);
+    const data = initializeFirestore(fireApp, {
+        experimentalAutoDetectLongPolling: true,
+    });
+
     
     // Initialize variables
     let currentNoticeCount = 1;

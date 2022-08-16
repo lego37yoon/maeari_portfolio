@@ -8,6 +8,10 @@
     });    
 </script>
 
+<svelte:head>
+    <title>종이상자 공간 | OSS Notice</title>
+</svelte:head>
+
 <main id="oss">
     <section id="teaserArea">
         <h1 class="teaserTitle">OSS Notice | maeari for portfolio</h1>
