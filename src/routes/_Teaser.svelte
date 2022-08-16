@@ -7,7 +7,7 @@
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     
     const data = initializeFirestore(fireApp, {
-        experimentalForceLongPolling: true,
+        experimentalAutoDetectLongPolling: true,
     });
     
     // Initialize variables
