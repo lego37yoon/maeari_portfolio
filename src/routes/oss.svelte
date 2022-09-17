@@ -8,6 +8,10 @@
     });    
 </script>
 
+<svelte:head>
+    <title>OSS Notice | 종이상자 공간</title>
+</svelte:head>
+
 <main id="oss">
     <section id="teaserArea">
         <h1 class="teaserTitle">OSS Notice | maeari for portfolio</h1>
@@ -47,12 +51,6 @@
                 </mwc-list-item>
             </a>
         </mwc-list>
-    </section>
-    <section id="ossDialog">
-        <mwc-dialog id="svelte" heading="Svelte">
-            <code id="ossFile"></code>
-            <mwc-button slot="primaryAction" dialogAction="close">닫기</mwc-button>
-        </mwc-dialog>
     </section>
 </main>
 
