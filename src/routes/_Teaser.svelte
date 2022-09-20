@@ -5,7 +5,6 @@
     import { onSnapshot, doc } from "firebase/firestore";
 
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    
     // Initialize variables
     let currentNoticeCount = 1;
     let maxNoticeCount = 2;
