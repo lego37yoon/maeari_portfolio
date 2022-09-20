@@ -79,7 +79,8 @@
     .title {
         margin: 1.5rem 1rem 0.5rem 1rem;
         font-weight: 600;
-        float: left;   
+        float: left;
+        color: cadetblue;
     }
     .title {
         text-decoration: none;
