@@ -9,7 +9,11 @@
 </script>
 
 <svelte:head>
+<<<<<<< HEAD
     <title>OSS Notice | 종이상자 공간</title>
+=======
+    <title>종이상자 공간 | OSS Notice</title>
+>>>>>>> 8cf495b762513097e6e9424ef1ce4543f63e2a4f
 </svelte:head>
 
 <main id="oss">
