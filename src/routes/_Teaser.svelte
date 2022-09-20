@@ -1,14 +1,10 @@
 <script>
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { fireApp } from "./backend.js";
-    import { initializeFirestore, onSnapshot, doc } from "firebase/firestore";
-    
+    import { fireData } from "./backend.js";
+    import { onSnapshot, doc } from "firebase/firestore";
+
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    
-    const data = initializeFirestore(fireApp, {
-        experimentalForceLongPolling: true,
-    });
     
     // Initialize variables
     let currentNoticeCount = 1;
@@ -40,12 +36,12 @@
         }
     }
 
-    onSnapshot(doc(data, "teaser", "intro"), (teaserData) => {
+    onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
         teaserTitle = teaserData.data().title;
         teaserText = teaserData.data().desc;
     });
 
-    onSnapshot(doc(data, "teaser", "notice"), (noticeData) => {
+    onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
         noticeArray = noticeData.data().data;
         maxNoticeCount = noticeArray.length;
 
