@@ -14,7 +14,7 @@
     let noticeArray;
     let noticeChange = true;
     let slideWorking = false;
-    let teaserNotice="현재 공지사항이 없습니다.";
+    let teaserNotice="현재 공지사항을 확인하고 있습니다.";
     let teaserLinkText="";
     let teaserLink="";
     let teaserBackground="linear-gradient(45deg, cadetblue, cornflowerblue)";

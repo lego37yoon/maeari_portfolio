@@ -31,6 +31,7 @@
 		"@material/mwc-base": "^0.26.1",
 		"@material/mwc-icon-button-toggle": "^0.26.1",
 		"@material/mwc-list": "^0.26.1",
-		"firebase": "^9.9.0"
+		"firebase": "^9.9.0",
+		"twemoji": "^14.0.2"
 	}
 }
