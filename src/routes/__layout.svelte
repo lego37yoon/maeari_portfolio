@@ -1,6 +1,7 @@
 <script>
     import "./index.scss";
     import { onMount } from 'svelte';
+    
 
     const currentYear = new Date().getFullYear();
 
@@ -13,10 +14,6 @@
     }
     
     onMount(async () => {
-        await import("@material/mwc-tab-bar");
-        await import("@material/mwc-tab");
-        await import("@material/mwc-icon-button-toggle");
-
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             darkModeButton.setAttribute("on", "");
             document.body.classList.add("dark");
@@ -32,12 +29,16 @@
                 document.body.classList.remove("dark");
             }
         });
+
+        await import("@material/mwc-tab-bar");
+        await import("@material/mwc-tab");
+        await import("@material/mwc-icon-button-toggle");
     });
 </script>
 
 <header>
     <ul>
-        <li class="title"><a href="./">paperbox</a></li>
+        <li><a href="./" class="title">paperbox</a></li>
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
@@ -49,7 +50,7 @@
 <slot></slot>
 
 <footer>
-    <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="./oss" target="_blank">OSS Notice</a></p>
+    <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="./oss">OSS Notice</a></p>
 </footer>
 
 <style>
@@ -78,12 +79,13 @@
     .title {
         margin: 1.5rem 1rem 0.5rem 1rem;
         font-weight: 600;
-        float: left;   
+        float: left;
+        color: cadetblue;
     }
-    .title a {
+    .title {
         text-decoration: none;
     }
-    .title a:visited {
+    .title:visited {
         color: cadetblue;
     }
     .rightMenu {

@@ -3,6 +3,7 @@
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 import { initializeApp } from "firebase/app";
+import { initializeFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -15,3 +16,6 @@ const firebaseConfig = {
 };
 
 export const fireApp = initializeApp(firebaseConfig);
+export const fireData = initializeFirestore(fireApp, {
+    experimentalForceLongPolling: true,
+});

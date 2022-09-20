@@ -1,16 +1,10 @@
 <script>
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { fireApp } from "./backend.js";
-    import { enableIndexedDbPersistence, initializeFirestore, onSnapshot, doc } from "firebase/firestore";
-    
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    
-    const data = initializeFirestore(fireApp, {
-        experimentalAutoDetectLongPolling: true,
-    });
+    import { fireData } from "./backend.js";
+    import { onSnapshot, doc } from "firebase/firestore";
 
-    
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     // Initialize variables
     let currentNoticeCount = 1;
     let maxNoticeCount = 2;
@@ -19,7 +13,7 @@
     let noticeArray;
     let noticeChange = true;
     let slideWorking = false;
-    let teaserNotice="현재 공지사항이 없습니다.";
+    let teaserNotice="현재 공지사항을 확인하고 있습니다.";
     let teaserLinkText="";
     let teaserLink="";
     let teaserBackground="linear-gradient(45deg, cadetblue, cornflowerblue)";
@@ -41,12 +35,12 @@
         }
     }
 
-    onSnapshot(doc(data, "teaser", "intro"), (teaserData) => {
+    onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
         teaserTitle = teaserData.data().title;
         teaserText = teaserData.data().desc;
     });
 
-    onSnapshot(doc(data, "teaser", "notice"), (noticeData) => {
+    onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
         noticeArray = noticeData.data().data;
         maxNoticeCount = noticeArray.length;
 

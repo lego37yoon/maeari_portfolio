@@ -2,7 +2,6 @@
 node_modules
 /build
 /.svelte-kit
-/src/routes/secrets.js
 past
 /package
 .env
