@@ -3,8 +3,6 @@
     
     onMount(async () => {
         await import("@material/mwc-list");
-        await import("@material/mwc-dialog");
-
     });    
 </script>
 
