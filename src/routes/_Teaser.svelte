@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { fireData } from "./backend.js";
+    import { fireData } from "./backend/+server.js";
     import { onSnapshot, doc } from "firebase/firestore";
 
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
