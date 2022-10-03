@@ -1,15 +1,11 @@
 <script>
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { fireApp } from "./backend.js";
-    import { enableIndexedDbPersistence, initializeFirestore, onSnapshot, doc } from "firebase/firestore";
-    
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    
-    const data = initializeFirestore(fireApp, {
-        experimentalAutoDetectLongPolling: true,
-    });
+    import { fireData } from "./backend/+server.js";
+    import { onSnapshot, doc } from "firebase/firestore";
 
+    export const prerender = true;
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     
     // Initialize variables
     let currentNoticeCount = 1;
@@ -19,7 +15,7 @@
     let noticeArray;
     let noticeChange = true;
     let slideWorking = false;
-    let teaserNotice="현재 공지사항이 없습니다.";
+    let teaserNotice="현재 공지사항을 확인하고 있습니다.";
     let teaserLinkText="";
     let teaserLink="";
     let teaserBackground="linear-gradient(45deg, cadetblue, cornflowerblue)";
@@ -41,12 +37,12 @@
         }
     }
 
-    onSnapshot(doc(data, "teaser", "intro"), (teaserData) => {
+    onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
         teaserTitle = teaserData.data().title;
         teaserText = teaserData.data().desc;
     });
 
-    onSnapshot(doc(data, "teaser", "notice"), (noticeData) => {
+    onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
         noticeArray = noticeData.data().data;
         maxNoticeCount = noticeArray.length;
 
@@ -73,7 +69,7 @@
 {#key teaserNotice}
 <section id="teaserArea" style:background={teaserBackground}>
     <section id="Notice">
-        <h1 class="teaserTitle">{teaserTitle}</h1>
+        <p class="teaserTitle">{teaserTitle}</p>
         <p class="teaserText normalBannerText">{teaserText}</p>
         {#if maxNoticeCount > 0}
         <p class="smallBannerText teaserText" in:fade><mwc-icon>announcement</mwc-icon>{teaserNotice}</p>
@@ -84,13 +80,13 @@
     </section>
     {#if maxNoticeCount > 1}
     <section id="teaserCount">
-        <h1 id="currentCount">
+        <p id="currentCount">
             {#if currentNoticeCount < 10}0{/if}{currentNoticeCount}
-        </h1>
-        <p></p>
-        <h1 id="maxCount">
+        </p>
+        <p id="countBar"></p>
+        <p id="maxCount">
             {#if maxNoticeCount < 10}0{/if}{maxNoticeCount}
-        </h1>
+        </p>
         <mwc-icon-button-toggle id="playNoticeButton" onIcon="play_arrow" offIcon="pause" aria-label="teaser play or pause button" on:icon-button-toggle-change="{playPauseEvent}"></mwc-icon-button-toggle>
     </section>
     {/if}
@@ -135,20 +131,26 @@
 
     .teaserTitle {
         font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
+        color: white;
         font-size: 2rem;
         font-weight: 200;
     }
 
-    #teaserCount h1 {
+    #teaserCount #currentCount, #teaserCount #maxCount {
         font-size: 1.1rem;
+        font-weight: 900;
         text-align: end;
+    }
+
+    #currentCount {
+        color: white;
     }
 
     #maxCount {
         color: gainsboro;
     }
 
-    #teaserCount p {
+    #teaserCount #countBar {
         height: calc(100% - 10rem);
         border-right: 3px solid white;
     }
