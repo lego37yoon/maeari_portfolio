@@ -38,17 +38,21 @@
     }
 
     onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
-        teaserTitle = teaserData.data().title;
-        teaserText = teaserData.data().desc;
+        if (teaserData.data().title !== undefined) {
+            teaserTitle = teaserData.data().title;
+            teaserText = teaserData.data().desc;
+        }
     });
 
     onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
-        noticeArray = noticeData.data().data;
-        maxNoticeCount = noticeArray.length;
+        if (teaserData.data().data !== undefined) {
+            noticeArray = noticeData.data().data;
+            maxNoticeCount = noticeArray.length;
 
-        if (!slideWorking) {
-            slideWorking = true;
-            slideShow();
+            if (!slideWorking) {
+                slideWorking = true;
+                slideShow();
+            }
         }
     });
 
