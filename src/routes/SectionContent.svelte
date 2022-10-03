@@ -22,7 +22,7 @@
         <mwc-list-item graphic="icon" twoline>
 
         </mwc-list-item>
-        <li divider inset padded role="seperator"></li>
+        <li divider inset padded role="separator"></li>
     </mwc-list>
 {:else}
     <p>데이터를 불러오는 중입니다. 잠시만 기다려주세요.</p>
