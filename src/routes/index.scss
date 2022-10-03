@@ -1,5 +1,6 @@
 /* 공통 CSS */
 body {
+    font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
     background: #EDF3F7;
     margin: 0 0 0 0;
     --mdc-theme-primary: cadetblue;
@@ -38,20 +39,23 @@ body {
 }
 
 a {
-    font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
     color: cornflowerblue;
 }
 
 h1 {
-    font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
     font-weight: 200;
     color: cadetblue;
     font-size: 1.8rem;
 }
 
+h2 {
+    font-weight: 200;
+    color: cadetblue;
+    font-size: 1.6rem;
+}
+
 p {
-    font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
-    font-weight: normal;
+    font-weight: 400;
     color: cadetblue;
     font-size: 1.0rem;
 }
