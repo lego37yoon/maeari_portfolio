@@ -41,6 +41,8 @@
         if (teaserData.data().title != undefined) {
             teaserTitle = teaserData.data().title;
             teaserText = teaserData.data().desc;
+        } else {
+            console.log("Connection Error Occured at Teaser main. Trying again.");
         }
     });
 
@@ -53,6 +55,8 @@
                 slideWorking = true;
                 slideShow();
             }
+        } else {
+            console.log("Connection Error Occured at Teaser notice. Trying again");
         }
     });
 
