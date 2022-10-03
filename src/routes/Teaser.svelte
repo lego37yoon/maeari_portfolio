@@ -38,14 +38,14 @@
     }
 
     onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
-        if (teaserData.data().title !== undefined) {
+        if (teaserData.data().title != undefined) {
             teaserTitle = teaserData.data().title;
             teaserText = teaserData.data().desc;
         }
     });
 
     onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
-        if (teaserData.data().data !== undefined) {
+        if (teaserData.data().data != undefined) {
             noticeArray = noticeData.data().data;
             maxNoticeCount = noticeArray.length;
 
