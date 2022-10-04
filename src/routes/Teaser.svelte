@@ -38,17 +38,25 @@
     }
 
     onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
-        teaserTitle = teaserData.data().title;
-        teaserText = teaserData.data().desc;
+        if (teaserData != undefined) {
+            teaserTitle = teaserData.data().title;
+            teaserText = teaserData.data().desc;
+        } else {
+            console.log("Connection Error Occured at Teaser main. Trying again.");
+        }
     });
 
     onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
-        noticeArray = noticeData.data().data;
-        maxNoticeCount = noticeArray.length;
+        if (noticeData != undefined) {
+            noticeArray = noticeData.data().data;
+            maxNoticeCount = noticeArray.length;
 
-        if (!slideWorking) {
-            slideWorking = true;
-            slideShow();
+            if (!slideWorking) {
+                slideWorking = true;
+                slideShow();
+            }
+        } else {
+            console.log("Connection Error Occured at Teaser notice. Trying again");
         }
     });
 
