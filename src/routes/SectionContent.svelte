@@ -71,7 +71,17 @@
 <style>
     mwc-list-item {
         border-radius: 10px;
+        --mdc-theme-text-icon-on-background: cadetblue;
+        --mdc-theme-text-primary-on-background: cadetblue;
+        --mdc-theme-text-secondary-on-background: cadetblue;
     }
+    mwc-list-item span {
+        font-weight: 400;
+    }
+    mwc-list-item span[slot="secondary"] {
+        font-weight: 200;
+    }
+
     #person_name {
         font-size: 1.4rem;
         font-weight: 300;
@@ -82,5 +92,6 @@
         margin: auto 5px auto 5px;
         text-decoration: none;
         color: cadetblue;
+        font-weight: 400;
     }
 </style>

@@ -122,7 +122,6 @@
     }
 
     .teaserText {
-        font-weight: 300;
         color: white;
     }
 

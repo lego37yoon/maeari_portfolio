@@ -96,7 +96,7 @@
 <style>
     mwc-tab {
         --mdc-typography-button-font-size: 1.0rem;
-        --mdc-typography-button-font-weight: 300;
+        --mdc-typography-button-font-weight: 400;
     }
 
     main {
