@@ -38,7 +38,7 @@
     }
 
     onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
-        console.error("Teaser Data is \n" + teaserData.data());
+        //console.error("Teaser Data is \n" + teaserData.data());
         if (teaserData.data() != undefined) {
             teaserTitle = teaserData.data().title;
             teaserText = teaserData.data().desc;
