@@ -12,7 +12,7 @@
 
     if (mainMenu != "all") {
         onSnapshot(doc(fireData, mainMenu, subMenu), (sectionData) => {
-            if (sectionData != undefined) {
+            if (sectionData.data() != undefined) {
                 ifLoaded = true;
                 fetchedData = sectionData.data();
             } else {
