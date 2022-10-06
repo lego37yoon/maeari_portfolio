@@ -38,7 +38,9 @@
     }
 
     onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
-        if (teaserData != undefined) {
+        console.log(teaserData.data());
+        console.error(teaserData.data());
+        if (teaserData.data().title != undefined) {
             teaserTitle = teaserData.data().title;
             teaserText = teaserData.data().desc;
         } else {
@@ -47,7 +49,7 @@
     });
 
     onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
-        if (noticeData != undefined) {
+        if (noticeData.data().data != undefined) {
             noticeArray = noticeData.data().data;
             maxNoticeCount = noticeArray.length;
 
