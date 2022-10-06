@@ -38,16 +38,16 @@
     }
 
     onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
-        if (teaserData != undefined) {
+        if (teaserData.data() != undefined) {
             teaserTitle = teaserData.data().title;
             teaserText = teaserData.data().desc;
         } else {
-            console.log("Connection Error Occured at Teaser main. Trying again.");
+            console.error("Connection Error Occured at Teaser main. Trying again.");
         }
     });
 
     onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
-        if (noticeData != undefined) {
+        if (noticeData.data() != undefined) {
             noticeArray = noticeData.data().data;
             maxNoticeCount = noticeArray.length;
 
@@ -56,7 +56,7 @@
                 slideShow();
             }
         } else {
-            console.log("Connection Error Occured at Teaser notice. Trying again");
+            console.error("Connection Error Occured at Teaser notice. Trying again");
         }
     });
 
