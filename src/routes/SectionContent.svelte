@@ -21,6 +21,7 @@
         });
     } else {
         //TODO: get other resources
+        //It means "all" section -> mainMenu not means section.
 
         onSnapshot(doc(fireData, "others", "contact"), (sectionData) => {
             if (sectionData != undefined) {
@@ -40,6 +41,7 @@
     onMount(async() => {
         await import("@material/mwc-list");
         await import("@material/mwc-icon");
+        await import("@material/mwc-dialog");
     });
 
 </script>
@@ -92,6 +94,5 @@
         margin: auto 5px auto 5px;
         text-decoration: none;
         color: cadetblue;
-        font-weight: 400;
     }
 </style>
