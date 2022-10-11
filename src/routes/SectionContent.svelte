@@ -14,7 +14,11 @@
         onSnapshot(doc(fireData, mainMenu, subMenu), (sectionData) => {
             if (sectionData.data() != undefined) {
                 ifLoaded = true;
-                fetchedData = sectionData.data();
+                if (subMenu != "contact") {
+                    fetchedData = sectionData.data()["data-list"];
+                } else {
+                    fetchedData = sectionData.data();
+                }
             } else {
                 noData = true;
             }
@@ -46,17 +50,30 @@
 
 </script>
 
+<svelte:head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+</svelte:head>
+
 {#if noData === false}
     <h2>{subMenuName}</h2>
 {#if ifLoaded === true}
     {#if subMenu != "contact"}
         <mwc-list>
+            {#each fetchedData as listData}
             <mwc-list-item graphic="icon" twoline>
-                <span>개발 중인 버전이어서 아직 구현되지 않았습니다.</span>
-                <span slot="secondary">조금만 더 기다려주시면 이 부분도 보실 수 있도록 개선할게요.</span>
-                <mwc-icon slot="graphic">warning</mwc-icon>
+                <span>{listData.organization ? listData.organization : ""} {listData.name ? listData.name : listData.major}</span>
+                <span slot="secondary">
+                    {#if listData["start-year"] != undefined}
+                        {listData["start-year"]} ~ {listData["end-year"] ? listData["end-year"] : "현재"}
+                    {:else if listData["start-date"] != undefined}
+                        {listData["start-date"]} ~ {listData["end-date"] ? listData["end-date"] : "현재"} 
+                    {:else}
+                        일자 불명
+                    {/if}
+                </span>
+                <span class="{listData['icon-type']}" slot="graphic">{listData.icon}</span>
             </mwc-list-item>
-            <li divider inset padded role="separator"></li>
+            {/each}
         </mwc-list>
     {:else}
         <p id="person_name">{fetchedData.name} a.k.a {fetchedData.nickname}</p>
