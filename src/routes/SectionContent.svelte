@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { fireData } from "./backend/+server.js";
-    import { onSnapshot, doc } from "firebase/firestore";
+    import { getDoc, doc } from "firebase/firestore";
 
     export let mainMenu;
     export let subMenu;
@@ -11,8 +11,8 @@
     let fetchedData = null;
 
     if (mainMenu != "all") {
-        onSnapshot(doc(fireData, mainMenu, subMenu), (sectionData) => {
-            if (sectionData.data() != undefined) {
+        getDoc(doc(fireData, mainMenu, subMenu)).then((sectionData) => {
+            if (sectionData.exists()) {
                 ifLoaded = true;
                 if (subMenu != "contact") {
                     fetchedData = sectionData.data()["data-list"];
@@ -24,21 +24,52 @@
             }
         });
     } else {
-        //TODO: get other resources
-        //It means "all" section -> mainMenu not means section.
-
-        onSnapshot(doc(fireData, "others", "contact"), (sectionData) => {
-            if (sectionData != undefined) {
-                ifLoaded = true;
-                if (fetchedData != null) {
-                    fetchedData = fetchedData.concat(sectionData.data());
-                } else {
+        if (subMenu == "contact") {
+            getDoc(doc(fireData, "others", "contact")).then((sectionData) => {
+                if (sectionData.exists()) {
+                    ifLoaded = true;
                     fetchedData = sectionData.data();
+                } else {
+                    noData = true;
+                }
+            });
+        } else {
+            getSeveralData();
+        }
+    }
+
+    async function getSeveralData() {
+        await getDoc(doc(fireData, "now", subMenu)).then((sectionData) => {
+            if (sectionData.exists()) {
+                noData = false;
+                if (fetchedData != null) {
+                    fetchedData = fetchedData.concat(sectionData.data()["data-list"]);
+                } else {
+                    fetchedData = sectionData.data()["data-list"];
                 }
             } else {
                 noData = true;
             }
         });
+
+        await getDoc(doc(fireData, "past", subMenu)).then((sectionData) => {
+            if (sectionData.exists()) {
+                noData = false;
+                if (fetchedData != null) {
+                    fetchedData = fetchedData.concat(sectionData.data()["data-list"]);
+                } else {
+                    fetchedData = sectionData.data()["data-list"];
+                }
+            } else {
+                noData = true;
+            }
+        });
+
+        if (!noData) {
+            ifLoaded = true;
+        } else {
+            ifLoaded = false;
+        }
     }
     
 
@@ -66,7 +97,7 @@
                     {#if listData["start-year"] != undefined}
                         {listData["start-year"]} ~ {listData["end-year"] ? listData["end-year"] : "현재"}
                     {:else if listData["start-date"] != undefined}
-                        {listData["start-date"]} ~ {listData["end-date"] ? listData["end-date"] : "현재"} 
+                        {listData["start-date"]} {listData["end-date"] ? "~ " + listData["end-date"] : ""} 
                     {:else}
                         일자 불명
                     {/if}
