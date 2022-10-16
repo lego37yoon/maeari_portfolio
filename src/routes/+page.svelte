@@ -50,6 +50,7 @@
 </mwc-tab-bar>
 
 <main>
+    {#key viewMode}
     <h1 bind:this={itemTitle}>진행 중</h1>
     {#if viewMode != "others"}
     <section id="dev">
@@ -91,6 +92,7 @@
             subMenuName="연락처 및 SNS" />
     </section>
     {/if}
+    {/key}
 </main>
 
 <style>

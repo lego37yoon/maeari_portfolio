@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { fireData } from "./backend/+server.js";
-    import { onSnapshot, doc } from "firebase/firestore";
+    import { getDoc, doc } from "firebase/firestore";
 
     export let mainMenu;
     export let subMenu;
@@ -11,23 +11,11 @@
     let fetchedData = null;
 
     if (mainMenu != "all") {
-        onSnapshot(doc(fireData, mainMenu, subMenu), (sectionData) => {
-            if (sectionData.data() != undefined) {
+        getDoc(doc(fireData, mainMenu, subMenu)).then((sectionData) => {
+            if (sectionData.exists()) {
                 ifLoaded = true;
-                fetchedData = sectionData.data();
-            } else {
-                noData = true;
-            }
-        });
-    } else {
-        //TODO: get other resources
-        //It means "all" section -> mainMenu not means section.
-
-        onSnapshot(doc(fireData, "others", "contact"), (sectionData) => {
-            if (sectionData != undefined) {
-                ifLoaded = true;
-                if (fetchedData != null) {
-                    fetchedData = fetchedData.concat(sectionData.data());
+                if (subMenu != "contact") {
+                    fetchedData = sectionData.data()["data-list"];
                 } else {
                     fetchedData = sectionData.data();
                 }
@@ -35,6 +23,53 @@
                 noData = true;
             }
         });
+    } else {
+        if (subMenu == "contact") {
+            getDoc(doc(fireData, "others", "contact")).then((sectionData) => {
+                if (sectionData.exists()) {
+                    ifLoaded = true;
+                    fetchedData = sectionData.data();
+                } else {
+                    noData = true;
+                }
+            });
+        } else {
+            getSeveralData();
+        }
+    }
+
+    async function getSeveralData() {
+        await getDoc(doc(fireData, "now", subMenu)).then((sectionData) => {
+            if (sectionData.exists()) {
+                noData = false;
+                if (fetchedData != null) {
+                    fetchedData = fetchedData.concat(sectionData.data()["data-list"]);
+                } else {
+                    fetchedData = sectionData.data()["data-list"];
+                }
+            } else {
+                noData = true;
+            }
+        });
+
+        await getDoc(doc(fireData, "past", subMenu)).then((sectionData) => {
+            if (sectionData.exists()) {
+                noData = false;
+                if (fetchedData != null) {
+                    fetchedData = fetchedData.concat(sectionData.data()["data-list"]);
+                } else {
+                    fetchedData = sectionData.data()["data-list"];
+                }
+            } else {
+                noData = true;
+            }
+        });
+
+        if (!noData) {
+            ifLoaded = true;
+        } else {
+            ifLoaded = false;
+        }
     }
     
 
@@ -46,17 +81,30 @@
 
 </script>
 
+<svelte:head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
+</svelte:head>
+
 {#if noData === false}
     <h2>{subMenuName}</h2>
 {#if ifLoaded === true}
     {#if subMenu != "contact"}
         <mwc-list>
+            {#each fetchedData as listData}
             <mwc-list-item graphic="icon" twoline>
-                <span>개발 중인 버전이어서 아직 구현되지 않았습니다.</span>
-                <span slot="secondary">조금만 더 기다려주시면 이 부분도 보실 수 있도록 개선할게요.</span>
-                <mwc-icon slot="graphic">warning</mwc-icon>
+                <span>{listData.organization ? listData.organization : ""} {listData.name ? listData.name : listData.major}</span>
+                <span slot="secondary">
+                    {#if listData["start-year"] != undefined}
+                        {listData["start-year"]} ~ {listData["end-year"] ? listData["end-year"] : "현재"}
+                    {:else if listData["start-date"] != undefined}
+                        {listData["start-date"]} {listData["end-date"] ? "~ " + listData["end-date"] : ""} 
+                    {:else}
+                        일자 불명
+                    {/if}
+                </span>
+                <span class="{listData['icon-type']}" slot="graphic">{listData.icon}</span>
             </mwc-list-item>
-            <li divider inset padded role="separator"></li>
+            {/each}
         </mwc-list>
     {:else}
         <p id="person_name">{fetchedData.name} a.k.a {fetchedData.nickname}</p>
