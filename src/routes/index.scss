@@ -1,16 +1,28 @@
 /* 공통 CSS */
 body {
     font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
+    --md-ref-typeface-plain: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
     background: #EDF3F7;
     margin: 0 0 0 0;
-    --mdc-theme-primary: cadetblue;
-    --mdc-theme-secondary: cornflowerblue;
+
+    /* Material Color Sets */
+    --md-sys-color-primary: #00696c;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-secondary: #235cb1;
+    --md-sys-color-on-secondary: #ffffff;
+    --md-sys-color-background: #fafdfc;
+    --md-sys-color-on-background: #191c1c;
+    --md-sys-color-surface: #fafdfc;
+    --md-sys-color-surface-variant: #dae4e4;
+    --md-sys-color-on-surface: #191c1c;
+    --md-sys-color-on-surface-variant: #3f4949;
     --mdc-ripple-focus-opacity: 0.00;
     --mdc-typography-font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
+    --md-sys-color-background: #EDF3F7;
 }
 
 .svelte-main {
-    background: white;
+    background: #ffffff;
     margin: 1rem;
     border-radius: 10px;
 }
@@ -27,15 +39,23 @@ body {
         box-shadow: none;
     }
 
-    #oss {
-        mwc-list {
-            --mdc-theme-text-primary-on-background: #F0F0F0;
-            --mdc-theme-text-secondary-on-background: #D6D6D6;
-        }
-    }
-
     background: #404040;
-    --mdc-tab-text-label-color-default: #F0F0F0;
+    
+    /* Material Color Sets */
+    --md-sys-color-primary: #4cd9de;
+    --md-sys-color-primary-container: #004f51;
+    --md-sys-color-on-primary: #003738;
+    --md-sys-color-on-primary-container: #6ff6fb;
+    --md-sys-color-secondary: #acc7ff;
+    --md-sys-color-secondary-container: #004492;
+    --md-sys-color-on-secondary: #002f67;
+    --md-sys-color-on-secondary-container: #d7e2ff;
+    --md-sys-color-background: #191c1c;
+    --md-sys-color-on-background: #e0e3e2;
+    --md-sys-color-surface: #191c1c;
+    --md-sys-color-surface-variant: #3f4949;
+    --md-sys-color-on-surface: #e0e3e2;
+    --md-sys-color-on-surface-variant: #bec8c8;
 }
 
 a {

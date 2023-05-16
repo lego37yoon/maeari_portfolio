@@ -1,12 +1,14 @@
 <script>
     import "./index.scss";
+    import "@material/web/icon/icon.js";
+    import "@material/web/iconbutton/standard-icon-button.js";
     import { onMount } from 'svelte';
     
 
     const currentYear = new Date().getFullYear();
 
     function darkToggleEvent() {
-        if (darkModeButton.on) {
+        if (darkModeButton.selected) {
             document.body.classList.add("dark");
         } else {
             document.body.classList.remove("dark");
@@ -15,24 +17,20 @@
     
     onMount(async () => {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            darkModeButton.setAttribute("on", "");
+            darkModeButton.setAttribute("selected", "");
             document.body.classList.add("dark");
         }
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
             let colorSet = event.matches ? "dark":"light";
             if (colorSet == "dark") {
-                darkModeButton.setAttribute("on", "");
+                darkModeButton.setAttribute("selected", "");
                 document.body.classList.add("dark");
             } else {
-                darkModeButton.removeAttribute("on");
+                darkModeButton.removeAttribute("selected");
                 document.body.classList.remove("dark");
             }
         });
-
-        await import("@material/mwc-tab-bar");
-        await import("@material/mwc-tab");
-        await import("@material/mwc-icon-button-toggle");
     });
 </script>
 
@@ -42,7 +40,12 @@
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-            <li><mwc-icon-button-toggle id="darkModeButton" onIcon="light_mode" offIcon="dark_mode" aria-label="toggle dark or light mode" on:icon-button-toggle-change="{darkToggleEvent}"></mwc-icon-button-toggle></li> 
+            <li>
+                <md-standard-icon-button id="darkModeButton" toggle aria-label="toggle dark or light mode" on:click="{darkToggleEvent}">
+                    <md-icon>light_mode</md-icon>
+                    <md-icon slot="selectedIcon">dark_mode</md-icon>
+                </md-standard-icon-button>
+            </li> 
         </ul>
     </ul>
 </header>
@@ -103,9 +106,12 @@
         text-decoration: none;
     }
 
-    .rightMenu mwc-icon-button-toggle {
+    .rightMenu md-standard-icon-button {
         margin-top: -0.5rem;
         margin-bottom: -0.5rem;
+        --md-icon-button-unselected-icon-color: #5f9ea0;
+        --md-icon-button-unselected-focus-icon-color: #5f9ea0;
+        --md-icon-button-selected-focus-icon-color: #5f9ea0;
     }
 
     /* 푸터 부분 CSS */
