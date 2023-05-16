@@ -37,7 +37,7 @@
                     <md-icon slot="start">app_badging</md-icon>
                 </md-list-item>
             </a>
-            <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL" target="_blank">
+            <a href="https://sunn.us/suit/" target="_blank">
                 <md-list-item headline="SUIT" supportingtext="SIL Open Font License">
                     <md-icon slot="start">text_fields</md-icon>
                 </md-list-item>
@@ -105,8 +105,6 @@
     }
 
     md-icon {
-        --md-icon-font: 'Material Symbols Outlined';
-        font-family: 'Material Symbols Outlined';
         margin-inline-start: 1em;
     }
 </style>
