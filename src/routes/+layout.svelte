@@ -57,20 +57,22 @@
 
 {#if $page.url.pathname.substr($page.url.pathname.lastIndexOf('/')) !== "/oss"}
 <Teaser teaserData={data}></Teaser>
-<md-outlined-segmented-button-set>
-    <md-outlined-segmented-button selected label="프로젝트">
-        <md-icon slot="icon">design_services</md-icon>
-    </md-outlined-segmented-button>
-    <md-outlined-segmented-button label="CV(한국어)">
-        <md-icon slot="icon">receipt_long</md-icon>
-    </md-outlined-segmented-button>
-    <md-outlined-segmented-button label="소식">
-        <md-icon slot="icon">newspaper</md-icon>
-    </md-outlined-segmented-button>
-    <md-outlined-segmented-button label="연락하기">
-        <md-icon slot="icon">mail</md-icon>
-    </md-outlined-segmented-button>
-</md-outlined-segmented-button-set>
+<nav id="submenu">
+    <md-outlined-segmented-button-set>
+        <md-outlined-segmented-button selected label="프로젝트">
+            <md-icon slot="icon">design_services</md-icon>
+        </md-outlined-segmented-button>
+        <md-outlined-segmented-button label="포트폴리오">
+            <md-icon slot="icon">receipt_long</md-icon>
+        </md-outlined-segmented-button>
+        <md-outlined-segmented-button label="소식">
+            <md-icon slot="icon">newspaper</md-icon>
+        </md-outlined-segmented-button>
+        <md-outlined-segmented-button label="연락처">
+            <md-icon slot="icon">mail</md-icon>
+        </md-outlined-segmented-button>
+    </md-outlined-segmented-button-set>    
+</nav>
 {/if}
 <slot></slot>
 
@@ -134,10 +136,16 @@
         --md-icon-button-unselected-icon-color: #5f9ea0;
         --md-icon-button-unselected-focus-icon-color: #5f9ea0;
         --md-icon-button-selected-focus-icon-color: #5f9ea0;
+        --md-icon-button-selected-icon-color: #5f9ea0;
     }
 
-    md-outlined-segmented-button-set {
+    #submenu {
         margin: 1em;
+    }
+    
+    md-outlined-segmented-button {
+        word-break: keep-all;
+        --md-segmented-button-with-icon-icon-size: 18px;
     }
 
     /* 푸터 부분 CSS */
