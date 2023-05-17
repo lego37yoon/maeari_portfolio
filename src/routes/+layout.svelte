@@ -47,8 +47,8 @@
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
             <li>
                 <md-standard-icon-button id="darkModeButton" toggle aria-label="toggle dark or light mode" on:click="{darkToggleEvent}">
-                    <md-icon>light_mode</md-icon>
-                    <md-icon slot="selectedIcon">dark_mode</md-icon>
+                    <md-icon>dark_mode</md-icon>
+                    <md-icon slot="selectedIcon">light_mode</md-icon>
                 </md-standard-icon-button>
             </li> 
         </ul>
@@ -59,14 +59,14 @@
 <Teaser teaserData={data}></Teaser>
 <nav id="submenu">
     <md-outlined-segmented-button-set>
-        <md-outlined-segmented-button selected label="프로젝트">
-            <md-icon slot="icon">design_services</md-icon>
-        </md-outlined-segmented-button>
-        <md-outlined-segmented-button label="포트폴리오">
-            <md-icon slot="icon">receipt_long</md-icon>
+        <md-outlined-segmented-button selected label="홈">
+            <md-icon slot="icon">home</md-icon>
         </md-outlined-segmented-button>
         <md-outlined-segmented-button label="소식">
             <md-icon slot="icon">newspaper</md-icon>
+        </md-outlined-segmented-button>
+        <md-outlined-segmented-button label="CV">
+            <md-icon slot="icon">receipt_long</md-icon>
         </md-outlined-segmented-button>
         <md-outlined-segmented-button label="연락처">
             <md-icon slot="icon">mail</md-icon>
