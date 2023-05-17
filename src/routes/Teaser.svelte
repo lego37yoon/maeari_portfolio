@@ -71,7 +71,7 @@
             <md-icon>tips_and_updates</md-icon>
             {teaserNotice}
             {#if teaserLink}
-                <a class="teaserLink" href={teaserLink ? teaserLink : "#"}>{teaserLinkText ? teaserLinkText : "이동하기"} &gt;</a>
+                <a class="teaserLink" href={teaserLink ? teaserLink : "#"} target="_blank">{teaserLinkText ? teaserLinkText : "이동하기"} &gt;</a>
             {/if}
         </p>
         {/if}
