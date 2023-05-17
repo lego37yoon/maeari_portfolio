@@ -2,15 +2,17 @@
     import "./index.scss";
     import "@material/web/icon/icon.js";
     import "@material/web/iconbutton/standard-icon-button.js";
-    import '@material/web/segmentedbutton/outlined-segmented-button.js';
-    import '@material/web/segmentedbuttonset/outlined-segmented-button-set.js';
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
-    import Teaser from "./Teaser.svelte";
+    import Nav from "../components/Nav.svelte";
+    import Teaser from "../components/Teaser.svelte";
 
-    const currentYear = new Date().getFullYear();
     /** @type {import('./$types').LayoutData} */
     export let data;
+
+    const currentYear = new Date().getFullYear();
+    let currentPage;
+    $: currentPage = $page.url.pathname.substr($page.url.pathname.lastIndexOf('/') + 1);
 
     function darkToggleEvent() {
         if (darkModeButton.selected) {
@@ -46,7 +48,7 @@
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
             <li>
-                <md-standard-icon-button id="darkModeButton" toggle aria-label="toggle dark or light mode" on:click="{darkToggleEvent}">
+                <md-standard-icon-button id="darkModeButton" toggle aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
                     <md-icon>dark_mode</md-icon>
                     <md-icon slot="selectedIcon">light_mode</md-icon>
                 </md-standard-icon-button>
@@ -55,24 +57,9 @@
     </ul>
 </header>
 
-{#if $page.url.pathname.substr($page.url.pathname.lastIndexOf('/')) !== "/oss"}
+{#if currentPage !== "oss"}
 <Teaser teaserData={data}></Teaser>
-<nav id="submenu">
-    <md-outlined-segmented-button-set>
-        <md-outlined-segmented-button selected label="홈">
-            <md-icon slot="icon">home</md-icon>
-        </md-outlined-segmented-button>
-        <md-outlined-segmented-button label="소식">
-            <md-icon slot="icon">newspaper</md-icon>
-        </md-outlined-segmented-button>
-        <md-outlined-segmented-button label="CV">
-            <md-icon slot="icon">receipt_long</md-icon>
-        </md-outlined-segmented-button>
-        <md-outlined-segmented-button label="연락처">
-            <md-icon slot="icon">mail</md-icon>
-        </md-outlined-segmented-button>
-    </md-outlined-segmented-button-set>    
-</nav>
+<Nav selectedId={currentPage} />
 {/if}
 <slot></slot>
 
@@ -137,15 +124,6 @@
         --md-icon-button-unselected-focus-icon-color: #5f9ea0;
         --md-icon-button-selected-focus-icon-color: #5f9ea0;
         --md-icon-button-selected-icon-color: #5f9ea0;
-    }
-
-    #submenu {
-        margin: 1em;
-    }
-    
-    md-outlined-segmented-button {
-        word-break: keep-all;
-        --md-segmented-button-with-icon-icon-size: 18px;
     }
 
     /* 푸터 부분 CSS */
