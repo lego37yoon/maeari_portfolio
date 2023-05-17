@@ -1,38 +1,31 @@
 <script>
     import { onMount } from 'svelte';
-    import Teaser from './Teaser.svelte';
-    import SectionContent from './SectionContent.svelte';
     
     let itemTabs;
     let itemTitle;
     let viewMode = "now";
 
-    onMount(async() => {
-        await import("@material/mwc-tab-bar");
-        await import("@material/mwc-tab");
-        await import("@material/mwc-icon")
-        await import("@material/mwc-icon-button-toggle");
+    // onMount(async() => {
+    //     itemTabs.addEventListener('MDCTabBar:activated', function(data) {
+    //         itemTitle.textContent = document.querySelectorAll("mwc-tab")[data.detail.index].label;
 
-        itemTabs.addEventListener('MDCTabBar:activated', function(data) {
-            itemTitle.textContent = document.querySelectorAll("mwc-tab")[data.detail.index].label;
-
-            switch(data.detail.index) {
-                case 0: //전체
-                    viewMode = "all";
-                    break;
-                case 2: //과거 활동
-                    viewMode = "past";
-                    break;
-                case 3: //그 밖에
-                    viewMode = "others";
-                    break;
-                case 1: //진행 중
-                default:
-                    viewMode = "now";
-                    break;
-            }
-        });
-    });
+    //         switch(data.detail.index) {
+    //             case 0: //전체
+    //                 viewMode = "all";
+    //                 break;
+    //             case 2: //과거 활동
+    //                 viewMode = "past";
+    //                 break;
+    //             case 3: //그 밖에
+    //                 viewMode = "others";
+    //                 break;
+    //             case 1: //진행 중
+    //             default:
+    //                 viewMode = "now";
+    //                 break;
+    //         }
+    //     });
+    // });
 
 </script>
 
@@ -40,8 +33,7 @@
     <title>종이상자 공간</title>
 </svelte:head>
 
-<Teaser></Teaser>
-
+<!--
 <mwc-tab-bar activeIndex="1" bind:this={itemTabs}>
     <mwc-tab isMinWidthIndicator label="전체"/>
     <mwc-tab isMinWidthIndicator label="진행 중"/>
@@ -94,6 +86,8 @@
     {/if}
     {/key}
 </main>
+
+-->
 
 <style>
     mwc-tab {
