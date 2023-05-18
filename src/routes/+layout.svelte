@@ -1,12 +1,21 @@
 <script>
     import "./index.scss";
+    import "@material/web/icon/icon.js";
+    import "@material/web/iconbutton/standard-icon-button.js";
     import { onMount } from 'svelte';
-    
+    import { page } from '$app/stores';
+    import Nav from "../components/Nav.svelte";
+    import Teaser from "../components/Teaser.svelte";
+
+    /** @type {import('./$types').LayoutData} */
+    export let data;
 
     const currentYear = new Date().getFullYear();
+    let currentPage;
+    $: currentPage = $page.url.pathname.substr($page.url.pathname.lastIndexOf('/') + 1);
 
     function darkToggleEvent() {
-        if (darkModeButton.on) {
+        if (darkModeButton.selected) {
             document.body.classList.add("dark");
         } else {
             document.body.classList.remove("dark");
@@ -15,24 +24,20 @@
     
     onMount(async () => {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            darkModeButton.setAttribute("on", "");
+            darkModeButton.setAttribute("selected", "");
             document.body.classList.add("dark");
         }
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
             let colorSet = event.matches ? "dark":"light";
             if (colorSet == "dark") {
-                darkModeButton.setAttribute("on", "");
+                darkModeButton.setAttribute("selected", "");
                 document.body.classList.add("dark");
             } else {
-                darkModeButton.removeAttribute("on");
+                darkModeButton.removeAttribute("selected");
                 document.body.classList.remove("dark");
             }
         });
-
-        await import("@material/mwc-tab-bar");
-        await import("@material/mwc-tab");
-        await import("@material/mwc-icon-button-toggle");
     });
 </script>
 
@@ -42,11 +47,20 @@
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-            <li><mwc-icon-button-toggle id="darkModeButton" onIcon="light_mode" offIcon="dark_mode" aria-label="toggle dark or light mode" on:icon-button-toggle-change="{darkToggleEvent}"></mwc-icon-button-toggle></li> 
+            <li id="displayToggle">
+                <md-standard-icon-button id="darkModeButton" toggle aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
+                    <md-icon>dark_mode</md-icon>
+                    <md-icon slot="selectedIcon">light_mode</md-icon>
+                </md-standard-icon-button>
+            </li> 
         </ul>
     </ul>
 </header>
 
+{#if currentPage !== "oss"}
+<Teaser teaserData={data}></Teaser>
+<Nav selectedId={currentPage} />
+{/if}
 <slot></slot>
 
 <footer>
@@ -103,9 +117,37 @@
         text-decoration: none;
     }
 
-    .rightMenu mwc-icon-button-toggle {
+    @media screen and (max-width: 355px) {
+        .rightMenu li {
+            display: none;
+        }
+
+        .rightMenu { 
+            padding: 1.5rem 0.5rem 0.5rem 0;
+        }
+
+        .title {
+            margin: 1.5rem 0 0.5rem 1rem;
+        }
+
+        #displayToggle {
+            display: inline;
+        }
+    }
+
+    @media screen and (max-width: 190px) {
+        .rightMenu {
+            display: none;
+        }
+    }
+
+    .rightMenu md-standard-icon-button {
         margin-top: -0.5rem;
         margin-bottom: -0.5rem;
+        --md-icon-button-unselected-icon-color: #5f9ea0;
+        --md-icon-button-unselected-focus-icon-color: #5f9ea0;
+        --md-icon-button-selected-focus-icon-color: #5f9ea0;
+        --md-icon-button-selected-icon-color: #5f9ea0;
     }
 
     /* 푸터 부분 CSS */

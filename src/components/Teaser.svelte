@@ -1,88 +1,78 @@
 <script>
-    import { onMount } from 'svelte';
+    import "@material/web/icon/icon.js";
+    import "@material/web/iconbutton/standard-icon-button.js";
     import { fade } from 'svelte/transition';
-    import { fireData } from "./backend/+server.js";
-    import { onSnapshot, doc } from "firebase/firestore";
-
-    export const prerender = true;
+    
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     
     // Initialize variables
+    export let teaserData = {
+        intro: {
+            title: "안녕하세요,",
+            desc: "포트폴리오 사이트에 오신 것을 환영합니다"
+        },
+        notice: {
+            data: [
+                {
+                    background: "linear-gradient(45deg, cadetblue, cornflowerblue)",
+                    enabled: true,
+                    text: "공지사항을 확인하고 있어요."
+                }
+            ]
+        }
+    };
+
     let currentNoticeCount = 1;
-    let maxNoticeCount = 2;
-    let teaserTitle="안녕하세요, 여러분!";
-    let teaserText="제 포트폴리오 웹사이트에 오신 걸 환영합니다."
-    let noticeArray;
+    let maxNoticeCount = teaserData.notice.data.length ?? 1;
     let noticeChange = true;
-    let slideWorking = false;
-    let teaserNotice="현재 공지사항을 확인하고 있습니다.";
-    let teaserLinkText="";
-    let teaserLink="";
+    let teaserNotice = teaserData.notice.data[0].text;
+    let teaserLinkText = teaserData.notice.data[0]["link-title"];
+    let teaserLink = teaserData.notice.data[0].link;
     let teaserBackground="linear-gradient(45deg, cadetblue, cornflowerblue)";
 
+    if (teaserData.notice.data.length > 1) {
+        slideShow();
+    }
+
     async function slideShow() {
-        for (let i = 0; i < noticeArray.length;) {
+        for (let i = 0; i < teaserData.notice.data.length;) {
             if (noticeChange) {
                 currentNoticeCount = i + 1;
-                teaserNotice = noticeArray[i].text;
-                teaserLinkText = noticeArray[i]["link-title"] + " >";
-                teaserLink = noticeArray[i].link;
-                teaserBackground = noticeArray[i].background;    
-                if (i == noticeArray.length - 1) {
+                teaserNotice = teaserData.notice.data[i].text;
+                teaserLinkText = teaserData.notice.data[i]["link-title"];
+                teaserLink = teaserData.notice.data[i].link;
+                teaserBackground = teaserData.notice.data[i].background;    
+                if (i === teaserData.notice.data.length - 1) {
                     i = -1;
                 }
                 i++;
             }
-            await delay(5000);
+            await delay(7000);
         }
     }
 
-    onSnapshot(doc(fireData, "teaser", "intro"), (teaserData) => {
-        if (teaserData.data() != undefined) {
-            teaserTitle = teaserData.data().title;
-            teaserText = teaserData.data().desc;
-        } else {
-            console.error("Connection Error Occured at Teaser main. Trying again.");
-        }
-    });
-
-    onSnapshot(doc(fireData, "teaser", "notice"), (noticeData) => {
-        if (noticeData.data() != undefined) {
-            noticeArray = noticeData.data().data;
-            maxNoticeCount = noticeArray.length;
-
-            if (!slideWorking) {
-                slideWorking = true;
-                slideShow();
-            }
-        } else {
-            console.error("Connection Error Occured at Teaser notice. Trying again");
-        }
-    });
-
     function playPauseEvent() {
-        if (playNoticeButton.on) {
+        if (playNoticeButton.selected) {
             noticeChange = false;
         } else {
             noticeChange = true;
         }
     }
 
-    onMount(async () => {
-        await import("@material/mwc-icon")
-        await import("@material/mwc-icon-button-toggle");
-    });
 </script>
 
 {#key teaserNotice}
 <section id="teaserArea" style:background={teaserBackground}>
     <section id="Notice">
-        <p class="teaserTitle">{teaserTitle}</p>
-        <p class="teaserText normalBannerText">{teaserText}</p>
+        <p class="teaserTitle">{teaserData.intro.title}</p>
+        <p class="teaserText normalBannerText">{teaserData.intro.desc}</p>
         {#if maxNoticeCount > 0}
-        <p class="smallBannerText teaserText" in:fade><mwc-icon>announcement</mwc-icon>{teaserNotice}</p>
         <p class="smallBannerText teaserText" in:fade>
-            <a class="teaserLink" href="{teaserLink}">{teaserLinkText}</a>
+            <md-icon>tips_and_updates</md-icon>
+            {teaserNotice}
+            {#if teaserLink}
+                <a class="teaserLink" href={teaserLink ? teaserLink : "#"} target="_blank">{teaserLinkText ? teaserLinkText : "이동하기"} &gt;</a>
+            {/if}
         </p>
         {/if}
     </section>
@@ -95,7 +85,10 @@
         <p id="maxCount">
             {#if maxNoticeCount < 10}0{/if}{maxNoticeCount}
         </p>
-        <mwc-icon-button-toggle id="playNoticeButton" onIcon="play_arrow" offIcon="pause" aria-label="teaser play or pause button" on:icon-button-toggle-change="{playPauseEvent}"></mwc-icon-button-toggle>
+        <md-standard-icon-button id="playNoticeButton" toggle aria-label="안내사항 일시정지 혹은 재생하기" on:click={playPauseEvent} on:keypress={playPauseEvent}>
+            <md-icon>pause</md-icon>
+            <md-icon slot="selectedIcon">play_arrow</md-icon>
+        </md-standard-icon-button>
     </section>
     {/if}
 </section>
@@ -130,6 +123,7 @@
         text-decoration: none;
         margin: 0 5px 0 5px;
         border-bottom: solid 2px white;
+        display: inline-block;
     }
     .teaserLink:visited {
         text-decoration: none;
@@ -162,9 +156,18 @@
         border-right: 3px solid white;
     }
 
-    #teaserCount mwc-icon-button-toggle {
+    #teaserCount md-standard-icon-button {
         margin-top: -1rem;
-        margin-right: -1rem;
+        margin-right: -0.5rem;
+        --md-icon-button-unselected-icon-color: #ffffff;
+        --md-icon-button-unselected-focus-icon-color: #ffffff;
+        --md-icon-button-selected-focus-icon-color: #ffffff;
+    }
+
+    @media screen and (max-width: 231px) {
+        #teaserCount {
+            display: none;
+        }
     }
 
     /* navigation bar CSS */
@@ -172,8 +175,8 @@
         font-size: 1.5rem;
     }
 
-    mwc-icon {
+    p md-icon {
         margin-right: 0.5rem;
-        --mdc-icon-size: 16px;
+        --md-icon-size: 16px;
     }
 </style>

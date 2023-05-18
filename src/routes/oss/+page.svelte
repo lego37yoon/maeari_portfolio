@@ -1,9 +1,8 @@
 <script>
-    import { onMount } from 'svelte';
-    
-    onMount(async () => {
-        await import("@material/mwc-list");
-    });    
+    import '@material/web/list/list-item-link.js';
+    import '@material/web/list/list-item.js';
+    import '@material/web/divider/divider.js';
+    import '@material/web/list/list.js';
 </script>
 
 <svelte:head>
@@ -17,38 +16,33 @@
         <p class="teaserText">Please contact to<a href="mailto:lego37yoon@outlook.com" class="teaserLink">this email</a>if you have any question.</p>
     </section>
     <section id="ossList">
-        <mwc-list multi id="listContainer">
+        <md-list id="listContainer">
             <a href="https://github.com/sveltejs/svelte/blob/master/LICENSE.md" target="_blank">
-                <mwc-list-item twoline>
-                    <span>Svelte</span>
-                    <span slot="secondary">MIT License</span>
-                </mwc-list-item>
+                <md-list-item headline="Svelte" supportingText="MIT License">
+                    <md-icon slot="start">square_foot</md-icon>
+                </md-list-item>
             </a>
             <a href="https://github.com/sveltejs/kit/blob/master/LICENSE" target="_blank">
-                <mwc-list-item twoline>
-                    <span>SvelteKit</span>
-                    <span slot="secondary">MIT License</span>
-                </mwc-list-item>
+                <md-list-item headline="SvelteKit" supportingText="MIT License">
+                    <md-icon slot="start">construction</md-icon>
+                </md-list-item>
             </a>
-            <a href="https://github.com/material-components/material-web/blob/mwc/LICENSE" target="_blank">
-                <mwc-list-item twoline>
-                    <span>Material Web Components</span>
-                    <span slot="secondary">Apache License 2.0</span>
-                </mwc-list-item>
+            <a href="https://github.com/material-components/material-web/LICENSE" target="_blank">
+                <md-list-item headline="Material Web Components" supportingtext="Apache License 2.0">
+                    <md-icon slot="start">brush</md-icon>
+                </md-list-item>
             </a>
-            <a href="https://github.com/material-icons/material-icons/blob/master/LICENSE" target="_blank">
-                <mwc-list-item twoline>
-                    <span>Material Icons</span>
-                    <span slot="secondary">Apache License 2.0</span>
-                </mwc-list-item>
+            <a href="https://developers.google.com/fonts/docs/material_symbols" target="_blank">
+                <md-list-item headline="Material Symbols" supportingtext="Apache License 2.0">
+                    <md-icon slot="start">app_badging</md-icon>
+                </md-list-item>
             </a>
-            <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL" target="_blank">
-                <mwc-list-item twoline>
-                    <span>SUIT</span>
-                    <span slot="secondary">SIL Open Font License</span>
-                </mwc-list-item>
+            <a href="https://sunn.us/suit/" target="_blank">
+                <md-list-item headline="SUIT" supportingtext="SIL Open Font License">
+                    <md-icon slot="start">text_fields</md-icon>
+                </md-list-item>
             </a>
-        </mwc-list>
+        </md-list>
     </section>
 </main>
 
@@ -91,15 +85,26 @@
         font-size: 1.5rem;
     }
 
-    mwc-list-item {
-        border-radius: 10px;
+    #ossList {
+        margin-top: 1em;
     }
 
-    mwc-list a {
+    md-list {
+        border-radius: 8px;
+        border: 1px solid var(--md-sys-color-outline);
+        overflow: hidden;
+    }
+
+    md-list a {
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    md-list a:visited {
         text-decoration: none;
     }
 
-    mwc-list a:visited {
-        text-decoration: none;
+    md-icon {
+        margin-inline-start: 1em;
     }
 </style>
