@@ -47,7 +47,7 @@
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-            <li>
+            <li id="displayToggle">
                 <md-standard-icon-button id="darkModeButton" toggle aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
                     <md-icon>dark_mode</md-icon>
                     <md-icon slot="selectedIcon">light_mode</md-icon>
@@ -115,6 +115,16 @@
     .rightMenu a {
         color: cadetblue;
         text-decoration: none;
+    }
+
+    @media screen and (max-width: 355px) {
+        .rightMenu li {
+            display: none;
+        }
+
+        #displayToggle {
+            display: inline;
+        }
     }
 
     .rightMenu md-standard-icon-button {

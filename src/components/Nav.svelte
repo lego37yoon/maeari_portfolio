@@ -45,6 +45,20 @@
             <md-icon slot="icon">mail</md-icon>
         </md-outlined-segmented-button>
     </md-outlined-segmented-button-set>
+    <ul class="smallMenu">
+        <li>
+            <a href="/"><md-icon>home</md-icon>홈</a>
+        </li>
+        <li>
+            <a href="/news"><md-icon>newspaper</md-icon>소식</a>
+        </li>
+        <li>
+            <a href="/resume"><md-icon>receipt_long</md-icon>CV</a>
+        </li>
+        <li>
+            <a href="/contacts"><md-icon>mail</md-icon>연락처</a>
+        </li>
+    </ul>
 </nav>
 
 <style>
@@ -58,4 +72,42 @@
         --md-segmented-button-with-icon-icon-size: 18px;
     }
 
+    md-outlined-segmented-button md-icon {
+        vertical-align: top;
+    }
+
+    .smallMenu {
+        display: none;
+        list-style-type: none;
+        background: #d7e2ff;
+        border-radius: 24px;
+        padding: 1em;
+    }
+
+    .smallMenu a {
+        text-decoration: none;
+        display: block;
+    }
+
+    .smallMenu a md-icon {
+        --md-icon-size: 20px;
+        vertical-align: top;
+        margin-inline-end: 5px;
+    }
+
+    .smallMenu li:hover {
+        background: #edf3f7;
+        opacity: 0.8;
+        border-radius: 24px;
+    }
+
+    @media screen and (max-width: 331px) {
+        md-outlined-segmented-button-set{
+            display: none;
+        }
+
+        .smallMenu {
+            display: block;
+        }
+    }
 </style>
