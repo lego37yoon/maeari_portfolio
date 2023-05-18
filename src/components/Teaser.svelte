@@ -164,6 +164,12 @@
         --md-icon-button-selected-focus-icon-color: #ffffff;
     }
 
+    @media screen and (max-width: 231px) {
+        #teaserCount {
+            display: none;
+        }
+    }
+
     /* navigation bar CSS */
     section {
         font-size: 1.5rem;

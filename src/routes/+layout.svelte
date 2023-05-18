@@ -122,8 +122,22 @@
             display: none;
         }
 
+        .rightMenu { 
+            padding: 1.5rem 0.5rem 0.5rem 0;
+        }
+
+        .title {
+            margin: 1.5rem 0 0.5rem 1rem;
+        }
+
         #displayToggle {
             display: inline;
+        }
+    }
+
+    @media screen and (max-width: 190px) {
+        .rightMenu {
+            display: none;
         }
     }
 

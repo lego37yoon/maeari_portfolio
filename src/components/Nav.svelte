@@ -79,9 +79,9 @@
     .smallMenu {
         display: none;
         list-style-type: none;
-        background: #d7e2ff;
+        background: var(--md-sys-color-secondary-container);
         border-radius: 24px;
-        padding: 1em;
+        padding: 1em 0.5em;
     }
 
     .smallMenu a {
@@ -95,8 +95,13 @@
         margin-inline-end: 5px;
     }
 
+    .smallMenu li {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
     .smallMenu li:hover {
-        background: #edf3f7;
+        background: var(--md-sys-color-background);
         opacity: 0.8;
         border-radius: 24px;
     }
