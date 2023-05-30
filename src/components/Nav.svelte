@@ -10,8 +10,6 @@
     $: if (sets) {
         switch(selectedId) {
             case "news":
-                console.log(sets.selectedItem);
-                console.log(sets.previousSelectedItem);
                 sets.selected = 1;
                 break;
             case "resume":
@@ -26,30 +24,29 @@
                 break;
         }
     }
-    
+
     function movePage() {
         goto(sets.focusedItem.getAttribute("href"), {
-            keepFocus: true,
             noScroll: true
         });
     }
 </script>
 
 <nav id="submenu">
-    <md-tabs variant="horizontal" bind:this={sets} on:click={movePage}>
-        <md-tab href="/">
+    <md-tabs variant="primary" bind:this={sets} on:click={movePage}>
+        <md-tab variant="primary" href="/">
             <md-icon slot="icon">home</md-icon>
             홈
         </md-tab>
-        <md-tab href="/news">
+        <md-tab variant="primary" href="/news">
             <md-icon slot="icon">newspaper</md-icon>
             소식
         </md-tab>
-        <md-tab href="/resume">
+        <md-tab variant="primary" href="/resume">
             <md-icon slot="icon">receipt_long</md-icon>
             포트폴리오
         </md-tab>
-        <md-tab href="/contacts">
+        <md-tab variant="primary" href="/contacts">
             <md-icon slot="icon">mail</md-icon>
             연락하기
         </md-tab>
