@@ -3,6 +3,7 @@
     import "@material/web/icon/icon.js";
     import "@material/web/iconbutton/standard-icon-button.js";
     import { onMount } from 'svelte';
+    import { fly } from 'svelte/transition';
     import { page } from '$app/stores';
     import Nav from "../components/Nav.svelte";
     import Teaser from "../components/Teaser.svelte";
@@ -61,7 +62,12 @@
 <Teaser teaserData={data}></Teaser>
 <Nav selectedId={currentPage} />
 {/if}
-<slot></slot>
+
+{#key currentPage}
+<div in:fly="{{ x: 200, duration: 1000 }}">
+    <slot></slot>
+</div>
+{/key}
 
 <footer>
     <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="./oss">OSS Notice</a></p>
