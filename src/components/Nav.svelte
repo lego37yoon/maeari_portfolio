@@ -6,7 +6,7 @@
 
     export let selectedId = "home";
     let sets = undefined;
-
+    
     $: if (sets) {
         switch(selectedId) {
             case "news":
@@ -20,13 +20,15 @@
                 break;
             default:
                 sets.selected = 0;
-                sets.selectedItem.selected = true;
+                if (sets.selectedItem)
+                    sets.selectedItem.selected = true;
                 break;
         }
     }
 
     function movePage() {
         goto(sets.focusedItem.getAttribute("href"), {
+            keepFocus: true,
             noScroll: true
         });
     }
