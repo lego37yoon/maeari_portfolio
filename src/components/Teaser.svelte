@@ -85,7 +85,7 @@
         <p id="maxCount">
             {#if maxNoticeCount < 10}0{/if}{maxNoticeCount}
         </p>
-        <md-standard-icon-button id="playNoticeButton" toggle aria-label="안내사항 일시정지 혹은 재생하기" on:click={playPauseEvent} on:keypress={playPauseEvent}>
+        <md-standard-icon-button id="playNoticeButton" toggle aria-label="pause or play announcements" on:click={playPauseEvent} on:keypress={playPauseEvent}>
             <md-icon>pause</md-icon>
             <md-icon slot="selectedIcon">play_arrow</md-icon>
         </md-standard-icon-button>
