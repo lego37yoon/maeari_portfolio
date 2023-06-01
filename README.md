@@ -1,38 +1,30 @@
-# create-svelte
+# maeari for portfolio
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+> In shorthand, mfp (maeari-for-portfolio)
 
-## Creating a project
+maeari for portfolio is a personal website with Firestore database and written with SvelteKit.
 
-If you're seeing this, you've probably already done this step. Congrats!
+Supports TISTORY API to show post list of own blog.
 
-```bash
-# create a new project in the current directory
-npm init svelte
+## How to Customize
 
-# create a new project in my-app
-npm init svelte my-app
-```
+1. Clone repository
+2. using Yarn latest stable before start: `yarn set version berry`
+3. install dependencies: `yarn install`
+4. Start development server: `yarn run dev`
+5. Use your favorite editor to modfiy pages under `src/routes/`
 
-## Developing
+> Please modify `.env` file before run development server to use your own database. there will be a guide who wants to build own data to database in GitHub Wiki.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Open Source Software
 
-```bash
-npm run dev
+- [SDK] Firebase SDK
+- [Framework] SvelteKit
+- [Preprocessor] SCSS
+- [Icon Font] Material Symbols
+- [UI Components] @material/web
+- [Text Font] SUIT
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## FAQ
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- A11y warning in `Nav.svelte` is actually not an issue. This is because Svelte indicates `md-tab` is not an interactive component, but `md-tab` is a kind of `button`. 
