@@ -5,11 +5,35 @@
     import '@material/web/divider/divider.js';
     import '@material/web/list/list.js';
     import { darkMode } from "../../components/darkMode";
+    import { onMount } from "svelte";
 
     /** @type {import('./$types').PageData} */
     export let data;
 
-    const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE; 
+    const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE;
+    let notOverflowedList;
+    let _postItems = [];
+    $: postItems = _postItems.filter(Boolean);
+    $: if (postItems.length > 0) {
+        for(let i = 0; i < postItems.length; i++) {
+            console.log(postItems[i].shadowRoot.adoptedStyleSheets);
+            postItems[i].shadowRoot.adoptedStyleSheets = 
+                [...postItems[i].shadowRoot.adoptedStyleSheets, notOverflowedList ];
+        }
+    }
+
+    onMount(async () => {
+        notOverflowedList = new CSSStyleSheet;
+        notOverflowedList.replaceSync(`
+            .label-text {
+                display: block;
+            }
+
+            .body {
+                min-width: 0;
+            }
+        `);
+    });
 </script>
 
 <svelte:head>
@@ -21,10 +45,10 @@
         <h1>블로그에 새로 작성한 글을 만나보세요</h1>
         <div id="postDecorator">
             <md-list id="postList">
-                {#each data.tistory.item.posts as post}
+                {#each data.tistory.item.posts as post, index}
                 {#if post.visibility === "20"}
                 <a href={post.postUrl} target="_blank">
-                    <md-list-item headline={post.title} supportingText={post.date}>
+                    <md-list-item bind:this={_postItems[index]} headline={post.title} supportingText={post.date}>
                         <md-icon slot="start">{post.categoryId === "0" ? "announcement" : "post"}</md-icon>
                     </md-list-item>
                 </a>
@@ -74,6 +98,12 @@
 
     md-list a {
         text-decoration: none;
+    }
+
+    md-list-item {
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     md-list-item md-icon {
