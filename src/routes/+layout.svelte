@@ -7,9 +7,11 @@
     import { page } from '$app/stores';
     import Nav from "../components/Nav.svelte";
     import Teaser from "../components/Teaser.svelte";
+    import { darkMode } from "../components/darkMode"; 
 
     /** @type {import('./$types').LayoutData} */
     export let data;
+    
 
     const currentYear = new Date().getFullYear();
     let currentPage;
@@ -18,8 +20,10 @@
     function darkToggleEvent() {
         if (darkModeButton.selected) {
             document.body.classList.add("dark");
+            darkMode.set(true);
         } else {
             document.body.classList.remove("dark");
+            darkMode.set(false);
         }
     }
     
@@ -30,13 +34,15 @@
         }
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            let colorSet = event.matches ? "dark":"light";
-            if (colorSet == "dark") {
+            const colorSet = event.matches ? "dark":"light";
+            if (colorSet === "dark") {
                 darkModeButton.setAttribute("selected", "");
                 document.body.classList.add("dark");
+                darkMode.set(true);
             } else {
                 darkModeButton.removeAttribute("selected");
                 document.body.classList.remove("dark");
+                darkMode.set(false);
             }
         });
     });
