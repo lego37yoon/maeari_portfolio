@@ -1,5 +1,15 @@
 <script>
-    
+    import "@material/web/icon/icon.js";
+    import '@material/web/list/list-item-link.js';
+    import '@material/web/list/list-item.js';
+    import '@material/web/divider/divider.js';
+    import '@material/web/list/list.js';
+    import { darkMode } from "../../components/darkMode";
+
+    /** @type {import('./$types').PageData} */
+    export let data;
+
+    const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE; 
 </script>
 
 <svelte:head>
@@ -7,12 +17,82 @@
 </svelte:head>
 
 <main>
+    <section id="blog">
+        <h1>블로그에 새로 작성한 글을 만나보세요</h1>
+        <div id="postDecorator">
+            <md-list id="postList">
+                {#each data.tistory.item.posts as post}
+                {#if post.visibility === "20"}
+                <a href={post.postUrl} target="_blank">
+                    <md-list-item headline={post.title} supportingText={post.date}>
+                        <md-icon slot="start">{post.categoryId === "0" ? "announcement" : "post"}</md-icon>
+                    </md-list-item>
+                </a>
+                {/if}
+                {/each}
+            </md-list>
+        </div>
+        <a 
+            href={data.tistory.item.secondaryUrl === "" ? data.tistory.item.url : `https://${data.tistory.item.secondaryUrl}`}
+            class="more"
+            target="_blank">
+            <md-icon>link</md-icon>
+            더보기
+        </a>
+    </section>
     
+    <section id="twitter">
+        <h1>트위터에서는 이런 소식을 안내하고 있어요</h1>
+        {#key $darkMode}
+        <section id="twitterSlot" >
+            <a class="twitter-timeline" data-width="500" data-height="500" data-lang="ko" data-dnt="true" 
+                data-theme={$darkMode ? "dark" : "light"}
+                href="https://twitter.com/{twitterHandle}?ref_src=twsrc%5Etfw">
+                <md-icon>link</md-icon>
+                @{twitterHandle} 계정 바로가기
+            </a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </section>
+        {/key}
+    </section>
 </main>
 
 <style>
-   
     main {
         padding: 0 1rem 0 1rem;
     }
+
+    #postDecorator {
+        margin-bottom: 1em;
+    }
+
+    md-list {
+        border-radius: 8px;
+        border: 1px solid var(--md-sys-color-outline);
+        overflow: hidden;
+    }
+
+    md-list a {
+        text-decoration: none;
+    }
+
+    md-list-item md-icon {
+        margin-inline-start: 1em;
+    }
+
+    .twitter-timeline, .more {
+        background: var(--md-sys-color-surface, #edf3f7);
+        border: 1px solid var(--md-sys-color-surface, grey);
+        border-radius: 24px;
+
+        padding: 1em;
+
+        text-decoration: none;
+    }
+
+    .twitter-timeline md-icon, .more md-icon {
+        vertical-align: sub;
+        margin-inline-end: 0.2em;
+    }
+
 </style>

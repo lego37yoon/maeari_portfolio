@@ -7,3 +7,4 @@ past
 .env
 .env.*
 !.env.example
+.yarn

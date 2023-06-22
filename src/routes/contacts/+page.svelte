@@ -189,7 +189,8 @@
         font-size: 1.2em;
         text-align: center;
         display: block;
-        word-break: break-all;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
     }
 
     .account md-icon {

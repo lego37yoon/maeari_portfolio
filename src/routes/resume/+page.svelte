@@ -7,7 +7,7 @@
 </svelte:head>
 
 <main>
-    
+    <p>열심히 만들고 있어요!</p>
 </main>
 
 <style>

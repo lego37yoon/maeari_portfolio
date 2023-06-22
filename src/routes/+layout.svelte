@@ -3,12 +3,15 @@
     import "@material/web/icon/icon.js";
     import "@material/web/iconbutton/standard-icon-button.js";
     import { onMount } from 'svelte';
+    import { fly } from 'svelte/transition';
     import { page } from '$app/stores';
     import Nav from "../components/Nav.svelte";
     import Teaser from "../components/Teaser.svelte";
+    import { darkMode } from "../components/darkMode"; 
 
     /** @type {import('./$types').LayoutData} */
     export let data;
+    
 
     const currentYear = new Date().getFullYear();
     let currentPage;
@@ -17,8 +20,10 @@
     function darkToggleEvent() {
         if (darkModeButton.selected) {
             document.body.classList.add("dark");
+            darkMode.set(true);
         } else {
             document.body.classList.remove("dark");
+            darkMode.set(false);
         }
     }
     
@@ -29,13 +34,15 @@
         }
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            let colorSet = event.matches ? "dark":"light";
-            if (colorSet == "dark") {
+            const colorSet = event.matches ? "dark":"light";
+            if (colorSet === "dark") {
                 darkModeButton.setAttribute("selected", "");
                 document.body.classList.add("dark");
+                darkMode.set(true);
             } else {
                 darkModeButton.removeAttribute("selected");
                 document.body.classList.remove("dark");
+                darkMode.set(false);
             }
         });
     });
@@ -61,7 +68,12 @@
 <Teaser teaserData={data}></Teaser>
 <Nav selectedId={currentPage} />
 {/if}
-<slot></slot>
+
+{#key currentPage}
+<div in:fly="{{ x: 200, duration: 1000 }}">
+    <slot></slot>
+</div>
+{/key}
 
 <footer>
     <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="./oss">OSS Notice</a></p>
