@@ -1,6 +1,13 @@
 <script>
     import "@material/web/icon/icon.js";
+    import '@material/web/list/list-item-link.js';
+    import '@material/web/list/list-item.js';
+    import '@material/web/divider/divider.js';
+    import '@material/web/list/list.js';
     import { darkMode } from "../../components/darkMode";
+
+    /** @type {import('./$types').PageData} */
+    export let data;
 
     const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE; 
 </script>
@@ -12,7 +19,26 @@
 <main>
     <section id="blog">
         <h1>블로그에 새로 작성한 글을 만나보세요</h1>
-        <p>준비 중이에요</p>
+        <div id="postDecorator">
+            <md-list id="postList">
+                {#each data.tistory.item.posts as post}
+                {#if post.visibility === "20"}
+                <a href={post.postUrl} target="_blank">
+                    <md-list-item headline={post.title} supportingText={post.date}>
+                        <md-icon slot="start">{post.categoryId === "0" ? "announcement" : "post"}</md-icon>
+                    </md-list-item>
+                </a>
+                {/if}
+                {/each}
+            </md-list>
+        </div>
+        <a 
+            href={data.tistory.item.secondaryUrl === "" ? data.tistory.item.url : `https://${data.tistory.item.secondaryUrl}`}
+            class="more"
+            target="_blank">
+            <md-icon>link</md-icon>
+            더보기
+        </a>
     </section>
     
     <section id="twitter">
@@ -36,7 +62,25 @@
         padding: 0 1rem 0 1rem;
     }
 
-    .twitter-timeline {
+    #postDecorator {
+        margin-bottom: 1em;
+    }
+
+    md-list {
+        border-radius: 8px;
+        border: 1px solid var(--md-sys-color-outline);
+        overflow: hidden;
+    }
+
+    md-list a {
+        text-decoration: none;
+    }
+
+    md-list-item md-icon {
+        margin-inline-start: 1em;
+    }
+
+    .twitter-timeline, .more {
         background: var(--md-sys-color-surface, #edf3f7);
         border: 1px solid var(--md-sys-color-surface, grey);
         border-radius: 24px;
@@ -46,7 +90,7 @@
         text-decoration: none;
     }
 
-    .twitter-timeline md-icon {
+    .twitter-timeline md-icon, .more md-icon {
         vertical-align: sub;
         margin-inline-end: 0.2em;
     }
