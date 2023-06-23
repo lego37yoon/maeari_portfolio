@@ -32,7 +32,6 @@ export async function GET({ url }) {
 
     switch (type) {
         case "contact":
-        case "education":
         case "banner":
             const objectDataList = {};
             originData.forEach((doc) => {
@@ -43,6 +42,7 @@ export async function GET({ url }) {
         case "project":
         case "certification":
         case "contribution":
+        case "education":
         case "activity":
             const arrayDataList = [];
             originData.forEach((doc) => {
@@ -52,21 +52,25 @@ export async function GET({ url }) {
                 })
             });
 
-            let date = null;
             arrayDataList.forEach((data) => {
-                if (data.data["start-year"]) {
-                    date = data.data["start-year"].toDate();
-                    data.data["start-year"] = `${date.getFullYear()}.${date.getMonth() + 1}`;
-                }
                 
-                if (data.data["end-year"]) {
-                    date = data.data["end-year"].toDate();
-                    data.data["end-year"] = `${date.getFullYear()}.${date.getMonth() + 1}`;
-                }
+                data.data["start-year"] ? 
+                    data.data["start-year"] = timestampToDate(data, "start-year") : "";
+                
+                data.data["end-year"] ?
+                    data.data["end-year"] = timestampToDate(data, "end-year") : "";
+                
+                data.data["date"] ?
+                    data.data["date"] = timestampToDate(data, "date") : "";
             })
 
             return new json(arrayDataList);
         default:
             throw error(400, "데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.");
     }
+}
+
+function timestampToDate(db, data) {
+    const date = db.data[data].toDate();
+    return `${date.getFullYear()}.${date.getMonth() + 1}`;
 }
