@@ -33,10 +33,11 @@
             {#each data.contribution as project}
             <Card icon={project.data.icon}
                 href={project.data.link} title={project.data.title} 
-                desc={project.data["end-year"] !== undefined ?
+                desc={[(project.data["end-year"] !== undefined ?
                     `${project.data["start-year"]} ~ ${project.data["end-year"]}` :
-                    `${project.data["start-year"]} ~ 현재`}
-                type={project.data.role} />
+                    `${project.data["start-year"]} ~ 현재`), project.data.desc]}
+                type={project.data.role}
+            />
             {/each}
         </div>
     </section>
@@ -47,8 +48,11 @@
             {#each data.activity as act}
             <Card icon={act.data.icon}
                 href={act.data.link} title={act.data.title} 
-                desc={act.data.team ? `${act.data.members}명 단체 참여` : "개인 참여"} 
-                type={act.data.prize} />
+                desc={[act.data.team ? `${act.data.members}명 단체 참여` : "개인 참여",
+                    `주최 | ${act.data.org[0]}`
+                ]} 
+                type={act.data.prize}
+            />
             {/each}
         </div>
     </section>
