@@ -18,32 +18,40 @@ const store = getFirestore(fireApp);
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
     const type = url.searchParams.get("type");
-    
+    let currentCollection = null
+
+    switch(type) {
+        case "banner":
+            currentCollection = "teaser";
+            break;
+        default:
+            currentCollection = type;
+    }
+
+    const originData = await getDocs(collection(store, currentCollection));
+
     switch (type) {
-        case "banner": {
-            const banner = await getDocs(collection(store, "teaser"));
-            const bannerData = {};
-            banner.forEach((doc) => {
-                bannerData[doc.id] = doc.data();
+        case "contact":
+        case "banner":
+            const objectDataList = {};
+            originData.forEach((doc) => {
+                objectDataList[doc.id] = doc.data();
             });
 
-            return new json(bannerData);
-        }
-        case "projects": {
-            break;
-        }
-        case "resume": {
-            break;
-        }
-        case "contacts": {
-            const contacts = await getDocs(collection(store, "contact"));
-            const contactData = {};
-            contacts.forEach((doc) => {
-                contactData[doc.id] = doc.data();
+            return new json(objectDataList);
+        case "project":
+        case "certification":
+        case "contribution":
+        case "activity":
+            const arrayDataList = [];
+            originData.forEach((doc) => {
+                arrayDataList.push({
+                    id: doc.id,
+                    data: doc.data()
+                })
             });
 
-            return new json(contactData);
-        }
+            return new json(arrayDataList);
         default:
             throw error(400, "데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.");
     }
