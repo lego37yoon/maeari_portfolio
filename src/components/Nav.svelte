@@ -9,10 +9,10 @@
     
     $: if (sets) {
         switch(selectedId) {
-            case "news":
+            case "edu":
                 sets.selected = 1;
                 break;
-            case "resume":
+            case "news":
                 sets.selected = 2;
                 break;
             case "contacts":
@@ -40,13 +40,13 @@
             <md-icon slot="icon">home</md-icon>
             홈
         </md-tab>
+        <md-tab variant="primary" href="/edu">
+            <md-icon slot="icon">history_edu</md-icon>
+            학업
+        </md-tab>
         <md-tab variant="primary" href="/news">
             <md-icon slot="icon">newspaper</md-icon>
             소식
-        </md-tab>
-        <md-tab variant="primary" href="/resume">
-            <md-icon slot="icon">receipt_long</md-icon>
-            포트폴리오
         </md-tab>
         <md-tab variant="primary" href="/contacts">
             <md-icon slot="icon">mail</md-icon>

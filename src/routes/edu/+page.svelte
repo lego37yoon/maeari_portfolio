@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-    <title>CV | 종이상자 공간</title>
+    <title>학업 | 종이상자 공간</title>
 </svelte:head>
 
 <main>

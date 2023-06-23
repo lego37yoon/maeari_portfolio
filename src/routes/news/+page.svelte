@@ -56,10 +56,7 @@
                 {/each}
             </md-list>
         </div>
-        <a 
-            href={data.url}
-            class="more"
-            target="_blank">
+        <a href={data.url} class="more" target="_blank">
             <md-icon>link</md-icon>
             더보기
         </a>
@@ -69,7 +66,7 @@
         <h1>트위터에서는 이런 소식을 안내하고 있어요</h1>
         {#key $darkMode}
         <section id="twitterSlot" >
-            <a class="twitter-timeline" data-width="500" data-height="500" data-lang="ko" data-dnt="true" 
+            <a class="twitter-timeline more" data-width="500" data-height="500" data-lang="ko" data-dnt="true" 
                 data-theme={$darkMode ? "dark" : "light"}
                 href="https://twitter.com/{twitterHandle}?ref_src=twsrc%5Etfw">
                 <md-icon>link</md-icon>
@@ -110,7 +107,7 @@
         margin-inline-start: 1em;
     }
 
-    .twitter-timeline, .more {
+    .more {
         background: var(--md-sys-color-surface, #edf3f7);
         border: 1px solid var(--md-sys-color-surface, grey);
         border-radius: 24px;
@@ -120,7 +117,7 @@
         text-decoration: none;
     }
 
-    .twitter-timeline md-icon, .more md-icon {
+    .more md-icon {
         vertical-align: sub;
         margin-inline-end: 0.2em;
     }
