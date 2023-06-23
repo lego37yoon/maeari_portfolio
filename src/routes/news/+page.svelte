@@ -16,7 +16,6 @@
     $: postItems = _postItems.filter(Boolean);
     $: if (postItems.length > 0) {
         for(let i = 0; i < postItems.length; i++) {
-            console.log(postItems[i].shadowRoot.adoptedStyleSheets);
             postItems[i].shadowRoot.adoptedStyleSheets = 
                 [...postItems[i].shadowRoot.adoptedStyleSheets, notOverflowedList ];
         }
