@@ -2,9 +2,10 @@
     import "./index.scss";
     import "@material/web/icon/icon.js";
     import "@material/web/iconbutton/standard-icon-button.js";
+    import '@material/web/circularprogress/circular-progress.js';
     import { onMount } from 'svelte';
     import { fly } from 'svelte/transition';
-    import { page } from '$app/stores';
+    import { page, navigating } from '$app/stores';
     import Nav from "../components/Nav.svelte";
     import Teaser from "../components/Teaser.svelte";
     import { darkMode } from "../components/darkMode"; 
@@ -68,6 +69,13 @@
 {#if currentPage !== "oss"}
 <Teaser teaserData={data}></Teaser>
 <Nav selectedId={currentPage} />
+{/if}
+
+{#if $navigating}
+    <dialog open>
+        <md-circular-progress indeterminate></md-circular-progress>
+        <p>데이터를 읽어오는 중입니다</p>
+    </dialog>
 {/if}
 
 {#key currentPage}
@@ -161,6 +169,15 @@
         --md-icon-button-unselected-focus-icon-color: #5f9ea0;
         --md-icon-button-selected-focus-icon-color: #5f9ea0;
         --md-icon-button-selected-icon-color: #5f9ea0;
+    }
+
+    dialog {
+        z-index: 999;
+        outline: none;
+        border: 1px var(--md-sys-color-surface-variant) solid;
+        background: var(--md-sys-color-surface-variant);
+        border-radius: 24px;
+        text-align: center;
     }
 
     /* 푸터 부분 CSS */
