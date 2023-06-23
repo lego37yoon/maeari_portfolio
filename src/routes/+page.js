@@ -1,8 +1,8 @@
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
-    const projectData = await fetch("/api/data?type=projects");
+    const projectData = await fetch("/api/data?type=project");
     const contributionData = await fetch("/api/data?type=contribution");
-    const activityData = await fetch("/api/data?type=activities");
+    const activityData = await fetch("/api/data?type=activity");
 
     const combinedData = {
         project: await projectData.json(),

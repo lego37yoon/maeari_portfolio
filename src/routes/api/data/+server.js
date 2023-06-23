@@ -32,6 +32,7 @@ export async function GET({ url }) {
 
     switch (type) {
         case "contact":
+        case "education":
         case "banner":
             const objectDataList = {};
             originData.forEach((doc) => {
@@ -50,6 +51,19 @@ export async function GET({ url }) {
                     data: doc.data()
                 })
             });
+
+            let date = null;
+            arrayDataList.forEach((data) => {
+                if (data.data["start-year"]) {
+                    date = data.data["start-year"].toDate();
+                    data.data["start-year"] = `${date.getFullYear()}.${date.getMonth() + 1}`;
+                }
+                
+                if (data.data["end-year"]) {
+                    date = data.data["end-year"].toDate();
+                    data.data["end-year"] = `${date.getFullYear()}.${date.getMonth() + 1}`;
+                }
+            })
 
             return new json(arrayDataList);
         default:
