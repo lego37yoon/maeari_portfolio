@@ -31,6 +31,7 @@
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             darkModeButton.setAttribute("selected", "");
             document.body.classList.add("dark");
+            darkMode.set(true);
         }
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
