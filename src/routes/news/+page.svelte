@@ -42,6 +42,7 @@
 <main>
     <section id="blog">
         <h1>블로그에 새로 작성한 글을 만나보세요</h1>
+        <p>기기 및 소프트웨어 리뷰, 개발 후기, 회고록 등을 게시하고 있어요.</p>
         <div id="postDecorator">
             <md-list id="postList">
                 {#each data.posts as post, index}
@@ -55,7 +56,7 @@
                 {/each}
             </md-list>
         </div>
-        <a href={data.url} class="more" target="_blank">
+        <a class="more" href={`https://${data.url}`} target="_blank">
             <md-icon>link</md-icon>
             더보기
         </a>
@@ -82,8 +83,12 @@
         padding: 0 1rem 0 1rem;
     }
 
+    h1 {
+        margin-bottom: 0;
+    }
+
     #postDecorator {
-        margin-bottom: 1em;
+        margin-bottom: 2em;
     }
 
     md-list {
@@ -106,6 +111,10 @@
         margin-inline-start: 1em;
     }
 
+    #twitterSlot {
+        margin-top: 2em;
+    }
+
     .more {
         background: var(--md-sys-color-surface, #edf3f7);
         border: 1px solid var(--md-sys-color-surface, grey);
@@ -117,7 +126,7 @@
     }
 
     .more md-icon {
-        vertical-align: sub;
+        vertical-align: middle;
         margin-inline-end: 0.2em;
     }
 
