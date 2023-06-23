@@ -7,7 +7,7 @@
 
 </script>
 
-<a class="card" href={href}>
+<a class="card" href={href} target="_blank">
     <md-icon>{icon}</md-icon>
     <span class="cardTitle">{title}</span>
     <span class="cardDesc">
@@ -48,7 +48,8 @@
     .cardDesc {
         margin-top: 0.5em;
         display: block;
-        color: cadetblue
+        color: cadetblue;
+        word-break: keep-all;
     }
 
     .cardType {
