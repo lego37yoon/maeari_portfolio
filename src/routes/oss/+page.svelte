@@ -27,9 +27,19 @@
                     <md-icon slot="start">construction</md-icon>
                 </md-list-item>
             </a>
+            <a href="https://github.com/firebase/firebase-js-sdk/blob/master/LICENSE" target="_blank">
+                <md-list-item headline="Firebase JavaScript SDK Version 9" supportingText="Apache License 2.0">
+                    <md-icon slot="start">cloud_upload</md-icon>
+                </md-list-item>
+            </a>
             <a href="https://github.com/material-components/material-web/LICENSE" target="_blank">
                 <md-list-item headline="Material Web Components" supportingtext="Apache License 2.0">
                     <md-icon slot="start">brush</md-icon>
+                </md-list-item>
+            </a>
+            <a href="https://github.com/sass/sass/blob/main/LICENSE" target="_blank">
+                <md-list-item headline="Sass" supportingtext="MIT License">
+                    <md-icon slot="start">css</md-icon>
                 </md-list-item>
             </a>
             <a href="https://developers.google.com/fonts/docs/material_symbols" target="_blank">

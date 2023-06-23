@@ -2,9 +2,10 @@
     import "./index.scss";
     import "@material/web/icon/icon.js";
     import "@material/web/iconbutton/standard-icon-button.js";
+    import '@material/web/circularprogress/circular-progress.js';
     import { onMount } from 'svelte';
     import { fly } from 'svelte/transition';
-    import { page } from '$app/stores';
+    import { page, navigating } from '$app/stores';
     import Nav from "../components/Nav.svelte";
     import Teaser from "../components/Teaser.svelte";
     import { darkMode } from "../components/darkMode"; 
@@ -31,6 +32,7 @@
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             darkModeButton.setAttribute("selected", "");
             document.body.classList.add("dark");
+            darkMode.set(true);
         }
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
@@ -67,6 +69,13 @@
 {#if currentPage !== "oss"}
 <Teaser teaserData={data}></Teaser>
 <Nav selectedId={currentPage} />
+{/if}
+
+{#if $navigating}
+    <dialog open>
+        <md-circular-progress indeterminate></md-circular-progress>
+        <p>데이터를 읽어오는 중입니다</p>
+    </dialog>
 {/if}
 
 {#key currentPage}
@@ -162,8 +171,21 @@
         --md-icon-button-selected-icon-color: #5f9ea0;
     }
 
+    dialog {
+        z-index: 999;
+        outline: none;
+        border: 1px var(--md-sys-color-surface-variant) solid;
+        background: var(--md-sys-color-surface-variant);
+        border-radius: 24px;
+        text-align: center;
+    }
+
     /* 푸터 부분 CSS */
     footer p {
         padding: 1rem 1rem 0.5rem 1rem;
+    }
+
+    footer a {
+        display: inline-block;
     }
 </style>
