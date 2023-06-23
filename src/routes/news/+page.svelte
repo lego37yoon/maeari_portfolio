@@ -45,7 +45,7 @@
         <h1>블로그에 새로 작성한 글을 만나보세요</h1>
         <div id="postDecorator">
             <md-list id="postList">
-                {#each data.tistory.item.posts as post, index}
+                {#each data.posts as post, index}
                 {#if post.visibility === "20"}
                 <a href={post.postUrl} target="_blank">
                     <md-list-item bind:this={_postItems[index]} headline={post.title} supportingText={post.date}>
@@ -57,7 +57,7 @@
             </md-list>
         </div>
         <a 
-            href={data.tistory.item.secondaryUrl === "" ? data.tistory.item.url : `https://${data.tistory.item.secondaryUrl}`}
+            href={data.url}
             class="more"
             target="_blank">
             <md-icon>link</md-icon>
