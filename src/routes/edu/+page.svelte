@@ -18,9 +18,11 @@
                 href={school.data.link}
                 title={school.data.school}
                 type={school.data.major}
-                desc={`${school.data["start-year"]} ~ ${school.data["end-year"]} |
-                    ${school.data.status} | ${school.data["school-type"]}
-                `}
+                desc={[
+                    `${school.data["start-year"]} ~ ${school.data["end-year"]} | ${school.data.status}`,
+                    school.data["school-type"],
+                    (school.data.score ? `GPA ${school.data.score}/${school.data["score-max"]}`: "")
+                ]}
             />
             {/each}
         </div>
@@ -34,7 +36,7 @@
                 href={cert.data.link}
                 title={cert.data.title}
                 type={cert.data.score}
-                desc={`${cert.data["date"]} | ${cert.data.org}`}
+                desc={[cert.data["date"], cert.data.org]}
             />
             {/each}
         </div>
