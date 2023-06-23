@@ -168,47 +168,6 @@
         gap: 1em;
     }
 
-    .account {
-        aspect-ratio: 1 / 1;
-        background: var(--md-sys-color-surface, #edf3f7);
-        border: 1px solid var(--md-sys-color-surface, grey);
-        border-radius: 24px;
-        padding: 1em;
-        text-decoration: none;
-        flex-basis: 12em;
-        width: 12em;
-    }
-
-    .accountTitle {
-        font-size: 1.2em;
-        text-align: center;
-        display: block;
-        overflow-x: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .account md-icon {
-        display: block;
-        text-align: center;
-        --md-icon-size: 48px;
-    }
-
-    .accountDesc {
-        margin-top: 0.5em;
-        display: block;
-        color: cadetblue
-    }
-
-    .accountType {
-        display: block;
-        text-align: center;
-        color: cornflowerblue;
-        margin: 0.5em;
-        background: var(--md-sys-color-background);
-        border-radius: 24px;
-        padding: 0.5em;
-    }
-
     @media screen and (max-width: 531px) {
         .list {
             justify-content: center;
