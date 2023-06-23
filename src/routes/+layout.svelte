@@ -167,4 +167,8 @@
     footer p {
         padding: 1rem 1rem 0.5rem 1rem;
     }
+
+    footer a {
+        display: inline-block;
+    }
 </style>
