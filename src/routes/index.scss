@@ -21,6 +21,10 @@ body {
     --mdc-ripple-focus-opacity: 0.00;
     --mdc-typography-font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
     --md-sys-color-background: #EDF3F7;
+
+    /* Custom Component Color Sets */
+    --mfp-card-type-color: #406CC5;
+    --mfp-primary-text-color: #29828C;
 }
 
 .svelte-main {
@@ -44,10 +48,10 @@ body {
     background: #404040;
     
     /* Material Color Sets */
-    --md-sys-color-primary: #4cd9de;
+    --md-sys-color-primary: #6FA3A8;
     --md-sys-color-primary-container: #004f51;
     --md-sys-color-on-primary: #003738;
-    --md-sys-color-on-primary-container: #6ff6fb;
+    --md-sys-color-on-primary-container: #6FA3A8;
     --md-sys-color-secondary: #acc7ff;
     --md-sys-color-secondary-container: #004492;
     --md-sys-color-on-secondary: #002f67;
@@ -58,33 +62,41 @@ body {
     --md-sys-color-surface-variant: #3f4949;
     --md-sys-color-on-surface: #e0e3e2;
     --md-sys-color-on-surface-variant: #bec8c8;
+
+    /* Custom Component Color Sets */
+    --mfp-card-type-color: #559BFC;
+    --mfp-primary-text-color: #6FA3A8;
 }
 
 a {
-    color: cornflowerblue;
+    color: #4072D1;
     word-break: keep-all;
+}
+
+.dark a {
+    color: #559BFC;
 }
 
 h1 {
     font-weight: 200;
-    color: cadetblue;
+    color: var(--mfp-primary-text-color);
     font-size: 1.8rem;
 }
 
 h2 {
     font-weight: 200;
-    color: cadetblue;
+    color: var(--mfp-primary-text-color);
     font-size: 1.6rem;
 }
 
 h3 {
     font-weight: 300;
-    color: cadetblue;
+    color: var(--mfp-primary-text-color);
     font-size: 1.4rem;
 }
 
 p {
     font-weight: 400;
-    color: cadetblue;
+    color: var(--mfp-primary-text-color);
     font-size: 1.0rem;
 }

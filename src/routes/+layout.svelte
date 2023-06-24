@@ -67,7 +67,7 @@
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
             <li id="displayToggle">
-                <md-standard-icon-button id="darkModeButton" toggle aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
+                <md-standard-icon-button id="darkModeButton" toggle role="switch" aria-checked={$darkMode} tabindex="0" aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
                     <md-icon>dark_mode</md-icon>
                     <md-icon slot="selectedIcon">light_mode</md-icon>
                 </md-standard-icon-button>
@@ -118,7 +118,7 @@
     header li {
         font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
         font-weight: lighter;
-        color: cadetblue;
+        color: var(--mfp-primary-text-color);
     }
 
     .title {
@@ -144,7 +144,7 @@
     }
 
     .rightMenu a {
-        color: cadetblue;
+        color: var(--mfp-primary-text-color);
         text-decoration: none;
     }
 

@@ -54,7 +54,7 @@
     .cardDesc {
         display: block;
         text-align: center;
-        color: cadetblue;
+        color: var(--mfp-primary-text-color);
         word-break: keep-all;
     }
 
@@ -66,7 +66,7 @@
     .cardType {
         display: block;
         text-align: center;
-        color: cornflowerblue;
+        color: var(--mfp-card-type-color, #406CC5);
         margin: 1em 0.5em 0.5em 0.5em; 
         background: var(--md-sys-color-background);
         border-radius: 24px;
