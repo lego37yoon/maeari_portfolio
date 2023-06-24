@@ -50,6 +50,16 @@
     });
 </script>
 
+<svelte:head>
+    <meta property="og:url" content="{$page.url.href}">
+    <meta property="og:title" content="홈 | 종이상자 공간">
+    <meta property="og:description" content="종이상자의 프로젝트, 소식, 소개 등 다양한 정보를 확인하실 수 있습니다.">
+
+    <meta property="twitter:domain" content={$page.url.origin}>
+    <meta property="twitter:url" content={$page.url.href}>
+    <meta name="twitter:title" content="종이상자의 프로젝트, 소식, 소개 등 다양한 정보를 확인하실 수 있습니다.">
+</svelte:head>
+
 <header>
     <ul>
         <li><a href="./" class="title">paperbox</a></li>
@@ -85,7 +95,7 @@
 {/key}
 
 <footer>
-    <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="./oss">OSS Notice</a></p>
+    <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="{$page.url.origin}/oss">OSS Notice</a></p>
 </footer>
 
 <style>
@@ -178,6 +188,7 @@
         background: var(--md-sys-color-surface-variant);
         border-radius: 24px;
         text-align: center;
+        position: fixed;
     }
 
     /* 푸터 부분 CSS */
