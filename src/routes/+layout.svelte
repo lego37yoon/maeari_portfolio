@@ -188,6 +188,7 @@
         background: var(--md-sys-color-surface-variant);
         border-radius: 24px;
         text-align: center;
+        top: 50%;
         position: fixed;
     }
 
