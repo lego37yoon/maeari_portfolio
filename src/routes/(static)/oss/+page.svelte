@@ -64,11 +64,11 @@
 
     /* teaser 공간 CSS */
     #teaserArea {
-        padding: 1rem;
+        margin: 0 1em;
+        padding: 1em;
         background: linear-gradient(45deg, cadetblue, cornflowerblue);
         word-break: keep-all;
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
+        border-radius: 10px;
     }
 
     .teaserText {

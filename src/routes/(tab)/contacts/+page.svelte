@@ -1,6 +1,6 @@
 <script>
     import "@material/web/icon/icon.js";
-    import Card from "../../components/Card.svelte";
+    import Card from "../../../components/Card.svelte";
 
     /** @type {import('./$types').PageData} */
     export let data;

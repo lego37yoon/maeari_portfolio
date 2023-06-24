@@ -4,7 +4,7 @@
     import '@material/web/list/list-item.js';
     import '@material/web/divider/divider.js';
     import '@material/web/list/list.js';
-    import { darkMode } from "../../components/darkMode";
+    import { darkMode } from "../../../components/darkMode";
     import { onMount } from "svelte";
 
     /** @type {import('./$types').PageData} */
