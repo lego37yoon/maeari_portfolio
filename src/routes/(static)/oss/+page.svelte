@@ -68,7 +68,7 @@
         padding: 1em;
         background: linear-gradient(45deg, cadetblue, cornflowerblue);
         word-break: keep-all;
-        border-radius: 10px;
+        border-radius: 8px;
     }
 
     .teaserText {
@@ -100,7 +100,7 @@
     }
 
     #ossList {
-        margin-top: 1em;
+        margin: 1em 1em 0 1em;
     }
 
     md-list {
