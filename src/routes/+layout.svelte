@@ -62,7 +62,7 @@
 
 <header>
     <ul>
-        <li><a href="./" class="title">paperbox</a></li>
+        <li><a href="{$page.url.origin}" class="title">paperbox</a></li>
         <ul class="rightMenu" role="navigation">
             <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
