@@ -7,24 +7,48 @@
     export let align = "";
 </script>
 
-<a class="card" href={href} target="_blank">
-    <md-icon>{icon}</md-icon>
-    <span class="cardTitle">{title}</span>
-    {#if type}
-    <span class="cardType">{type}</span>
-    {/if}
-    <span class="cardDesc {align}">
-        {#if typeof desc === "object"}
-            {#each desc as paragraph}
-                <p class="descInnerParagraph">{paragraph}</p>
-            {/each}
-        {:else}
-            {desc}
+{#if href}
+    <a class="card" href={href} target="_blank">
+        <md-icon>{icon}</md-icon>
+        <span class="cardTitle">{title}</span>
+        {#if type}
+        <span class="cardType">{type}</span>
         {/if}
-    </span>
-</a>
+        <span class="cardDesc {align}">
+            {#if typeof desc === "object"}
+                {#each desc as paragraph}
+                    <p class="descInnerParagraph">{paragraph}</p>
+                {/each}
+            {:else}
+                {desc}
+            {/if}
+        </span>
+    </a>
+{:else}
+    <p class="card" href={href} target="_blank">
+        <md-icon>{icon}</md-icon>
+        <span class="cardTitle">{title}</span>
+        {#if type}
+        <span class="cardType">{type}</span>
+        {/if}
+        <span class="cardDesc {align}">
+            {#if typeof desc === "object"}
+                {#each desc as paragraph}
+                    <p class="descInnerParagraph">{paragraph}</p>
+                {/each}
+            {:else}
+                {desc}
+            {/if}
+        </span>
+    </p>
+{/if}
 
 <style>
+    p.card {
+        color: var(--mfp-card-type-color, #406CC5);
+        margin: 0;
+    }
+
     .card {
         aspect-ratio: 1 / 1;
         background: var(--md-sys-color-surface, #edf3f7);
