@@ -6,11 +6,12 @@
 </script>
 
 <svelte:head>
-    <title>OSS Notice | 종이상자 공간</title>
-    <meta property="og:title" content="OSS Notice | 종이상자 공간">
     <meta name="description" content="메아리 for 포트폴리오의 오픈소스 라이선스 목록입니다.">
+    <meta property="og:title" content="OSS Notice | 종이상자 공간">
+    <meta property="og:description" content="메아리 for 포트폴리오의 오픈소스 라이선스 목록입니다.">
     <meta name="twitter:title" content="OSS Notice | 종이상자 공간">
     <meta name="twitter:description" content="메아리 for 포트폴리오의 오픈소스 라이선스 목록입니다.">
+    <title>OSS Notice | 종이상자 공간</title>
 </svelte:head>
 
 <main id="oss">

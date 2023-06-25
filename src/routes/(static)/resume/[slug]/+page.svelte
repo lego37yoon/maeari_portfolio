@@ -10,9 +10,12 @@
 </script>
 
 <svelte:head>
-    <title>{data.title} | 포트폴리오 | 종이상자 공간</title>
+    <meta name="description" content="개인 프로젝트 등 포트폴리오를 소개합니다">
     <meta property="og:title" content="{data.title} | 포트폴리오 | 종이상자 공간">
-    <meta name="twitter:title" content="{data.title} | 종이상자 공간">
+    <meta property="og:description" content="개인 프로젝트 등 포트폴리오를 소개합니다">
+    <meta name="twitter:title" content="{data.title} | 포트폴리오 | 종이상자 공간">
+    <meta name="twitter:description" content="개인 프로젝트 등 포트폴리오를 소개합니다">  
+    <title>{data.title} | 포트폴리오 | 종이상자 공간</title>
 </svelte:head>
 
 <main>

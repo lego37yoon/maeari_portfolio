@@ -4,22 +4,13 @@
 		<!-- Meta Tags -->
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
-		<!-- Facebook Meta Tags -->
-		<meta property="og:type" content="website">
-		<meta property="og:title" content="홈 | 메아리 for 포트폴리오">
-		<meta property="og:description" content="개인 웹사이트, 포트폴리오">
-		<meta property="og:image" content="">
-		<!-- Twitter Meta Tags -->
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:title" content="홈 | 메아리 for 포트폴리오">
-		<meta property="twitter:description" content="개인 웹사이트, 포트폴리오">
-		<meta name="twitter:image" content="">
+		%sveltekit.head%
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<!-- Custom Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://cdn.jsdelivr.net">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css">
-		%sveltekit.head%
 	</head>
 	<body>
 		<div class="svelte-main">%sveltekit.body%</div>
