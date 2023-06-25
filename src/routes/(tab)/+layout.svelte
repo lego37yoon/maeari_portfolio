@@ -63,8 +63,8 @@
     <ul>
         <li><a href="{$page.url.origin}" class="title">paperbox</a></li>
         <ul class="rightMenu" role="navigation">
-            <li><a href="https://pbdiary.pw" target="_blank">blog</a></li>
             <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
+            <li><a href="./resume/swuniv-hack-2023">resume</a></li>
             <li id="displayToggle">
                 <md-standard-icon-button id="darkModeButton" toggle role="switch" aria-checked={$darkMode} tabindex="0" aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
                     <md-icon>dark_mode</md-icon>
@@ -134,7 +134,7 @@
         text-decoration: none;
     }
 
-    @media screen and (max-width: 355px) {
+    @media screen and (max-width: 388px) {
         .rightMenu li {
             display: none;
         }

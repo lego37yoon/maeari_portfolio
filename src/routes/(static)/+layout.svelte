@@ -40,12 +40,14 @@
 <header>
     <ul>
         <li>
-            <a href="{$page.url.origin}" class="back">
-                <md-standard-icon-button id="mainPageButton">
+            <p>
+                <md-standard-icon-button href="javascript:window.history.back()" id="mainPageButton" aria-label="뒤로가기">
                     <md-icon>arrow_back</md-icon>
                 </md-standard-icon-button>
-                <span class="label">홈으로 돌아가기</span>
-            </a>
+                <md-standard-icon-button href={$page.url.origin} id="mainPageButton" aria-label="홈으로 돌아가기">
+                    <md-icon>home</md-icon>
+                </md-standard-icon-button>                
+            </p>
         </li>
     </ul>
     <ul class="rightMenu">
@@ -82,21 +84,13 @@
         color: var(--mfp-primary-text-color);
     }
 
-    .back {
+    header li p {
         margin: 0.5em;
         float: left;
         color: var(--mfp-static-header-text-color);
         text-decoration: none;
         display: flex;
         gap: 0.5em;
-    }
-
-    .back:visited, .label:visited {
-        color: var(--mfp-static-header-text-color);
-    }
-
-    .label {
-        margin: 0.5em 0;
     }
 
     /* 같은 위치, 같은 CSS로 p 태그와 a 태그에 같은 margin을 부여해도 크기 차이가 나는 이유 알아보기: p의 0.6em과 a의 0.5em의 계산 값이 동일 */
