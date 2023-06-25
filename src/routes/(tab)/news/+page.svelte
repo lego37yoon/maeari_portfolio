@@ -36,7 +36,11 @@
 </script>
 
 <svelte:head>
-    <meta name="description" content="최근 현황을 확인하실 수 있습니다">
+    <meta name="description" content="최근 소식을 한 곳에서 확인하세요">
+    <meta property="og:title" content="소식 | 종이상자 공간">
+    <meta property="og:description" content="최근 소식을 한 곳에서 확인하세요">
+    <meta name="twitter:title" content="소식 | 종이상자 공간">
+    <meta name="twitter:description" content="최근 소식을 한 곳에서 확인하세요">
     <title>소식 | 종이상자 공간</title>
 </svelte:head>
 

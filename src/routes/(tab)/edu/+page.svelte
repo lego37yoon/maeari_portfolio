@@ -7,6 +7,10 @@
 
 <svelte:head>
     <meta name="description" content="학업 및 자격증 현황을 확인하실 수 있습니다.">
+    <meta property="og:title" content="학업 | 종이상자 공간">
+    <meta property="og:description" content="학업 및 자격증 현황을 확인하실 수 있습니다.">
+    <meta name="twitter:title" content="학업 | 종이상자 공간">
+    <meta name="twitter:description" content="학업 및 자격증 현황을 확인하실 수 있습니다.">
     <title>학업 | 종이상자 공간</title>
 </svelte:head>
 
