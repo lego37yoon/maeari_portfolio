@@ -35,6 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-prettier", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:8.8.0"],\
             ["eslint-plugin-svelte3", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:4.0.0"],\
             ["firebase", "npm:9.22.1"],\
+            ["mdsvex", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:0.11.0"],\
             ["prettier", "npm:2.8.8"],\
             ["prettier-plugin-svelte", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:2.10.1"],\
             ["sass", "npm:1.63.6"],\
@@ -1829,6 +1830,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/unist", [\
+        ["npm:2.0.6", {\
+          "packageLocation": "./.yarn/cache/@types-unist-npm-2.0.6-82641b4aa5-25cb860ff1.zip/node_modules/@types/unist/",\
+          "packageDependencies": [\
+            ["@types/unist", "npm:2.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["abbrev", [\
         ["npm:1.1.1", {\
           "packageLocation": "./.yarn/cache/abbrev-npm-1.1.1-3659247eab-a4a97ec07d.zip/node_modules/abbrev/",\
@@ -3367,6 +3377,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["mdsvex", [\
+        ["npm:0.11.0", {\
+          "packageLocation": "./.yarn/cache/mdsvex-npm-0.11.0-9cdc3116ba-7265247c81.zip/node_modules/mdsvex/",\
+          "packageDependencies": [\
+            ["mdsvex", "npm:0.11.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:0.11.0", {\
+          "packageLocation": "./.yarn/__virtual__/mdsvex-virtual-0168d9fbe3/0/cache/mdsvex-npm-0.11.0-9cdc3116ba-7265247c81.zip/node_modules/mdsvex/",\
+          "packageDependencies": [\
+            ["mdsvex", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:0.11.0"],\
+            ["@types/svelte", null],\
+            ["@types/unist", "npm:2.0.6"],\
+            ["prism-svelte", "npm:0.4.7"],\
+            ["prismjs", "npm:1.29.0"],\
+            ["svelte", "npm:4.0.0"],\
+            ["vfile-message", "npm:2.0.4"]\
+          ],\
+          "packagePeers": [\
+            "@types/svelte",\
+            "svelte"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["mfp", [\
         ["workspace:.", {\
           "packageLocation": "./",\
@@ -3379,6 +3415,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-prettier", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:8.8.0"],\
             ["eslint-plugin-svelte3", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:4.0.0"],\
             ["firebase", "npm:9.22.1"],\
+            ["mdsvex", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:0.11.0"],\
             ["prettier", "npm:2.8.8"],\
             ["prettier-plugin-svelte", "virtual:cc6acca049a500daafeb88e4a8c79c0a1f025c7091ddc3bde7fd41bb2419d6a11d3643beacc384cf33101011b1e8ff4acd3fb68022c6e04f629b5cd41c156915#npm:2.10.1"],\
             ["sass", "npm:1.63.6"],\
@@ -3807,6 +3844,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/svelte",\
             "prettier",\
             "svelte"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["prism-svelte", [\
+        ["npm:0.4.7", {\
+          "packageLocation": "./.yarn/cache/prism-svelte-npm-0.4.7-094c9de752-7f3648ba67.zip/node_modules/prism-svelte/",\
+          "packageDependencies": [\
+            ["prism-svelte", "npm:0.4.7"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["prismjs", [\
+        ["npm:1.29.0", {\
+          "packageLocation": "./.yarn/cache/prismjs-npm-1.29.0-6faa5b04b8-007a8869d4.zip/node_modules/prismjs/",\
+          "packageDependencies": [\
+            ["prismjs", "npm:1.29.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4384,6 +4439,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["unist-util-stringify-position", [\
+        ["npm:2.0.3", {\
+          "packageLocation": "./.yarn/cache/unist-util-stringify-position-npm-2.0.3-abaa9bf961-f755cadc95.zip/node_modules/unist-util-stringify-position/",\
+          "packageDependencies": [\
+            ["unist-util-stringify-position", "npm:2.0.3"],\
+            ["@types/unist", "npm:2.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["uri-js", [\
         ["npm:4.4.1", {\
           "packageLocation": "./.yarn/cache/uri-js-npm-4.4.1-66d11cbcaf-7167432de6.zip/node_modules/uri-js/",\
@@ -4399,6 +4464,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/util-deprecate-npm-1.0.2-e3fe1a219c-474acf1146.zip/node_modules/util-deprecate/",\
           "packageDependencies": [\
             ["util-deprecate", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["vfile-message", [\
+        ["npm:2.0.4", {\
+          "packageLocation": "./.yarn/cache/vfile-message-npm-2.0.4-ca3f9b6719-1bade49979.zip/node_modules/vfile-message/",\
+          "packageDependencies": [\
+            ["vfile-message", "npm:2.0.4"],\
+            ["@types/unist", "npm:2.0.6"],\
+            ["unist-util-stringify-position", "npm:2.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
