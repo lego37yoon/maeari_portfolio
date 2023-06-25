@@ -7,12 +7,12 @@
     export let data;
     const name = import.meta.env.VITE_REAL_NAME;
     const englishName = import.meta.env.VITE_ENGLISH_NAME;
-
-    console.log(data);
 </script>
 
 <svelte:head>
-    <title>{data.title} | 이력서 | 종이상자 공간</title>
+    <title>{data.title} | 포트폴리오 | 종이상자 공간</title>
+    <meta property="og:title" content="{data.title} | 포트폴리오 | 종이상자 공간">
+    <meta name="twitter:title" content="{data.title} | 종이상자 공간">
 </svelte:head>
 
 <main>
