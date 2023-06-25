@@ -4,7 +4,7 @@
     import '@material/web/list/list-item.js';
     import '@material/web/divider/divider.js';
     import '@material/web/list/list.js';
-    import { darkMode } from "../../components/darkMode";
+    import { darkMode } from "../../../components/darkMode";
     import { onMount } from "svelte";
 
     /** @type {import('./$types').PageData} */
@@ -36,6 +36,8 @@
 </script>
 
 <svelte:head>
+    <meta property="og:title" content="소식 | 종이상자 공간">
+    <meta name="twitter:title" content="소식 | 종이상자 공간">
     <title>소식 | 종이상자 공간</title>
 </svelte:head>
 

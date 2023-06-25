@@ -1,5 +1,5 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { getFirestore, collection, getDocs, getDoc } from "firebase/firestore/lite";
 import { error, json } from '@sveltejs/kit';
 
 const firebaseConfig = {
@@ -18,21 +18,11 @@ const store = getFirestore(fireApp);
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
     const type = url.searchParams.get("type");
-    let currentCollection = null
-
-    switch(type) {
-        case "banner":
-            currentCollection = "teaser";
-            break;
-        default:
-            currentCollection = type;
-    }
-
-    const originData = await getDocs(collection(store, currentCollection));
+    const originData = await getDocs(collection(store, type));
 
     switch (type) {
+        case "teaser":
         case "contact":
-        case "banner":
             const objectDataList = {};
             originData.forEach((doc) => {
                 objectDataList[doc.id] = doc.data();
@@ -53,13 +43,10 @@ export async function GET({ url }) {
             });
 
             arrayDataList.forEach((data) => {
-                
                 data.data["start-year"] ? 
-                    data.data["start-year"] = timestampToDate(data, "start-year") : "";
-                
+                    data.data["start-year"] = timestampToDate(data, "start-year") : "";                
                 data.data["end-year"] ?
                     data.data["end-year"] = timestampToDate(data, "end-year") : "";
-                
                 data.data["date"] ?
                     data.data["date"] = timestampToDate(data, "date") : "";
             })

@@ -1,6 +1,6 @@
 <script>
     import "@material/web/icon/icon.js";
-    import Card from "../../components/Card.svelte";
+    import Card from "../../../components/Card.svelte";
 
     /** @type {import('./$types').PageData} */
     export let data;
@@ -9,6 +9,8 @@
 </script>
 
 <svelte:head>
+    <meta property="og:title" content="연락처 | 종이상자 공간">
+    <meta name="twitter:title" content="연락처 | 종이상자 공간">
     <title>연락처 | 종이상자 공간</title>
 </svelte:head>
 

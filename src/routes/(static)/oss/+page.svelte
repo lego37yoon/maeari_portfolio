@@ -7,6 +7,10 @@
 
 <svelte:head>
     <title>OSS Notice | 종이상자 공간</title>
+    <meta property="og:title" content="OSS Notice | 종이상자 공간">
+    <meta name="description" content="메아리 for 포트폴리오의 오픈소스 라이선스 목록입니다.">
+    <meta name="twitter:title" content="OSS Notice | 종이상자 공간">
+    <meta name="twitter:description" content="메아리 for 포트폴리오의 오픈소스 라이선스 목록입니다.">
 </svelte:head>
 
 <main id="oss">
@@ -60,11 +64,11 @@
 
     /* teaser 공간 CSS */
     #teaserArea {
-        padding: 1rem;
+        margin: 0 1em;
+        padding: 1em;
         background: linear-gradient(45deg, cadetblue, cornflowerblue);
         word-break: keep-all;
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
+        border-radius: 8px;
     }
 
     .teaserText {
@@ -96,7 +100,7 @@
     }
 
     #ossList {
-        margin-top: 1em;
+        margin: 1em 1em 0 1em;
     }
 
     md-list {

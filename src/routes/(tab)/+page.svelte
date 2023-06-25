@@ -1,11 +1,13 @@
 <script>
-    import Card from '../components/Card.svelte';
+    import Card from '../../components/Card.svelte';
 
     /** @type {import('./$types').PageData} */
     export let data;
 </script>
 
 <svelte:head>
+    <meta property="og:title" content="홈 | 종이상자 공간">
+    <meta name="twitter:title" content="홈 | 종이상자 공간">
     <title>홈 | 종이상자 공간</title>
 </svelte:head>
 
