@@ -9,8 +9,7 @@
 </script>
 
 <svelte:head>
-    <meta property="og:title" content="연락처 | 종이상자 공간">
-    <meta name="twitter:title" content="연락처 | 종이상자 공간">
+    <meta name="description" content="연락 방법을 확인하실 수 있습니다.">
     <title>연락처 | 종이상자 공간</title>
 </svelte:head>
 

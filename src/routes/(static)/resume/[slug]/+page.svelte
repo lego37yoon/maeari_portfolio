@@ -10,9 +10,8 @@
 </script>
 
 <svelte:head>
+    <meta name="description" content="개인 프로젝트, 오픈소스 기여활동 등을 소개합니다">
     <title>{data.title} | 포트폴리오 | 종이상자 공간</title>
-    <meta property="og:title" content="{data.title} | 포트폴리오 | 종이상자 공간">
-    <meta name="twitter:title" content="{data.title} | 종이상자 공간">
 </svelte:head>
 
 <main>
