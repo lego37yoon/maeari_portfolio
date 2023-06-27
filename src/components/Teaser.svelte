@@ -61,11 +61,11 @@
 
 </script>
 
-{#key teaserNotice}
 <section id="teaserArea" style:background={teaserBackground}>
     <section id="Notice">
         <p class="teaserTitle">{teaserData.intro.title}</p>
         <p class="teaserText normalBannerText">{teaserData.intro.desc}</p>
+        {#key teaserNotice}
         {#if maxNoticeCount > 0}
         <p class="smallBannerText teaserText" in:fade>
             <md-icon>tips_and_updates</md-icon>
@@ -75,6 +75,7 @@
             {/if}
         </p>
         {/if}
+        {/key}
     </section>
     {#if maxNoticeCount > 1}
     <section id="teaserCount">
@@ -92,7 +93,6 @@
     </section>
     {/if}
 </section>
-{/key}
 
 <style>
     .smallBannerText {
@@ -131,7 +131,6 @@
     }
 
     .teaserTitle {
-        font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
         color: white;
         font-size: 2rem;
         font-weight: 200;
