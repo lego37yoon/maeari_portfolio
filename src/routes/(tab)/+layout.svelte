@@ -52,16 +52,16 @@
 <header>
     <ul>
         <li><a href="{$page.url.origin}" class="title">paperbox</a></li>
-        <ul class="rightMenu" role="navigation">
-            <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-            <li><a href="./resume/swuniv-hack-2023">resume</a></li>
-            <li id="displayToggle">
-                <md-standard-icon-button id="darkModeButton" toggle role="switch" aria-checked={$darkMode} tabindex="0" aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
-                    <md-icon>dark_mode</md-icon>
-                    <md-icon slot="selectedIcon">light_mode</md-icon>
-                </md-standard-icon-button>
-            </li> 
-        </ul>
+    </ul>
+    <ul class="rightMenu" role="navigation">
+        <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
+        <li><a href="./resume/swuniv-hack-2023">resume</a></li>
+        <li id="displayToggle">
+            <md-standard-icon-button id="darkModeButton" toggle role="switch" aria-checked={$darkMode} tabindex="0" aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
+                <md-icon>dark_mode</md-icon>
+                <md-icon slot="selectedIcon">light_mode</md-icon>
+            </md-standard-icon-button>
+        </li> 
     </ul>
 </header>
 
@@ -108,7 +108,7 @@
         color: cadetblue;
     }
     .rightMenu {
-        padding: 1.5rem 1rem 0.5rem 1rem;
+        margin: 1.5rem 0.5rem 0.5rem 1rem;
         display: inline;
         float: right;
     }
@@ -127,20 +127,12 @@
             display: none;
         }
 
-        .rightMenu { 
-            padding: 1.5rem 0.5rem 0.5rem 0;
-        }
-
-        .title {
-            margin: 1.5rem 0 0.5rem 1rem;
-        }
-
         #displayToggle {
             display: inline;
         }
     }
 
-    @media screen and (max-width: 190px) {
+    @media screen and (max-width: 223px) {
         .rightMenu {
             display: none;
         }
