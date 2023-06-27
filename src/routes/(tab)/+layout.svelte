@@ -77,7 +77,6 @@
 <style>
     /* 헤더 부분 UI CSS */
     header {
-        font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
         font-weight: lighter;
         color: cadetblue;
         font-size: 1.5rem;
@@ -92,7 +91,6 @@
     }
 
     header li {
-        font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
         font-weight: lighter;
         color: var(--mfp-primary-text-color);
     }
