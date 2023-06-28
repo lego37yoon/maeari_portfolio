@@ -23,12 +23,12 @@
     };
 
     let currentNoticeCount = 1;
-    let maxNoticeCount = teaserData.notice.data.length ?? 1;
+    let maxNoticeCount = teaserData.notice.data.length || 1;
     let noticeChange = true;
     let teaserNotice = teaserData.notice.data[0].text;
     let teaserLinkText = teaserData.notice.data[0]["link-title"];
     let teaserLink = teaserData.notice.data[0].link;
-    let teaserBackground="linear-gradient(45deg, cadetblue, cornflowerblue)";
+    let teaserBackground=teaserData.notice.data[0].background;
 
     if (teaserData.notice.data.length > 1) {
         slideShow();
@@ -61,19 +61,20 @@
 
 </script>
 
-{#key teaserNotice}
 <section id="teaserArea" style:background={teaserBackground}>
     <section id="Notice">
         <p class="teaserTitle">{teaserData.intro.title}</p>
         <p class="teaserText normalBannerText">{teaserData.intro.desc}</p>
         {#if maxNoticeCount > 0}
+        {#key teaserNotice}
         <p class="smallBannerText teaserText" in:fade>
             <md-icon>tips_and_updates</md-icon>
             {teaserNotice}
             {#if teaserLink}
-                <a class="teaserLink" href={teaserLink ? teaserLink : "#"} target="_blank">{teaserLinkText ? teaserLinkText : "이동하기"} &gt;</a>
+                <a class="teaserLink" href={teaserLink} target="_blank">{teaserLinkText ? teaserLinkText : "이동하기"} &gt;</a>
             {/if}
         </p>
+        {/key}
         {/if}
     </section>
     {#if maxNoticeCount > 1}
@@ -92,7 +93,6 @@
     </section>
     {/if}
 </section>
-{/key}
 
 <style>
     .smallBannerText {
@@ -131,7 +131,6 @@
     }
 
     .teaserTitle {
-        font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
         color: white;
         font-size: 2rem;
         font-weight: 200;
