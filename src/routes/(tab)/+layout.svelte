@@ -55,7 +55,7 @@
     </ul>
     <ul class="rightMenu" role="navigation">
         <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-        <li><a href="./resume/default">resume</a></li>
+        <li><a href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" target="_blank">linkedin</a></li>
         <li id="displayToggle">
             <md-standard-icon-button id="darkModeButton" toggle role="switch" aria-checked={$darkMode} tabindex="0" aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
                 <md-icon>dark_mode</md-icon>
