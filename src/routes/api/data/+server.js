@@ -12,7 +12,7 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-const fireApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const fireApp = initializeApp(firebaseConfig);
 const store = getFirestore(fireApp);
 
 /** @type {import('./$types').RequestHandler} */
@@ -53,7 +53,7 @@ export async function GET({ url }) {
 
             return new json(arrayDataList);
         default:
-            throw error(400, "데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.");
+            error(400, "데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.");
     }
 }
 

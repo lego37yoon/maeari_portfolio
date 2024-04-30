@@ -11,9 +11,9 @@ export async function GET({ url }) {
             return new json(await tistory(token, handle));
         case "metaweblog":
         case "wordpress":
-            throw error(400, "아직 지원하지 않는 API입니다.");
+            error(400, "아직 지원하지 않는 API입니다.");
         default:
-            throw error(400, "데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.");
+            error(400, "데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.");
     }
 }
 

@@ -23,7 +23,7 @@ export async function GET({ url }) {
     const provider = url.searchParams.get("provider");
     
     if (!purpose) {
-        throw error(404, "일치하는 데이터가 없어 불러올 수 없습니다.");
+        error(404, "일치하는 데이터가 없어 불러올 수 없습니다.");
     }
     const defaultData = await getDoc(doc(store, type, purpose));
 
@@ -50,9 +50,9 @@ export async function GET({ url }) {
                     return text(profile.address);
                 }
                 default:
-                    throw error(404, "찾고자 하는 관련 데이터가 없습니다.");
+                    error(404, "찾고자 하는 관련 데이터가 없습니다.");
             }
         default:
-            throw error(400, "잘못된 데이터를 수신했습니다. 증상이 지속될 경우 관리자에게 문의하세요");
+            error(400, "잘못된 데이터를 수신했습니다. 증상이 지속될 경우 관리자에게 문의하세요");
     }
 }

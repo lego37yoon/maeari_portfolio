@@ -36,6 +36,6 @@ export async function load({ fetch, params }) {
 
         return dataset;
     } catch(e) {
-        throw error(404, `${params.slug} 페이지의 데이터를 찾지 못했습니다.`);
+        error(404, `${params.slug} 페이지의 데이터를 찾지 못했습니다.`);
     }
 }
