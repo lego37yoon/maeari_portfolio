@@ -26,5 +26,8 @@
 		"sass": "^1.72.0",
 		"svelte": "^4.2.12",
 		"vite": "^5.2.7"
+	},
+	"dependencies": {
+		"fast-xml-parser": "^4.3.6"
 	}
 }

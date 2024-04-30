@@ -51,17 +51,15 @@
         <div id="postDecorator">
             <md-list id="postList">
                 {#each data.posts as post, index}
-                {#if post.visibility === "20"}
-                <a href={post.postUrl} target="_blank">
-                    <md-list-item bind:this={_postItems[index]} headline={post.title} supportingText={post.date}>
-                        <md-icon slot="start">{post.categoryId === "0" ? "announcement" : "post"}</md-icon>
+                <a href={post.link} target="_blank">
+                    <md-list-item bind:this={_postItems[index]} headline={post.title} supportingText={`${post.pubDate}${post.category ? ` | ${post.category[0]}` : ""}`}>
+                        <md-icon slot="start">{post.category ? "post" : "announcement"}</md-icon>
                     </md-list-item>
                 </a>
-                {/if}
                 {/each}
             </md-list>
         </div>
-        <a class="more" href={`https://${data.url}`} target="_blank">
+        <a class="more" href={`${data.url}`} target="_blank">
             <md-icon>link</md-icon>
             더보기
         </a>

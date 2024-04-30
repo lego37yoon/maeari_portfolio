@@ -1,4 +1,5 @@
 import { error, json } from '@sveltejs/kit';
+import { XMLParser } from "fast-xml-parser";
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
@@ -6,18 +7,40 @@ export async function GET({ url }) {
 
     switch(type) {
         case "tistory":
-            const token = import.meta.env.VITE_TISTORY_ACCESS_TOKEN;
-            const handle = import.meta.env.VITE_TISTORY_BLOG_HANDLE;
-            return new json(await tistory(token, handle));
-        case "metaweblog":
-        case "wordpress":
-            error(400, "아직 지원하지 않는 API입니다.");
+        case "rss":
+            const rawData = await fetch(import.meta.env.VITE_RSS_URL).then(async (res) => await res.text());
+            const customDomain = import.meta.env.VITE_RSS_CUSTOM_URL;
+            const parser = new XMLParser();
+            const parsedData = parser.parse(rawData).rss.channel;
+
+            if (parsedData.item.length > 0) {
+                if (customDomain) {
+                    
+                    parsedData.item.forEach(item => {
+                        item.link.replace(parsedData.link, 
+                            customDomain.endsWith("/") ? customDomain : `${customDomain}/`);
+                    });
+                }
+
+                return new json({
+                    url: customDomain ?? parsedData.link,
+                    posts: parsedData.item.map((post) => {
+                        const postDate = new Date(Date.parse(post.pubDate));
+                        const localPostDate = postDate.toLocaleString("ko-KR");
+
+                        if (customDomain) {
+                            return {
+                                ...post,
+                                pubDate: localPostDate,
+                                link: post.link.replace(parsedData.link, customDomain.endsWith("/") ? customDomain : `${customDomain}/`)
+                            }
+                        } else {
+                            return {...post, pubDate: localPostDate}
+                        }
+                    }).slice(0, 5)
+                });
+            } 
         default:
             error(400, "데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.");
     }
-}
-
-async function tistory(token, handle) {
-    const fetchedData = await fetch(`https://www.tistory.com/apis/post/list?access_token=${token}&output=json&blogName=${handle}&page=1`);
-    return await fetchedData.json();
 }
