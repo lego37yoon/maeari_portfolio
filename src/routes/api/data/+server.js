@@ -1,12 +1,13 @@
 import { initializeServerApp, getApp } from "firebase/app";
 import { getFirestore, collection, getDocs, getDoc } from "firebase/firestore/lite";
 import { error, json } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    apiKey: env.FIREBASE_API_KEY,
+    authDomain: env.FIREBASE_AUTH_DOMAIN,
+    projectId: env.FIREBASE_PROJECT_ID,
+    appId: env.FIREBASE_APP_ID,
 };
 
 const firebaseSettings = {
