@@ -1,11 +1,21 @@
 <script>
     import "@material/web/icon/icon.js";
-    import "@material/web/iconbutton/standard-icon-button.js";
+    import "@material/web/iconbutton/icon-button.js";
     import { onMount } from 'svelte';
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import { darkMode } from "../../components/darkMode"; 
 
     let darkModeButton = undefined;
+    let darkModeState = $state(false);
+
+    $effect(() => {
+        const unsubscribe = darkMode.subscribe((value) => {
+            darkModeState = value;
+        });
+
+        return unsubscribe;
+    });
+
     function darkToggleEvent() {
         if (darkModeButton.selected) {
             document.body.classList.add("dark");
@@ -41,28 +51,28 @@
     <ul>
         <li>
             <p>
-                <md-standard-icon-button href="javascript:window.history.back()" id="mainPageButton" aria-label="뒤로가기">
+                <md-icon-button href="javascript:window.history.back()" id="mainPageButton" aria-label="뒤로가기">
                     <md-icon>arrow_back</md-icon>
-                </md-standard-icon-button>
-                <md-standard-icon-button href={$page.url.origin} id="mainPageButton" aria-label="홈으로 돌아가기">
+                </md-icon-button>
+                <md-icon-button href={page.url.origin} id="mainPageButton" aria-label="홈으로 돌아가기">
                     <md-icon>home</md-icon>
-                </md-standard-icon-button>                
+                </md-icon-button>                
             </p>
         </li>
     </ul>
     <ul class="rightMenu">
         <li id="displayToggle">
             <p>
-                <md-standard-icon-button bind:this={darkModeButton} toggle role="switch" aria-checked={$darkMode} tabindex="0" aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
+                <md-icon-button bind:this={darkModeButton} id="darkModeButton" toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onclick={darkToggleEvent} onkeypress={darkToggleEvent}>
                     <md-icon>dark_mode</md-icon>
                     <md-icon slot="selectedIcon">light_mode</md-icon>
-                </md-standard-icon-button>
+                </md-icon-button>
             </p>
         </li> 
     </ul>
 </header>
 
-<slot></slot>
+{@render children()}
 
 <style>
     header {
@@ -106,7 +116,7 @@
         }
     }
 
-    .rightMenu md-standard-icon-button {
+    .rightMenu md-icon-button {
         --md-sys-color-on-surface-variant: var(--mfp-static-header-text-color);
         --md-sys-color-primary: var(--mfp-static-header-text-color);
     }

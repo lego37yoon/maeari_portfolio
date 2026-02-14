@@ -1,12 +1,10 @@
 <script>
     import "@material/web/icon/icon.js";
-    import "@material/web/iconbutton/standard-icon-button.js";
+    import "@material/web/iconbutton/icon-button.js";
     import { fade } from 'svelte/transition';
-    
+
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    
-    // Initialize variables
-    export let teaserData = {
+    const defaultTeaserData = {
         intro: {
             title: "안녕하세요,",
             desc: "포트폴리오 사이트에 오신 것을 환영합니다"
@@ -21,28 +19,36 @@
             ]
         }
     };
+    const defaultNotice = {
+        background: "linear-gradient(45deg, cadetblue, cornflowerblue)",
+        text: "공지사항을 확인하고 있어요."
+    };
 
-    let currentNoticeCount = 1;
-    let maxNoticeCount = teaserData.notice.data.length || 1;
-    let noticeChange = true;
-    let teaserNotice = teaserData.notice.data[0].text;
-    let teaserLinkText = teaserData.notice.data[0]["link-title"];
-    let teaserLink = teaserData.notice.data[0].link;
-    let teaserBackground=teaserData.notice.data[0].background;
+    let { teaserData = defaultTeaserData } = $props();
+    const notices = $derived(teaserData.notice?.data?.length ? teaserData.notice.data : [defaultNotice]);
+    const maxNoticeCount = $derived(notices.length || 1);
+    let currentNoticeCount = $state(1);
+    let noticeChange = $state(true);
+    let startCarousel = $state(false);
+    const currentNotice = $derived(notices[currentNoticeCount - 1] ?? notices[0]);
+    const teaserNotice = $derived(currentNotice?.text ?? "공지사항을 확인하고 있어요.");
+    const teaserLinkText = $derived(currentNotice["link-title"] ?? "");
+    const teaserLink = $derived(currentNotice.link ?? "");
+    const teaserBackground = $derived(currentNotice.background ?? "linear-gradient(45deg, cadetblue, cornflowerblue)");
+    let isNoticePlaying = $state(true);
 
-    if (teaserData.notice.data.length > 1) {
-        slideShow();
-    }
+    $effect(() => {
+        if (maxNoticeCount > 1 && !startCarousel) {
+            startCarousel = true;
+            void slideShow();
+        }
+    });
 
     async function slideShow() {
-        for (let i = 0; i < teaserData.notice.data.length;) {
+        for (let i = 0; i < notices.length;) {
             if (noticeChange) {
                 currentNoticeCount = i + 1;
-                teaserNotice = teaserData.notice.data[i].text;
-                teaserLinkText = teaserData.notice.data[i]["link-title"];
-                teaserLink = teaserData.notice.data[i].link;
-                teaserBackground = teaserData.notice.data[i].background;    
-                if (i === teaserData.notice.data.length - 1) {
+                if (i === notices.length - 1) {
                     i = -1;
                 }
                 i++;
@@ -52,11 +58,8 @@
     }
 
     function playPauseEvent() {
-        if (playNoticeButton.selected) {
-            noticeChange = false;
-        } else {
-            noticeChange = true;
-        }
+        isNoticePlaying = !isNoticePlaying;
+        noticeChange = isNoticePlaying;
     }
 
 </script>
@@ -86,10 +89,10 @@
         <p id="maxCount">
             {#if maxNoticeCount < 10}0{/if}{maxNoticeCount}
         </p>
-        <md-standard-icon-button id="playNoticeButton" toggle aria-label="pause or play announcements" on:click={playPauseEvent} on:keypress={playPauseEvent}>
+        <md-icon-button id="playNoticeButton" toggle role="button" tabindex="0" aria-label="pause or play announcements" onclick={playPauseEvent} onkeypress={playPauseEvent}>
             <md-icon>pause</md-icon>
             <md-icon slot="selectedIcon">play_arrow</md-icon>
-        </md-standard-icon-button>
+        </md-icon-button>
     </section>
     {/if}
 </section>
@@ -155,7 +158,7 @@
         border-right: 3px solid white;
     }
 
-    #teaserCount md-standard-icon-button {
+    #teaserCount md-icon-button {
         margin-top: -1rem;
         margin-right: -0.5rem;
         --md-icon-button-unselected-icon-color: #ffffff;

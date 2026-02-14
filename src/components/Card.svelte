@@ -1,10 +1,5 @@
 <script>
-    export let icon;
-    export let title;
-    export let href;
-    export let desc;
-    export let type;
-    export let align = "";
+    let { icon, title, href, desc, type, align = "" } = $props();
 </script>
 
 {#if href}
@@ -25,7 +20,7 @@
         </span>
     </a>
 {:else}
-    <p class="card" href={href} target="_blank">
+    <div class="card">
         <md-icon>{icon}</md-icon>
         <span class="cardTitle">{title}</span>
         {#if type}
@@ -40,24 +35,23 @@
                 {desc}
             {/if}
         </span>
-    </p>
+    </div>
 {/if}
 
 <style>
-    p.card {
-        color: var(--mfp-card-type-color, #406CC5);
-        margin: 0;
-    }
-
-    .card {
+	.card {
         aspect-ratio: 1 / 1;
         background: var(--md-sys-color-surface, #edf3f7);
         border: 1px solid var(--md-sys-color-surface, grey);
+        color: var(--mfp-card-type-color, #406CC5);
         border-radius: 24px;
         padding: 1em;
         text-decoration: none;
         flex-basis: 12em;
         width: 12em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .cardTitle {
@@ -67,6 +61,7 @@
         overflow-x: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        width: 100%;
     }
 
     .card md-icon {
@@ -90,10 +85,10 @@
     .cardType {
         display: block;
         text-align: center;
-        color: var(--mfp-card-type-color, #406CC5);
         margin: 1em 0.5em 0.5em 0.5em; 
         background: var(--md-sys-color-background);
         border-radius: 24px;
         padding: 0.5em;
+        width: 100%;
     }
 </style>

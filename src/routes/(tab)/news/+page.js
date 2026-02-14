@@ -1,3 +1,5 @@
+import { error } from '@sveltejs/kit';
+
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
     const postData = await fetch("/api/social?type=tistory");

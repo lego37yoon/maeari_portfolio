@@ -1,57 +1,60 @@
 <script>
-    import "@material/web/icon/icon.js";
-    import "@material/web/iconbutton/standard-icon-button.js";
-    import "@material/web/tabs/tabs.js";
-    import { goto } from "$app/navigation";
+	import "@material/web/icon/icon.js";
+	import "@material/web/tabs/tabs.js";
+	import "@material/web/tabs/primary-tab.js";
+	import { goto } from "$app/navigation";
 
-    export let selectedId = "home";
-    let sets = undefined;
-    
-    $: if (sets) {
-        switch(selectedId) {
-            case "edu":
-                sets.selected = 1;
-                break;
-            case "news":
-                sets.selected = 2;
-                break;
-            case "contacts":
-                sets.selected = 3;
-                break;
-            default:
-                sets.selected = 0;
-                if (sets.selectedItem)
-                    sets.selectedItem.selected = true;
-                break;
-        }
-    }
+	let { selectedId = "home" } = $props();
+	const tabs = $derived.by(() => [
+		{ id: "home", href: "/" },
+		{ id: "edu", href: "/edu" },
+		{ id: "news", href: "/news" },
+		{ id: "contacts", href: "/contacts" }
+	]);
+	const selectedIndex = $derived.by(() => {
+		const index = tabs.findIndex((tab) => tab.id === selectedId);
+		return index >= 0 ? index : 0;
+	});
 
-    function movePage() {
-        goto(sets.focusedItem.getAttribute("href"), {
-            keepFocus: true,
-            noScroll: true
-        });
-    }
+	function movePage(event) {
+		const targetIndex = event.currentTarget?.activeTabIndex;
+		if (typeof targetIndex !== "number") {
+			return;
+		}
+
+		const target = tabs[targetIndex];
+		if (!target) {
+			return;
+		}
+
+		goto(target.href, {
+			keepFocus: true,
+			noScroll: true
+		});
+	}
 </script>
 
 <nav id="submenu">
-    <md-tabs variant="primary" bind:this={sets} on:click={movePage}>
-        <md-tab variant="primary" href="/">
+	<md-tabs
+		activeTabIndex={selectedIndex}
+		onchange={movePage}
+	>
+        <md-primary-tab>
             <md-icon slot="icon">home</md-icon>
             홈
-        </md-tab>
-        <md-tab variant="primary" href="/edu">
+        </md-primary-tab>
+        <md-primary-tab>
             <md-icon slot="icon">history_edu</md-icon>
             학업
-        </md-tab>
-        <md-tab variant="primary" href="/news">
+        </md-primary-tab>
+        <md-primary-tab>
             <md-icon slot="icon">newspaper</md-icon>
             소식
-        </md-tab>
-        <md-tab variant="primary" href="/contacts">
+        </md-primary-tab>
+        <md-primary-tab>
             <md-icon slot="icon">mail</md-icon>
             연락하기
-        </md-tab>
+        </md-primary-tab>
     </md-tabs>
 </nav>
 
@@ -61,11 +64,11 @@
         border-radius: 5px;
     }
 
-    md-tab {
+    md-primary-tab {
         word-break: keep-all;
     }
 
-    md-tab md-icon {
+    md-primary-tab md-icon {
         vertical-align: top;
     }
 

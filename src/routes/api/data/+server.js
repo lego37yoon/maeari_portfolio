@@ -1,5 +1,5 @@
-import { initializeServerApp, getApp } from "firebase/app";
-import { getFirestore, collection, getDocs, getDoc } from "firebase/firestore/lite";
+import { initializeServerApp } from "firebase/app";
+import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import { error, json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 
@@ -14,19 +14,29 @@ const firebaseSettings = {
     automaticDataCollectionEnabled: false
 }
 
-const fireApp = initializeServerApp(firebaseConfig, firebaseSettings);
-const store = getFirestore(fireApp);
+const hasFirebaseConfig = Boolean(
+    env.FIREBASE_API_KEY &&
+    env.FIREBASE_AUTH_DOMAIN &&
+    env.FIREBASE_PROJECT_ID &&
+    env.FIREBASE_APP_ID
+);
+const fireApp = hasFirebaseConfig ? initializeServerApp(firebaseConfig, firebaseSettings) : null;
+const store = fireApp ? getFirestore(fireApp) : null;
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
     const type = url.searchParams.get("type");
-    const originData = await getDocs(collection(store, type));
+
+    if (!store) {
+        error(500, "Firebase 설정이 누락되었습니다. 관리자에게 문의하세요.");
+    }
 
     switch (type) {
         case "teaser":
         case "contact":
+            const teaserData = await getDocs(collection(store, type));
             const objectDataList = {};
-            originData.forEach((doc) => {
+            teaserData.forEach((doc) => {
                 objectDataList[doc.id] = doc.data();
             });
 
@@ -36,8 +46,9 @@ export async function GET({ url }) {
         case "contribution":
         case "education":
         case "activity":
+            const activityData = await getDocs(collection(store, type));
             const arrayDataList = [];
-            originData.forEach((doc) => {
+            activityData.forEach((doc) => {
                 arrayDataList.push({
                     id: doc.id,
                     data: doc.data()

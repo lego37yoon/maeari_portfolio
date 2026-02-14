@@ -1,21 +1,27 @@
 <script>
     import "../index.scss";
     import "@material/web/icon/icon.js";
-    import "@material/web/iconbutton/standard-icon-button.js";
-    import '@material/web/circularprogress/circular-progress.js';
+    import "@material/web/iconbutton/icon-button.js";
+    import '@material/web/progress/circular-progress.js';
     import { onMount } from 'svelte';
     import { fly } from 'svelte/transition';
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import Nav from "../../components/Nav.svelte";
     import Teaser from "../../components/Teaser.svelte";
     import { darkMode } from "../../components/darkMode"; 
 
-    /** @type {import('./$types').LayoutData} */
-    export let data;
-    
+    let { data, children } = $props();
+    let currentPage = $derived(page.url.pathname.substr(page.url.pathname.lastIndexOf('/') + 1));
+    let darkModeButton = undefined;
+    let darkModeState = $state(false);
 
-    let currentPage;
-    $: currentPage = $page.url.pathname.substr($page.url.pathname.lastIndexOf('/') + 1);
+    $effect(() => {
+        const unsubscribe = darkMode.subscribe((value) => {
+            darkModeState = value;
+        });
+
+        return unsubscribe;
+    });
 
     function darkToggleEvent() {
         if (darkModeButton.selected) {
@@ -51,17 +57,17 @@
 
 <header>
     <ul>
-        <li><a href="{$page.url.origin}" class="title">paperbox</a></li>
+        <li><a href={page.url.origin} class="title">paperbox</a></li>
     </ul>
     <ul class="rightMenu" role="navigation">
         <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
         <li><a href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" target="_blank">linkedin</a></li>
         <li id="displayToggle">
-            <md-standard-icon-button id="darkModeButton" toggle role="switch" aria-checked={$darkMode} tabindex="0" aria-label="toggle dark or light mode" on:click="{darkToggleEvent}" on:keypress={darkToggleEvent}>
-                <md-icon>dark_mode</md-icon>
-                <md-icon slot="selectedIcon">light_mode</md-icon>
-            </md-standard-icon-button>
-        </li> 
+        <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onclick={darkToggleEvent} onkeypress={darkToggleEvent}>
+            <md-icon>dark_mode</md-icon>
+            <md-icon slot="selectedIcon">light_mode</md-icon>
+        </md-icon-button>
+            </li> 
     </ul>
 </header>
 
@@ -70,7 +76,7 @@
 
 {#key currentPage}
 <div in:fly="{{ x: 200, duration: 1000 }}">
-    <slot></slot>
+    {@render children()}
 </div>
 {/key}
 
@@ -138,7 +144,7 @@
         }
     }
 
-    .rightMenu md-standard-icon-button {
+    .rightMenu md-icon-button {
         margin-top: -0.5rem;
         margin-bottom: -0.5rem;
         --md-icon-button-unselected-icon-color: #5f9ea0;

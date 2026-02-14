@@ -1,37 +1,22 @@
 <script>
     import "@material/web/icon/icon.js";
-    import '@material/web/list/list-item-link.js';
     import '@material/web/list/list-item.js';
     import '@material/web/divider/divider.js';
     import '@material/web/list/list.js';
     import { darkMode } from "../../../components/darkMode";
-    import { onMount } from "svelte";
 
-    /** @type {import('./$types').PageData} */
-    export let data;
+    let { data } = $props();
 
     const twitterHandle = import.meta.env.VITE_TWITTER_HANDLE;
-    let notOverflowedList;
-    let _postItems = [];
-    $: postItems = _postItems.filter(Boolean);
-    $: if (postItems.length > 0) {
-        for(let i = 0; i < postItems.length; i++) {
-            postItems[i].shadowRoot.adoptedStyleSheets = 
-                [...postItems[i].shadowRoot.adoptedStyleSheets, notOverflowedList ];
-        }
-    }
+    let _postItems = $state([]);
+    let darkModeState = $state(false);
 
-    onMount(async () => {
-        notOverflowedList = new CSSStyleSheet;
-        notOverflowedList.replaceSync(`
-            .label-text {
-                display: block;
-            }
+    $effect(() => {
+        const unsubscribe = darkMode.subscribe((value) => {
+            darkModeState = value;
+        });
 
-            .body {
-                min-width: 0;
-            }
-        `);
+        return unsubscribe;
     });
 </script>
 
@@ -52,8 +37,10 @@
             <md-list id="postList">
                 {#each data.posts as post, index}
                 <a href={post.link} target="_blank">
-                    <md-list-item bind:this={_postItems[index]} headline={post.title} supportingText={`${post.pubDate}${post.category ? ` | ${post.category[0]}` : ""}`}>
+                    <md-list-item bind:this={_postItems[index]}>
                         <md-icon slot="start">{post.category ? "post" : "announcement"}</md-icon>
+                        <span slot="headline">{post.title}</span>
+                        <span slot="supporting-text">{`${post.pubDate}${post.category ? ` | ${post.category[0]}` : ""}`}</span>
                     </md-list-item>
                 </a>
                 {/each}
@@ -67,11 +54,11 @@
     
     <section id="twitter">
         <h1>트위터에서는 이런 소식을 안내하고 있어요</h1>
-        {#key $darkMode}
+        {#key darkModeState}
         <section id="twitterSlot" >
             <a class="twitter-timeline more" data-width="500" data-height="500" data-lang="ko" data-dnt="true" 
-                data-theme={$darkMode ? "dark" : "light"}
-                href="https://twitter.com/{twitterHandle}?ref_src=twsrc%5Etfw">
+                data-theme={darkModeState ? "dark" : "light"}
+                href="https://x.com/{twitterHandle}?ref_src=twsrc%5Etfw">
                 <md-icon>link</md-icon>
                 @{twitterHandle} 계정 바로가기
             </a>

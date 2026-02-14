@@ -1,21 +1,22 @@
 <script>
     import "./index.scss";
-    import { page, navigating } from '$app/stores';
+    import { page, navigating } from '$app/state';
 
+    let { children } = $props();
     const currentYear = new Date().getFullYear();
 </script>
 
-{#if $navigating}
+{#if navigating.complete === false}
     <dialog open>
         <md-circular-progress indeterminate></md-circular-progress>
         <p>데이터를 읽어오는 중입니다</p>
     </dialog>
 {/if}
 
-<slot></slot>
+{@render children()}
 
 <footer>
-    <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href="{$page.url.origin}/oss">OSS Notice</a></p>
+    <p>copyright by {currentYear} 종이상자. Made with &lt;3 and Svelte. <a href={`${page.url.origin}/oss`}>OSS Notice</a></p>
 </footer>
 
 <style>
