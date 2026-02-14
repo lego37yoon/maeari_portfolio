@@ -2,9 +2,11 @@
 node_modules
 /build
 /.svelte-kit
+/.vercel
+/.pnpm-store
+/.yarn
 past
 /package
 .env
 .env.*
 !.env.example
-.yarn
