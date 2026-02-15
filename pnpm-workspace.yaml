@@ -1,5 +1,0 @@
-onlyBuiltDependencies:
-  - '@firebase/util'
-  - '@parcel/watcher'
-  - esbuild
-  - protobufjs

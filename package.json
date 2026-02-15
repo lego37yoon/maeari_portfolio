@@ -8,6 +8,7 @@
 		"package": "svelte-kit package",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync",
+		"check": "svelte-check",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
@@ -24,6 +25,7 @@
 		"prettier-plugin-svelte": "^3.4.1",
 		"sass": "^1.97.3",
 		"svelte": "^5.0.0",
+		"typescript": "^5.8.3",
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
