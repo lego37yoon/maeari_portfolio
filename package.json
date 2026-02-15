@@ -1,10 +1,17 @@
 {
 	"name": "mfp",
-	"version": "2.1.1",
+	"version": "3.0.0_alpha",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
+		"dev:cf": "wrangler dev",
 		"build": "vite build",
+		"deploy": "wrangler deploy",
+		"predeploy": "node scripts/init-d1.mjs --remote",
+		"d1:init:local": "node scripts/init-d1.mjs --local",
+		"d1:init:remote": "node scripts/init-d1.mjs --remote",
+		"d1:migrate:local": "wrangler d1 migrations apply DB --local",
+		"d1:migrate:remote": "wrangler d1 migrations apply DB --remote",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync",
@@ -14,22 +21,22 @@
 	},
 	"devDependencies": {
 		"@material/web": "2.4.1",
+		"@sveltejs/adapter-cloudflare": "^7.2.2",
 		"@sveltejs/kit": "^2.51.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"eslint": "^10.0.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.15.0",
-		"firebase": "^12.9.0",
 		"mdsvex": "^0.12.6",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
 		"sass": "^1.97.3",
 		"svelte": "^5.0.0",
 		"typescript": "^5.8.3",
-		"vite": "^7.3.1"
+		"vite": "^7.3.1",
+		"wrangler": "^4.46.0"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-vercel": "^6.3.1",
 		"fast-xml-parser": "^5.3.6"
 	},
 	"packageManager": "yarn@6.0.0-rc.15"

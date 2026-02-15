@@ -4,5 +4,5 @@
     "strict": false,
     "allowJs": false
   },
-  "include": ["src/**/*.ts", "src/**/*.svelte"]
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.svelte"]
 }

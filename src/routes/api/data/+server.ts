@@ -1,89 +1,161 @@
-import { initializeServerApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, type Firestore } from 'firebase/firestore/lite';
 import { error, json } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
 
-const firebaseConfig = {
-	apiKey: env.FIREBASE_API_KEY,
-	authDomain: env.FIREBASE_AUTH_DOMAIN,
-	projectId: env.FIREBASE_PROJECT_ID,
-	appId: env.FIREBASE_APP_ID
-};
-
-const firebaseSettings = {
-	automaticDataCollectionEnabled: false
-};
-
-const hasFirebaseConfig = Boolean(
-	env.FIREBASE_API_KEY &&
-		env.FIREBASE_AUTH_DOMAIN &&
-		env.FIREBASE_PROJECT_ID &&
-		env.FIREBASE_APP_ID
+const OBJECT_TYPES = new Set(['teaser', 'contact']);
+const ARRAY_TYPES = new Set(['project', 'certification', 'contribution', 'education', 'activity']);
+const DATE_FIELDS = ['start-year', 'end-year', 'date'];
+const SCHEMA_SQL = `
+CREATE TABLE IF NOT EXISTS portfolio_entries (
+	id TEXT NOT NULL,
+	type TEXT NOT NULL,
+	payload TEXT NOT NULL,
+	sort_order INTEGER NOT NULL DEFAULT 0,
+	created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+	updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+	PRIMARY KEY (type, id)
 );
 
-const fireApp = hasFirebaseConfig ? initializeServerApp(firebaseConfig, firebaseSettings) : null;
-const store: Firestore | null = fireApp ? getFirestore(fireApp) : null;
+CREATE INDEX IF NOT EXISTS portfolio_entries_type_sort_idx
+ON portfolio_entries (type, sort_order, id);
+`;
 
-const ensureStoreReady = (firestore: Firestore | null): firestore is Firestore => {
-	if (!firestore) {
-		error(500, 'Firebase 설정이 누락되었습니다. 관리자에게 문의하세요.');
-	}
+type DataType = 'teaser' | 'contact' | 'project' | 'certification' | 'contribution' | 'education' | 'activity';
+type D1QueryResult<T> = { results: T[] };
+type D1Row = { id: string; payload: string };
 
-	return true;
+interface D1Statement {
+	bind(...values: unknown[]): {
+		all<T = unknown>(): Promise<D1QueryResult<T>>;
+	};
+}
+
+interface D1Binding {
+	prepare(query: string): D1Statement;
+	exec(query: string): Promise<unknown>;
+}
+
+const isD1Binding = (value: unknown): value is D1Binding => {
+	return Boolean(value) && typeof value === 'object' && 'prepare' in value && 'exec' in value && typeof (value as D1Binding).prepare === 'function' && typeof (value as D1Binding).exec === 'function';
 };
 
-const timestampToDate = (rawData: Record<string, { toDate: () => Date }>, key: string): string => {
-	const date = rawData[key].toDate();
+let schemaInitPromise: Promise<void> | null = null;
+
+const ensureSchemaReady = async (db: D1Binding) => {
+	if (!schemaInitPromise) {
+		schemaInitPromise = db.exec(SCHEMA_SQL).then(() => undefined);
+	}
+
+	try {
+		await schemaInitPromise;
+	} catch (e) {
+		schemaInitPromise = null;
+		throw e;
+	}
+};
+
+const parsePayload = (payload: string): Record<string, unknown> => {
+	try {
+		const parsed = JSON.parse(payload);
+		if (parsed && typeof parsed === 'object') {
+			return parsed as Record<string, unknown>;
+		}
+		return {};
+	} catch {
+		return {};
+	}
+};
+
+const dateFromUnknown = (value: unknown): Date | null => {
+	if (value instanceof Date && !Number.isNaN(value.valueOf())) {
+		return value;
+	}
+
+	if (typeof value === 'string') {
+		if (/^\d{4}\.\d{1,2}$/.test(value.trim())) {
+			const [year, month] = value.trim().split('.');
+			const d = new Date(Number(year), Number(month) - 1, 1);
+			return Number.isNaN(d.valueOf()) ? null : d;
+		}
+
+		const parsed = Date.parse(value);
+		return Number.isNaN(parsed) ? null : new Date(parsed);
+	}
+
+	if (typeof value === 'number') {
+		const byMs = new Date(value);
+		if (!Number.isNaN(byMs.valueOf())) {
+			return byMs;
+		}
+	}
+
+	if (value && typeof value === 'object') {
+		if ('seconds' in value && typeof value.seconds === 'number') {
+			const bySeconds = new Date(value.seconds * 1000);
+			return Number.isNaN(bySeconds.valueOf()) ? null : bySeconds;
+		}
+	}
+
+	return null;
+};
+
+const toYearMonth = (value: unknown): string => {
+	const date = dateFromUnknown(value);
+	if (!date) {
+		return typeof value === 'string' ? value : '';
+	}
 	return `${date.getFullYear()}.${date.getMonth() + 1}`;
 };
 
-export const GET: RequestHandler = async ({ url }) => {
+const normalizeDateFields = (record: Record<string, unknown>) => {
+	for (const field of DATE_FIELDS) {
+		if (field in record) {
+			record[field] = toYearMonth(record[field]);
+		}
+	}
+};
+
+export const GET: RequestHandler = async ({ url, platform }) => {
 	const type = url.searchParams.get('type');
-	if (!ensureStoreReady(store)) {
-		return; // unreachable, keeps types narrow for TypeScript
+
+	const db = platform?.env?.DB;
+	if (!isD1Binding(db)) {
+		error(500, 'D1 연결이 구성되지 않았습니다. 관리자에게 문의하세요.');
+	}
+	try {
+		await ensureSchemaReady(db);
+	} catch {
+		error(500, 'D1 초기화 중 문제가 발생했습니다. 관리자에게 문의하세요.');
 	}
 
-	switch (type) {
-		case 'teaser':
-		case 'contact': {
-			const teaserData = await getDocs(collection(store, type));
-			const objectDataList: Record<string, unknown> = {};
-			teaserData.forEach((doc) => {
-				objectDataList[doc.id] = doc.data();
-			});
+	if (!type || (!OBJECT_TYPES.has(type) && !ARRAY_TYPES.has(type))) {
+		error(400, '데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.');
+	}
 
-			return json(objectDataList);
+	const query = await db
+		.prepare(
+			`SELECT id, payload
+			 FROM portfolio_entries
+			 WHERE type = ?
+			 ORDER BY sort_order ASC, id ASC`
+		)
+		.bind(type)
+		.all<D1Row>();
+
+	if (OBJECT_TYPES.has(type)) {
+		const objectDataList: Record<string, unknown> = {};
+		for (const row of query.results) {
+			objectDataList[row.id] = parsePayload(row.payload);
 		}
-		case 'project':
-		case 'certification':
-		case 'contribution':
-		case 'education':
-		case 'activity': {
-			const activityData = await getDocs(collection(store, type));
-			const arrayDataList: Array<{ id: string; data: Record<string, unknown> }> = [];
-			activityData.forEach((doc) => {
-				arrayDataList.push({ id: doc.id, data: doc.data() as Record<string, unknown> });
-			});
+		return json(objectDataList);
+	}
 
-			arrayDataList.forEach((item) => {
-				const data = item.data as Record<string, { toDate: () => Date }>;
+	const arrayDataList = query.results.map((row) => {
+		const data = parsePayload(row.payload);
+		normalizeDateFields(data);
+		return { id: row.id, data };
+	});
 
-				if ('start-year' in data) {
-					data['start-year'] = timestampToDate(data, 'start-year');
-				}
-
-				if ('end-year' in data) {
-					data['end-year'] = timestampToDate(data, 'end-year');
-				}
-				if ('date' in data) {
-					data['date'] = timestampToDate(data, 'date');
-				}
-			});
-
-			return json(arrayDataList);
-		}
-		default:
-			error(400, '데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.');
+	return json(arrayDataList);
+};
 	}
 };
