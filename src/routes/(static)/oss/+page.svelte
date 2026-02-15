@@ -22,39 +22,52 @@
     <section id="ossList">
         <md-list id="listContainer">
             <a href="https://github.com/sveltejs/svelte/blob/master/LICENSE.md" target="_blank">
-                <md-list-item headline="Svelte" supportingText="MIT License">
+                <md-list-item>
                     <md-icon slot="start">square_foot</md-icon>
-                    
+                    <span slot="headline">Svelte</span>
+                    <span slot="supporting-text">MIT License</span>
                 </md-list-item>
             </a>
             <a href="https://github.com/sveltejs/kit/blob/master/LICENSE" target="_blank">
-                <md-list-item headline="SvelteKit" supportingText="MIT License">
+                <md-list-item>
                     <md-icon slot="start">construction</md-icon>
+                    <span slot="headline">SvelteKit</span>
+                    <span slot="supporting-text">MIT License</span>
                 </md-list-item>
             </a>
             <a href="https://github.com/firebase/firebase-js-sdk/blob/master/LICENSE" target="_blank">
-                <md-list-item headline="Firebase JavaScript SDK Version 9" supportingText="Apache License 2.0">
+                <md-list-item>
                     <md-icon slot="start">cloud_upload</md-icon>
+                    <span slot="headline">Firebase JavaScript SDK</span>
+                    <span slot="supporting-text">Apache License 2.0</span>
                 </md-list-item>
             </a>
             <a href="https://github.com/material-components/material-web/LICENSE" target="_blank">
-                <md-list-item headline="Material Web Components" supportingtext="Apache License 2.0">
+                <md-list-item>
                     <md-icon slot="start">brush</md-icon>
+                    <span slot="headline">Material Web Components</span>
+                    <span slot="supporting-text">Apache License 2.0</span>
                 </md-list-item>
             </a>
             <a href="https://github.com/sass/sass/blob/main/LICENSE" target="_blank">
-                <md-list-item headline="Sass" supportingtext="MIT License">
+                <md-list-item>
                     <md-icon slot="start">css</md-icon>
+                    <span slot="headline">Sass</span>
+                    <span slot="supporting-text">MIT License</span>
                 </md-list-item>
             </a>
             <a href="https://developers.google.com/fonts/docs/material_symbols" target="_blank">
-                <md-list-item headline="Material Symbols" supportingtext="Apache License 2.0">
+                <md-list-item>
                     <md-icon slot="start">app_badging</md-icon>
+                    <span slot="headline">Material Symbols</span>
+                    <span slot="supporting-text">Apache License 2.0</span>
                 </md-list-item>
             </a>
             <a href="https://sunn.us/suit/" target="_blank">
-                <md-list-item headline="SUIT" supportingtext="SIL Open Font License">
+                <md-list-item>
                     <md-icon slot="start">text_fields</md-icon>
+                    <span slot="headline">SUIT</span>
+                    <span slot="supporting-text">SIL Open Font License</span>
                 </md-list-item>
             </a>
         </md-list>
