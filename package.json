@@ -32,5 +32,5 @@
 		"@sveltejs/adapter-vercel": "^6.3.1",
 		"fast-xml-parser": "^5.3.6"
 	},
-	"packageManager": "yarn@6.0.0-rc.15"
+	"packageManager": "pnpm@10.29.3"
 }
