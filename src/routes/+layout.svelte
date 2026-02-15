@@ -6,7 +6,7 @@
     const currentYear = new Date().getFullYear();
 </script>
 
-{#if navigating.complete === false}
+{#if navigating.complete !== null}
     <dialog open>
         <md-circular-progress indeterminate></md-circular-progress>
         <p>데이터를 읽어오는 중입니다</p>
