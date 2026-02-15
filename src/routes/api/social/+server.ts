@@ -51,7 +51,8 @@ export const GET: RequestHandler = async ({ url }) => {
 					posts: posts.slice(0, 5)
 				});
 			}
+		}
 	}
-
+	
 	error(400, '데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.');
 };

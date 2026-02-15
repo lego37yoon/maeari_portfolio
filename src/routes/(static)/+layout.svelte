@@ -7,6 +7,7 @@
 
     let darkModeButton = undefined;
     let darkModeState = $state(false);
+    let { children } = $props();
 
     $effect(() => {
         const unsubscribe = darkMode.subscribe((value) => {

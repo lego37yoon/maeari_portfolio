@@ -24,6 +24,7 @@
             <a href="https://github.com/sveltejs/svelte/blob/master/LICENSE.md" target="_blank">
                 <md-list-item headline="Svelte" supportingText="MIT License">
                     <md-icon slot="start">square_foot</md-icon>
+                    
                 </md-list-item>
             </a>
             <a href="https://github.com/sveltejs/kit/blob/master/LICENSE" target="_blank">
