@@ -2,6 +2,10 @@
     import { page } from "$app/state";
 </script>
 
+<svelte:head>
+    <title>오류: 종이상자 공간</title>
+</svelte:head>
+
 <main>
     <h1>{page.status}</h1>
     <p>{page.error.message}</p>
