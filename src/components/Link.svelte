@@ -2,23 +2,31 @@
     import type { Snippet } from "svelte";
     import Icon from "./Icon.svelte";
 
-  let { external = false, href, children }
-   : { external?: boolean, href: string, children: Snippet<[]> } = $props();
+  let { external = false, nav = false, current = false, href, children }
+    : { external?: boolean, nav?: boolean, current?: boolean, href: string, children: Snippet<[]> } = $props();
 </script>
 
 {#if external}
-<a {href} target="_blank" class="mfp-link-external">
-  <span>
+<a {href} target="_blank" class={`mfp-link-external ${nav ? "mfp-link-nav":""}`}>
+  <span class={`mfp-link-label ${current ? "mfp-link-nav-current" : ""}`}>
     {@render children()}
   </span>
-  <Icon code={"open_in_new"} size="1em" ariaHidden={true} />
+  <span class="mfp-link-icon">
+    <Icon code={"open_in_new"} size="1em" ariaHidden={true} />
+  </span>
 </a>
 {:else}
-<a {href} class="mfp-link-internal">
-  <span>
+<a {href} class={`mfp-link-internal ${nav ? "mfp-link-nav":""}`}>
+  <span class={`mfp-link-label ${current ? "mfp-link-nav-current" : ""}`}>
     {@render children()}
   </span>
+  {#if nav}
+  <span class="mfp-link-icon">
+    <Icon code={"arrow_forward"} size="1em" ariaHidden={true} />
+  </span>
+  {:else}
   <Icon code={"arrow_forward"} size="1em" ariaHidden={true} />
+  {/if}
 </a>
 {/if}
 
@@ -30,6 +38,11 @@
     font-weight: 700;
   }
 
+  .mfp-link-nav {
+    color: var(--mfp-primary-text-color);
+    font-weight: 600;
+  }
+
   .mfp-link-external, .mfp-link-internal {
     display: inline-flex;
     align-items: center;
@@ -37,13 +50,19 @@
     position: relative;
   }
 
-  .mfp-link-external > span,
-  .mfp-link-internal > span {
+  .mfp-link-label {
     position: relative;
   }
 
-  .mfp-link-external > span::after,
-  .mfp-link-internal > span::after {
+  .mfp-link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    line-height: 1;
+  }
+
+  .mfp-link-label::after {
     content: "";
     position: absolute;
     left: 0;
@@ -56,10 +75,24 @@
     transition: transform 400ms ease;
   }
 
-  .mfp-link-external:hover > span::after,
-  .mfp-link-external:focus-visible > span::after,
-  .mfp-link-internal:hover > span::after,
-  .mfp-link-internal:focus-visible > span::after {
+  .mfp-link-nav-current::after {
     transform: scaleX(1);
+  }
+
+  .mfp-link-nav .mfp-link-icon {
+    opacity: 0;
+    transition: opacity 250ms ease;
+  }
+
+  .mfp-link-external:hover .mfp-link-label::after,
+  .mfp-link-external:focus-visible .mfp-link-label::after,
+  .mfp-link-internal:hover .mfp-link-label::after,
+  .mfp-link-internal:focus-visible .mfp-link-label::after {
+    transform: scaleX(1);
+  }
+
+  .mfp-link-nav:hover .mfp-link-icon,
+  .mfp-link-nav:focus-visible .mfp-link-icon {
+    opacity: 1;
   }
 </style>
