@@ -8,7 +8,7 @@
 body {
     font-family: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
     --md-ref-typeface-plain: 'SUIT Variable', 'Noto Sans CJK KR Light', sans-serif;
-    background: #EDF3F7;
+    background: #FFF;
     margin: 0 0 0 0;
 
     /* Material Color Sets */
@@ -33,12 +33,6 @@ body {
     --mfp-primary-text-color: #297A7C;
     --mfp-static-header-text-color: #333333;
     --mfp-link-color: #4072D1;
-}
-
-.svelte-main {
-    background: #ffffff;
-    margin: 1rem;
-    border-radius: 10px;
 }
 
 @media screen and (max-width: 768px) {
