@@ -7,6 +7,25 @@
 
     let { data, children } = $props();
     let currentPage = $derived(getCurrentPath());
+    let pageContentContainer: HTMLElement | undefined = $state(undefined);
+
+    function scrollToPageContentTop(): void {
+        if (!pageContentContainer || typeof document === "undefined") {
+            return;
+        }
+
+        const mainContent = pageContentContainer.querySelector<HTMLElement>("main") ?? pageContentContainer;
+        const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+        const navHeight = document.getElementById("submenu")?.getBoundingClientRect().height ?? 0;
+        const offset = headerHeight + navHeight;
+
+        mainContent.style.scrollMarginTop = `${offset}px`;
+        mainContent.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest"
+        });
+    }
 </script>
 
 <Teaser teaserData={{
@@ -17,7 +36,7 @@
 <Nav selectedId={currentPage} />
 
 {#key currentPage}
-<div in:fly="{{ x: 200, duration: 1000 }}">
+<div bind:this={pageContentContainer} in:fly="{{ x: 200, duration: 1000 }}" onintroend={scrollToPageContentTop}>
     {@render children()}
 </div>
 {/key}
