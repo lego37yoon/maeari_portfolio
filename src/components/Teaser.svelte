@@ -17,6 +17,7 @@
                     background: "linear-gradient(45deg, cadetblue, cornflowerblue)",
                     enabled: true,
                     text: "공지사항을 확인하고 있어요.",
+                    desc: "5초 이상 공지 확인에서 넘어가지 않는 경우, 네트워크 문제가 있거나 코드가 잘못 작성되었을 수 있습니다.",
                     link: "https://github.com/lego37yoon/maeari_portfolio",
                     "link-text": "계속 오류가 확인된다면 이슈트래커에 남겨주세요."
                 }
@@ -32,7 +33,8 @@
     let teaserTextColor = $state("#ffffff");
 
     const currentNotice = $derived(notices[currentNoticeCount - 1] ?? notices[0]);
-    const teaserNotice = $derived(currentNotice?.text ?? "공지사항을 확인하고 있어요.");
+    const teaserNotice = $derived(currentNotice.text);
+    const teaserDesc = $derived(currentNotice.desc);
     const teaserLinkText = $derived(currentNotice["link-title"] ?? "");
     const teaserLink = $derived(currentNotice.link ?? "");
     const teaserBackground = $derived(currentNotice.background ?? "linear-gradient(45deg, cadetblue, cornflowerblue)");
@@ -173,7 +175,7 @@
         <div class="noticeContent" in:fly={{ x: 80, duration: 200, delay: 250 }} out:fly={{ x: -80, duration: 200 }}>
             <p class="teaserTitle">{teaserNotice}</p>
             <p class="teaserDesc">
-                <span></span>
+                <span>{teaserDesc}</span>
                 {#if teaserLink}
                 <a class="teaserText teaserLink" href={teaserLink} target="_blank">
                     {teaserLinkText ? teaserLinkText : "이동하기"} &gt;
@@ -269,6 +271,7 @@
     }
 
     .teaserDesc span {
+        font-size: 1.2rem;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
