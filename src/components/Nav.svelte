@@ -43,10 +43,13 @@
             return;
         }
 
+        const isLast = selectedIndex === tabs.length - 1;
+        const inline: ScrollLogicalPosition = isLast ? "end" : "center";
+
         selectedItem.scrollIntoView({
             behavior: "smooth",
             block: "nearest",
-            inline: "center"
+            inline
         });
     }
 
