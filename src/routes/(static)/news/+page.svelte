@@ -26,7 +26,7 @@
     <meta property="og:description" content="최근 소식을 한 곳에서 확인하세요">
     <meta name="twitter:title" content="소식 | 종이상자 공간">
     <meta name="twitter:description" content="최근 소식을 한 곳에서 확인하세요">
-    <title>소식 | 종이상자 공간</title>
+    <title>소식: 종이상자 공간</title>
 </svelte:head>
 
 <main>

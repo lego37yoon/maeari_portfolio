@@ -231,7 +231,7 @@
         {#each menus as menu}
         <li class="desktopLink"><Link href={menu.href} nav current={menu.current} external={menu.external}>{menu.title}</Link></li>
         {/each}
-        <li id="displayToggle">
+        <li class="displayToggle">
             <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onchange={darkToggleEvent}>
                 <md-icon>dark_mode</md-icon>
                 <md-icon slot="selected">light_mode</md-icon>
@@ -251,6 +251,12 @@
             {#each menus as menu}
             <li><Link href={menu.href} onClick={closeMobileMenu} nav current={menu.current} external={menu.external}>{menu.title}</Link></li>
             {/each}
+            <li class="displayToggle">
+                <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onchange={darkToggleEvent}>
+                    <md-icon>dark_mode</md-icon>
+                    <md-icon slot="selected">light_mode</md-icon>
+                </md-icon-button>
+            </li>
         </ul>
     </nav>
     {/if}
@@ -420,6 +426,10 @@
         box-sizing: border-box;
     }
 
+    #mobileMenuPopup .displayToggle {
+        display: none;
+    }
+
     #mobileMenuPopup.scrolled {
         background: var(--mfp-header-scrolled-bg-color);
     }
@@ -436,7 +446,6 @@
 
     #mobileMenuPopup li {
         font-size: 1.2rem;
-        color: var(--mfp-primary-text-color);
         padding: 0.25rem 0.35rem;
     }
 
@@ -445,23 +454,29 @@
             display: none;
         }
 
-        #displayToggle {
-            display: inline;
-        }
-
         #mobileMenuToggle {
             display: inline;
         }
     }
 
-    @media screen and (max-width: 232px) {
-        #mobileMenuPopup {
-            right: 0.5rem;
-            width: calc(100vw - 1rem);
+    @media screen and (max-width: 263px) {
+        .rightMenu .displayToggle {
+            display: none;
+        }
+
+        #mobileMenuPopup .displayToggle {
+            display: block;
+            margin-right: 1rem;
         }
     }
 
-    .rightMenu md-icon-button {
+    @media screen and (max-width: 213px) {
+        #mobileMenuToggle {
+            display: none;
+        }
+    }
+
+    .rightMenu md-icon-button, #mobileMenuPopup md-icon-button {
         margin-top: -0.5rem;
         margin-bottom: -0.5rem;
         color: currentColor;
