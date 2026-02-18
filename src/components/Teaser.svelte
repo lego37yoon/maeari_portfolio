@@ -16,23 +16,20 @@
                 {
                     background: "linear-gradient(45deg, cadetblue, cornflowerblue)",
                     enabled: true,
-                    text: "공지사항을 확인하고 있어요."
+                    text: "공지사항을 확인하고 있어요.",
+                    link: "https://github.com/lego37yoon/maeari_portfolio",
+                    "link-text": "계속 오류가 확인된다면 이슈트래커에 남겨주세요."
                 }
             ]
         }
     };
-    const defaultNotice = {
-        background: "linear-gradient(45deg, cadetblue, cornflowerblue)",
-        text: "공지사항을 확인하고 있어요."
-    };
 
     let { teaserData = defaultTeaserData } = $props();
-    const notices = $derived(teaserData.notice?.data?.length ? teaserData.notice.data : [defaultNotice]);
+    const notices = $derived(teaserData.notice?.data?.length ? teaserData.notice.data : defaultTeaserData.notice.data);
     const maxNoticeCount = $derived(notices.length || 1);
     let currentNoticeCount = $state(1);
     let isNoticePlaying = $state(false);
     let teaserTextColor = $state("#ffffff");
-    let teaserAreaElement = $state();
 
     const currentNotice = $derived(notices[currentNoticeCount - 1] ?? notices[0]);
     const teaserNotice = $derived(currentNotice?.text ?? "공지사항을 확인하고 있어요.");
@@ -42,6 +39,7 @@
 
     let carouselTimeoutId = null;
     let nextTickAt = 0;
+    let teaserAreaElement: HTMLElement = $state();
 
     function updateTeaserTextColor() {
         if (!teaserAreaElement) {
@@ -175,6 +173,7 @@
         <div class="noticeContent" in:fly={{ x: 80, duration: 200, delay: 250 }} out:fly={{ x: -80, duration: 200 }}>
             <p class="teaserTitle">{teaserNotice}</p>
             <p class="teaserDesc">
+                <span></span>
                 {#if teaserLink}
                 <a class="teaserText teaserLink" href={teaserLink} target="_blank">
                     {teaserLinkText ? teaserLinkText : "이동하기"} &gt;
@@ -235,6 +234,8 @@
     #Notice {
         display: flex;
         padding: 1rem;
+        height: 18rem;
+        align-items: end;
     }
 
     #Notice p {
@@ -245,6 +246,8 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        max-width: 50rem;
+        min-width: 0;
     }
 
     #teaserArea p,
@@ -260,7 +263,19 @@
 
     .teaserDesc {
         display: inline-flex;
+        flex-direction: column;
         gap: 0.5rem;
+    }
+
+    .teaserDesc span {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        overflow-wrap: anywhere;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
+        overflow: hidden;
     }
 
     .teaserText {
@@ -273,6 +288,7 @@
         text-decoration: none;
         border-bottom: solid 2px currentColor;
         display: inline-block;
+        max-width: max-content;
     }
     .teaserLink:visited {
         text-decoration: none;
