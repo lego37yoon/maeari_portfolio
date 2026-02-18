@@ -1,6 +1,6 @@
 {
 	"name": "mfp",
-	"version": "2.1.1",
+	"version": "2.5.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -31,6 +31,7 @@
 	"dependencies": {
 		"@sveltejs/adapter-vercel": "^6.3.1",
 		"bits-ui": "^2.15.5",
+		"colorjs.io": "^0.6.1",
 		"fast-xml-parser": "^5.3.6"
 	},
 	"packageManager": "pnpm@10.29.3"

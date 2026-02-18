@@ -7,6 +7,7 @@
     import { fly } from 'svelte/transition';
     import { page, navigating } from '$app/state';
     import { darkMode } from "../components/darkMode"; 
+    import { pickReadableTextColorFromElement } from "../utils/contrast";
     
     import meta from "../../package.json";
     import Nav from "../components/Nav.svelte";
@@ -16,8 +17,10 @@
     let { data, children } = $props();
     let currentPage = $derived(page.url.pathname.substring(page.url.pathname.lastIndexOf('/') + 1));
     let loadingDialog = $state<HTMLDialogElement>();
-    let darkModeButton = undefined;
+    let darkModeButton: (HTMLElement & { selected?: boolean }) | undefined = undefined;
     let darkModeState = $state(false);
+    let headerAtTop = $state(true);
+    let headerHeroTextColor = $state("#ffffff");
 
     const admin = '종이상자';
     const version = meta.version;
@@ -31,35 +34,89 @@
         return unsubscribe;
     });
 
-    function darkToggleEvent() {
-        if (darkModeButton.selected) {
-            document.body.classList.add("dark");
-            darkMode.set(true);
-        } else {
-            document.body.classList.remove("dark");
-            darkMode.set(false);
-        }
-    }
-    
-    onMount(async () => {
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            darkModeButton.setAttribute("selected", "");
-            document.body.classList.add("dark");
-            darkMode.set(true);
+    function applyDarkMode(enabled: boolean) {
+        if (darkModeButton) {
+            darkModeButton.selected = enabled;
         }
 
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        if (enabled) {
+            document.body.classList.add("dark");
+            darkMode.set(true);
+            darkModeState = true;
+            refreshHeaderHeroTextColor();
+            return;
+        }
+
+        document.body.classList.remove("dark");
+        darkMode.set(false);
+        darkModeState = false;
+
+        refreshHeaderHeroTextColor();
+    }
+
+    function darkToggleEvent(event: Event) {
+        const target = event.currentTarget as { selected?: boolean } | null;
+        applyDarkMode(Boolean(target?.selected));
+    }
+
+    function updateHeaderScrollState(): void {
+        headerAtTop = window.scrollY <= 1;
+    }
+
+    function refreshHeaderHeroTextColor(): void {
+        if (typeof document === "undefined") {
+            return;
+        }
+
+        const teaserArea = document.getElementById("teaserArea");
+        if (teaserArea) {
+            updateHeroTextColor(teaserArea);
+        }
+    }
+
+    function updateHeroTextColor(teaserArea: HTMLElement): void {
+        headerHeroTextColor = pickReadableTextColorFromElement(teaserArea, {
+            fallback: "#ffffff",
+            lightBackgroundTextColor: darkModeState ? "#111111" : "var(--mfp-primary-text-color)",
+            darkBackgroundTextColor: "#ffffff"
+        });
+    }
+    
+    onMount(() => {
+        const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        applyDarkMode(colorScheme.matches);
+        updateHeaderScrollState();
+
+        const handleColorSchemeChange = (event: MediaQueryListEvent) => {
             const colorSet = event.matches ? "dark":"light";
             if (colorSet === "dark") {
-                darkModeButton.setAttribute("selected", "");
-                document.body.classList.add("dark");
-                darkMode.set(true);
+                applyDarkMode(true);
             } else {
-                darkModeButton.removeAttribute("selected");
-                document.body.classList.remove("dark");
-                darkMode.set(false);
+                applyDarkMode(false);
             }
-        });
+        };
+
+        colorScheme.addEventListener("change", handleColorSchemeChange);
+        window.addEventListener("scroll", updateHeaderScrollState, { passive: true });
+
+        const teaserArea = document.getElementById("teaserArea");
+        let teaserStyleObserver: MutationObserver | undefined;
+        if (teaserArea) {
+            updateHeroTextColor(teaserArea);
+            teaserStyleObserver = new MutationObserver(() => {
+                updateHeroTextColor(teaserArea);
+            });
+            teaserStyleObserver.observe(teaserArea, {
+                attributes: true,
+                attributeFilter: ["style", "class"]
+            });
+        }
+
+        return () => {
+            colorScheme.removeEventListener("change", handleColorSchemeChange);
+            window.removeEventListener("scroll", updateHeaderScrollState);
+            teaserStyleObserver?.disconnect();
+        };
     });
 
     $effect (() => {
@@ -71,8 +128,6 @@
             loadingDialog.close();
         }
     });
-
-    $inspect(currentPage);
 </script>
 
 <dialog bind:this={loadingDialog}>
@@ -82,7 +137,11 @@
     </div>
 </dialog>
 
-<header>
+<header
+    class:with-teaser={headerAtTop}
+    class:scrolled={!headerAtTop}
+    style={`--mfp-header-hero-text-color: ${headerHeroTextColor};`}
+>
     <ul>
         <li><a href={page.url.origin} class="title">paperbox</a></li>
     </ul>
@@ -93,9 +152,9 @@
         <li><Link href="https://github.com/lego37yoon" external nav>GitHub</Link></li>
         <li><Link href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" external nav>LinkedIn</Link></li>
         <li id="displayToggle">
-            <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onclick={darkToggleEvent} onkeypress={darkToggleEvent}>
+            <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onchange={darkToggleEvent}>
                 <md-icon>dark_mode</md-icon>
-                <md-icon slot="selectedIcon">light_mode</md-icon>
+                <md-icon slot="selected">light_mode</md-icon>
             </md-icon-button>
         </li>
     </ul>
@@ -127,6 +186,15 @@
 </footer>
 
 <style>
+    :global(body) {
+        --mfp-header-height: 3.4rem;
+        --mfp-header-scrolled-bg-color: #ffffff;
+    }
+
+    :global(body.dark) {
+        --mfp-header-scrolled-bg-color: #000000;
+    }
+
     dialog {
         --cut-size: 1rem;
         z-index: 999;
@@ -185,35 +253,47 @@
     /* 헤더 부분 UI CSS */
     header {
         font-weight: lighter;
-        color: var(--mfp-primary-text-color);
+        color: var(--mfp-header-hero-text-color);
         font-size: 1.5rem;
-        height: 3.4rem;
+        height: var(--mfp-header-height);
         background: transparent;
-        /* background for scroll down (light mode) */
-        /* background: #ffffff80; */
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        transition: background-color 250ms ease, color 250ms ease, box-shadow 250ms ease;
+    }
+
+    header.scrolled {
+        position: fixed;
+        background: var(--mfp-header-scrolled-bg-color);
+        color: var(--mfp-primary-text-color);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
     }
 
     header ul {
         list-style: none;
         display: inline;
         padding: 0;
+        margin: 0;
     }
 
     header li {
         font-weight: lighter;
-        color: var(--mfp-primary-text-color);
+        color: currentColor;
     }
 
     .title {
         margin: 0.6rem 1rem 0 1rem;
         font-weight: 600;
         float: left;
-        color: var(--mfp-primary-text-color);
+        color: currentColor;
         text-decoration: none;
     }
 
     .title:visited {
-        color: var(--mfp-primary-text-color);
+        color: currentColor;
     }
 
     .rightMenu {
@@ -226,8 +306,7 @@
     .rightMenu li {
         display: inline;
         font-size: 1.2rem;
-        color: var(--mfp-primary-text-color);
-
+        color: currentColor;
     }
 
     @media screen and (max-width: 388px) {
@@ -249,9 +328,20 @@
     .rightMenu md-icon-button {
         margin-top: -0.5rem;
         margin-bottom: -0.5rem;
-        --md-icon-button-unselected-icon-color: #5f9ea0;
-        --md-icon-button-unselected-focus-icon-color: #5f9ea0;
-        --md-icon-button-selected-focus-icon-color: #5f9ea0;
-        --md-icon-button-selected-icon-color: #5f9ea0;
+        color: currentColor;
+        --md-sys-color-on-surface-variant: currentColor;
+        --md-sys-color-primary: currentColor;
+        --md-icon-button-unselected-icon-color: currentColor;
+        --md-icon-button-unselected-focus-icon-color: currentColor;
+        --md-icon-button-selected-focus-icon-color: currentColor;
+        --md-icon-button-selected-icon-color: currentColor;
+    }
+
+    :global(header.with-teaser .mfp-link-nav) {
+        color: var(--mfp-header-hero-text-color);
+    }
+
+    :global(header.scrolled .mfp-link-nav) {
+        color: var(--mfp-primary-text-color);
     }
 </style>

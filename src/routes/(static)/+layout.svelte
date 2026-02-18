@@ -66,7 +66,7 @@
             <p>
                 <md-icon-button bind:this={darkModeButton} id="darkModeButton" toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onclick={darkToggleEvent} onkeypress={darkToggleEvent}>
                     <md-icon>dark_mode</md-icon>
-                    <md-icon slot="selectedIcon">light_mode</md-icon>
+                    <md-icon slot="selected">light_mode</md-icon>
                 </md-icon-button>
             </p>
         </li> 
