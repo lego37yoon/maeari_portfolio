@@ -26,6 +26,15 @@
 
     const admin = import.meta.env.VITE_ADMIN_NAME;
     const currentYear = new Date().getFullYear();
+    let menus = $derived([
+        { href: "/", current: !["news", "cv"].includes(currentPage) ? true : false, title: "소개", external: false },
+        { href: "/news", current: currentPage === "news" ? true : false, title: "소식", external: false },
+        { href: "/cv", current: currentPage === "cv" ? true : false, title: "이력서", external: false },
+        { href: "https://diary.paperbox.pe.kr", current: false, title: "블로그", external: true },
+        { href: "https://github.com/lego37yoon", current: false, title: "GitHub", external: true },
+        { href: "https://www.linkedin.com/in/jungmin-yoon", current: false, title: "LinkedIn", external: true },
+        
+    ]);
 
     $effect(() => {
         const unsubscribe = darkMode.subscribe((value) => {
@@ -219,11 +228,9 @@
         <li><a href={page.url.origin} class="title">paperbox</a></li>
     </ul>
     <ul class="rightMenu" role="navigation">
-        <li class="desktopLink"><Link href="/" nav current={currentPage !== "cv" ? true : false}>소개</Link></li>
-        <li class="desktopLink"><Link href="/cv" nav current={currentPage === "cv" ? true : false}>이력서</Link></li>
-        <li class="desktopLink"><Link href="https://diary.paperbox.pe.kr" external nav>블로그</Link></li>
-        <li class="desktopLink"><Link href="https://github.com/lego37yoon" external nav>GitHub</Link></li>
-        <li class="desktopLink"><Link href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" external nav>LinkedIn</Link></li>
+        {#each menus as menu}
+        <li class="desktopLink"><Link href={menu.href} nav current={menu.current} external={menu.external}>{menu.title}</Link></li>
+        {/each}
         <li id="displayToggle">
             <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onchange={darkToggleEvent}>
                 <md-icon>dark_mode</md-icon>
@@ -241,11 +248,9 @@
     <button class="mobileMenuBackdrop" onclick={closeMobileMenu} aria-label="close site menu"></button>
     <nav id="mobileMenuPopup" transition:fly={{ y: -12, duration: 160 }} aria-label="mobile menu" class:scrolled={!headerAtTop}>
         <ul>
-            <li><Link href="/" onClick={closeMobileMenu} nav current={currentPage !== "cv" ? true : false}>소개</Link></li>
-            <li><Link href="/cv" onClick={closeMobileMenu} nav current={currentPage === "cv" ? true : false}>이력서</Link></li>
-            <li><Link href="https://diary.paperbox.pe.kr" onClick={closeMobileMenu} external nav>블로그</Link></li>
-            <li><Link href="https://github.com/lego37yoon" onClick={closeMobileMenu} external nav>GitHub</Link></li>
-            <li><Link href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" onClick={closeMobileMenu} external nav>LinkedIn</Link></li>
+            {#each menus as menu}
+            <li><Link href={menu.href} onClick={closeMobileMenu} nav current={menu.current} external={menu.external}>{menu.title}</Link></li>
+            {/each}
         </ul>
     </nav>
     {/if}
