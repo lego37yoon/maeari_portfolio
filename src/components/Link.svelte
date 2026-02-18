@@ -2,12 +2,12 @@
     import type { Snippet } from "svelte";
     import Icon from "./Icon.svelte";
 
-  let { external = false, nav = false, current = false, href, children }
-    : { external?: boolean, nav?: boolean, current?: boolean, href: string, children: Snippet<[]> } = $props();
+  let { external = false, nav = false, current = false, sub = false, href, children }
+    : { external?: boolean, nav?: boolean, current?: boolean, sub?: boolean, href: string, children: Snippet<[]> } = $props();
 </script>
 
 {#if external}
-<a {href} target="_blank" class={`mfp-link-external ${nav ? "mfp-link-nav":""}`}>
+<a {href} target="_blank" class={`mfp-link-external ${nav ? "mfp-link-nav":""} ${!current && sub ? "mfp-link-sub-not-current" : ""}`}>
   <span class={`mfp-link-label ${current ? "mfp-link-nav-current" : ""}`}>
     {@render children()}
   </span>
@@ -16,7 +16,7 @@
   </span>
 </a>
 {:else}
-<a {href} class={`mfp-link-internal ${nav ? "mfp-link-nav":""}`}>
+<a {href} class={`mfp-link-internal ${nav ? "mfp-link-nav":""} ${!current && sub ? "mfp-link-sub-not-current" : ""}`}>
   <span class={`mfp-link-label ${current ? "mfp-link-nav-current" : ""}`}>
     {@render children()}
   </span>
@@ -77,6 +77,10 @@
 
   .mfp-link-nav-current::after {
     transform: scaleX(1);
+  }
+
+  .mfp-link-sub-not-current {
+    color: gray;
   }
 
   .mfp-link-nav .mfp-link-icon {

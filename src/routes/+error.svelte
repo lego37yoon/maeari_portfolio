@@ -23,6 +23,6 @@
     }
 
     main {
-        padding: 1em;
+        padding: 4.4rem 1rem 1rem 1rem;
     }
 </style>

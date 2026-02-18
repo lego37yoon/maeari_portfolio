@@ -3,27 +3,27 @@
     import "@material/web/icon/icon.js";
     import "@material/web/iconbutton/icon-button.js";
     import '@material/web/progress/circular-progress.js';
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
     import { fly } from 'svelte/transition';
     import { page, navigating } from '$app/state';
     import { darkMode } from "../components/darkMode"; 
-    import { pickReadableTextColorFromElement } from "../utils/contrast";
+    import { pickReadableTextColorForPageTop } from "../utils/color";
     
     import meta from "../../package.json";
-    import Nav from "../components/Nav.svelte";
     import Link from "../components/Link.svelte";
-    import Teaser from "../components/Teaser.svelte";
-
-    let { data, children } = $props();
-    let currentPage = $derived(page.url.pathname.substring(page.url.pathname.lastIndexOf('/') + 1));
+    import { getCurrentPath } from "../utils/path";
+    
+    let { children } = $props();
     let loadingDialog = $state<HTMLDialogElement>();
+    let currentPage = $derived(getCurrentPath());
     let darkModeButton: (HTMLElement & { selected?: boolean }) | undefined = undefined;
+    let headerElement: HTMLElement | undefined = undefined;
     let darkModeState = $state(false);
     let headerAtTop = $state(true);
     let headerHeroTextColor = $state("#ffffff");
+    let heroStyleObserver: MutationObserver | undefined;
 
     const admin = '종이상자';
-    const version = meta.version;
     const currentYear = new Date().getFullYear();
 
     $effect(() => {
@@ -68,17 +68,56 @@
             return;
         }
 
-        const teaserArea = document.getElementById("teaserArea");
-        if (teaserArea) {
-            updateHeroTextColor(teaserArea);
-        }
+        updateHeaderHeroTextColorFromSource();
     }
 
-    function updateHeroTextColor(teaserArea: HTMLElement): void {
-        headerHeroTextColor = pickReadableTextColorFromElement(teaserArea, {
-            fallback: "#ffffff",
-            lightBackgroundTextColor: darkModeState ? "#111111" : "var(--mfp-primary-text-color)",
-            darkBackgroundTextColor: "#ffffff"
+    function doesElementIntersectHeaderArea(element: HTMLElement): boolean {
+        const rect = element.getBoundingClientRect();
+        const headerHeight = headerElement?.getBoundingClientRect().height ?? 0;
+        const visibleHeaderHeight = headerHeight > 0 ? headerHeight : 54;
+        return rect.top < visibleHeaderHeight && rect.bottom > 0;
+    }
+
+    function updateHeaderHeroTextColorFromSource(): void {
+        const teaserArea = document.getElementById("teaserArea");
+        headerHeroTextColor = pickReadableTextColorForPageTop(
+            teaserArea,
+            teaserArea ? doesElementIntersectHeaderArea(teaserArea) : false,
+            {
+                fallback: darkModeState ? "#ffffff" : "var(--mfp-primary-text-color)",
+                lightBackgroundTextColor: darkModeState ? "#111111" : "var(--mfp-primary-text-color)",
+                darkBackgroundTextColor: "#ffffff"
+            }
+        );
+    }
+
+    function connectHeroColorObserver(): void {
+        if (typeof document === "undefined") {
+            return;
+        }
+
+        heroStyleObserver?.disconnect();
+        updateHeaderHeroTextColorFromSource();
+
+        heroStyleObserver = new MutationObserver(() => {
+            updateHeaderHeroTextColorFromSource();
+        });
+
+        const teaserArea = document.getElementById("teaserArea");
+        if (teaserArea) {
+            heroStyleObserver.observe(teaserArea, {
+                attributes: true,
+                attributeFilter: ["style", "class"]
+            });
+        }
+
+        heroStyleObserver.observe(document.body, {
+            attributes: true,
+            attributeFilter: ["style", "class"]
+        });
+        heroStyleObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["style", "class"]
         });
     }
     
@@ -98,24 +137,33 @@
 
         colorScheme.addEventListener("change", handleColorSchemeChange);
         window.addEventListener("scroll", updateHeaderScrollState, { passive: true });
-
-        const teaserArea = document.getElementById("teaserArea");
-        let teaserStyleObserver: MutationObserver | undefined;
-        if (teaserArea) {
-            updateHeroTextColor(teaserArea);
-            teaserStyleObserver = new MutationObserver(() => {
-                updateHeroTextColor(teaserArea);
-            });
-            teaserStyleObserver.observe(teaserArea, {
-                attributes: true,
-                attributeFilter: ["style", "class"]
-            });
-        }
+        connectHeroColorObserver();
 
         return () => {
             colorScheme.removeEventListener("change", handleColorSchemeChange);
             window.removeEventListener("scroll", updateHeaderScrollState);
-            teaserStyleObserver?.disconnect();
+            heroStyleObserver?.disconnect();
+        };
+    });
+
+    $effect(() => {
+        page.url.pathname;
+
+        if (typeof document === "undefined") {
+            return;
+        }
+
+        let cancelled = false;
+        tick().then(() => {
+            if (cancelled) {
+                return;
+            }
+
+            connectHeroColorObserver();
+        });
+
+        return () => {
+            cancelled = true;
         };
     });
 
@@ -137,11 +185,7 @@
     </div>
 </dialog>
 
-<header
-    class:with-teaser={headerAtTop}
-    class:scrolled={!headerAtTop}
-    style={`--mfp-header-hero-text-color: ${headerHeroTextColor};`}
->
+<header bind:this={headerElement} class:with-teaser={headerAtTop} class:scrolled={!headerAtTop} style={`--mfp-header-hero-text-color: ${headerHeroTextColor};`}>
     <ul>
         <li><a href={page.url.origin} class="title">paperbox</a></li>
     </ul>
@@ -160,17 +204,7 @@
     </ul>
 </header>
 
-<Teaser teaserData={{
-    intro: data?.intro ?? { title: '', desc: '' },
-    notice: data?.notice ?? { data: [] }
-}}></Teaser>
-<Nav selectedId={currentPage} />
-
-{#key currentPage}
-<div in:fly="{{ x: 200, duration: 1000 }}">
-    {@render children()}
-</div>
-{/key}
+{@render children()}
 
 <footer>
     <p>© {currentYear} {admin}</p>
@@ -178,7 +212,7 @@
         <span>Made with &lt;3 and Svelte. <Link href={`${page.url.origin}/oss`}>OSS Notice</Link></span>
         <span class="mfp-version">
             <Link href="https://github.com/lego37yoon/maeari_portfolio" external={true}>
-                mfp v{version}
+                mfp v{meta.version}
             </Link>
         </span>
 

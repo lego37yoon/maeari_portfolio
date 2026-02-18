@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
     import "@material/web/icon/icon.js";
     import "@material/web/iconbutton/icon-button.js";
     import { fly, fade } from 'svelte/transition';
     import { onMount } from "svelte";
     import { pickReadableTextColorFromElement } from "../utils/contrast";
 
-    const NOTICE_INTERVAL_MS = 3000;
+    const NOTICE_INTERVAL_MS = 5000;
     const defaultTeaserData = {
         intro: {
             title: "안녕하세요,",
