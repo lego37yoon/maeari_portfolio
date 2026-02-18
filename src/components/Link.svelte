@@ -2,12 +2,20 @@
     import type { Snippet } from "svelte";
     import Icon from "./Icon.svelte";
 
-  let { external = false, nav = false, current = false, sub = false, href, children }
-    : { external?: boolean, nav?: boolean, current?: boolean, sub?: boolean, href: string, children: Snippet<[]> } = $props();
+  let { external = false, nav = false, current = false, sub = false, href, onClick, children }
+    : {
+      external?: boolean,
+      nav?: boolean,
+      current?: boolean,
+      sub?: boolean,
+      href: string,
+      onClick?: (event: MouseEvent) => void,
+      children: Snippet<[]>
+    } = $props();
 </script>
 
 {#if external}
-<a {href} target="_blank" class={`mfp-link-external ${nav ? "mfp-link-nav":""} ${!current && sub ? "mfp-link-sub-not-current" : ""}`}>
+<a {href} target="_blank" onclick={onClick} class={`mfp-link-external ${nav ? "mfp-link-nav":""} ${!current && sub ? "mfp-link-sub-not-current" : ""}`}>
   <span class={`mfp-link-label ${current ? "mfp-link-nav-current" : ""}`}>
     {@render children()}
   </span>
@@ -16,7 +24,7 @@
   </span>
 </a>
 {:else}
-<a {href} class={`mfp-link-internal ${nav ? "mfp-link-nav":""} ${!current && sub ? "mfp-link-sub-not-current" : ""}`}>
+<a {href} onclick={onClick} class={`mfp-link-internal ${nav ? "mfp-link-nav":""} ${!current && sub ? "mfp-link-sub-not-current" : ""}`}>
   <span class={`mfp-link-label ${current ? "mfp-link-nav-current" : ""}`}>
     {@render children()}
   </span>

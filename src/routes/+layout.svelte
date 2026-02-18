@@ -9,7 +9,7 @@
     import { darkMode } from "../components/darkMode"; 
     import { pickReadableTextColorForPageTop } from "../utils/color";
     
-    import meta from "../../package.json";
+    import { version } from "../../package.json";
     import Link from "../components/Link.svelte";
     import { getCurrentPath } from "../utils/path";
     
@@ -22,8 +22,9 @@
     let headerAtTop = $state(true);
     let headerHeroTextColor = $state("#ffffff");
     let heroStyleObserver: MutationObserver | undefined;
+    let mobileMenuOpen = $state(false);
 
-    const admin = '종이상자';
+    const admin = import.meta.env.VITE_ADMIN_NAME;
     const currentYear = new Date().getFullYear();
 
     $effect(() => {
@@ -57,6 +58,14 @@
     function darkToggleEvent(event: Event) {
         const target = event.currentTarget as { selected?: boolean } | null;
         applyDarkMode(Boolean(target?.selected));
+    }
+
+    function closeMobileMenu(): void {
+        mobileMenuOpen = false;
+    }
+
+    function toggleMobileMenu(): void {
+        mobileMenuOpen = !mobileMenuOpen;
     }
 
     function updateHeaderScrollState(): void {
@@ -123,6 +132,7 @@
     
     onMount(() => {
         const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const mobileQuery = window.matchMedia('(max-width: 780px)');
         applyDarkMode(colorScheme.matches);
         updateHeaderScrollState();
 
@@ -134,16 +144,35 @@
                 applyDarkMode(false);
             }
         };
+        const handleViewportChange = (event: MediaQueryListEvent) => {
+            if (!event.matches) {
+                closeMobileMenu();
+            }
+        };
+        const handleWindowKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                closeMobileMenu();
+            }
+        };
 
         colorScheme.addEventListener("change", handleColorSchemeChange);
+        mobileQuery.addEventListener("change", handleViewportChange);
         window.addEventListener("scroll", updateHeaderScrollState, { passive: true });
+        window.addEventListener("keydown", handleWindowKeyDown);
         connectHeroColorObserver();
 
         return () => {
             colorScheme.removeEventListener("change", handleColorSchemeChange);
+            mobileQuery.removeEventListener("change", handleViewportChange);
             window.removeEventListener("scroll", updateHeaderScrollState);
+            window.removeEventListener("keydown", handleWindowKeyDown);
             heroStyleObserver?.disconnect();
         };
+    });
+
+    $effect(() => {
+        page.url.pathname;
+        closeMobileMenu();
     });
 
     $effect(() => {
@@ -190,18 +219,36 @@
         <li><a href={page.url.origin} class="title">paperbox</a></li>
     </ul>
     <ul class="rightMenu" role="navigation">
-        <li><Link href="/" nav current={currentPage !== "cv" ? true : false}>소개</Link></li>
-        <li><Link href="/cv" nav current={currentPage === "cv" ? true : false}>이력서</Link></li>
-        <li><Link href="https://diary.paperbox.pe.kr" external nav>블로그</Link></li>
-        <li><Link href="https://github.com/lego37yoon" external nav>GitHub</Link></li>
-        <li><Link href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" external nav>LinkedIn</Link></li>
+        <li class="desktopLink"><Link href="/" nav current={currentPage !== "cv" ? true : false}>소개</Link></li>
+        <li class="desktopLink"><Link href="/cv" nav current={currentPage === "cv" ? true : false}>이력서</Link></li>
+        <li class="desktopLink"><Link href="https://diary.paperbox.pe.kr" external nav>블로그</Link></li>
+        <li class="desktopLink"><Link href="https://github.com/lego37yoon" external nav>GitHub</Link></li>
+        <li class="desktopLink"><Link href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" external nav>LinkedIn</Link></li>
         <li id="displayToggle">
             <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onchange={darkToggleEvent}>
                 <md-icon>dark_mode</md-icon>
                 <md-icon slot="selected">light_mode</md-icon>
             </md-icon-button>
         </li>
+        <li id="mobileMenuToggle">
+            <md-icon-button toggle aria-label="toggle site menu" aria-expanded={mobileMenuOpen} onclick={toggleMobileMenu} onkeypress={toggleMobileMenu} selected={mobileMenuOpen} role="button" tabindex="0">
+                <md-icon>menu</md-icon>
+                <md-icon slot="selected">close</md-icon>
+            </md-icon-button>
+        </li>
     </ul>
+    {#if mobileMenuOpen}
+    <button class="mobileMenuBackdrop" onclick={closeMobileMenu} aria-label="close site menu"></button>
+    <nav id="mobileMenuPopup" transition:fly={{ y: -12, duration: 160 }} aria-label="mobile menu" class:scrolled={!headerAtTop}>
+        <ul>
+            <li><Link href="/" onClick={closeMobileMenu} nav current={currentPage !== "cv" ? true : false}>소개</Link></li>
+            <li><Link href="/cv" onClick={closeMobileMenu} nav current={currentPage === "cv" ? true : false}>이력서</Link></li>
+            <li><Link href="https://diary.paperbox.pe.kr" onClick={closeMobileMenu} external nav>블로그</Link></li>
+            <li><Link href="https://github.com/lego37yoon" onClick={closeMobileMenu} external nav>GitHub</Link></li>
+            <li><Link href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" onClick={closeMobileMenu} external nav>LinkedIn</Link></li>
+        </ul>
+    </nav>
+    {/if}
 </header>
 
 {@render children()}
@@ -212,7 +259,7 @@
         <span>Made with &lt;3 and Svelte. <Link href={`${page.url.origin}/oss`}>OSS Notice</Link></span>
         <span class="mfp-version">
             <Link href="https://github.com/lego37yoon/maeari_portfolio" external={true}>
-                mfp v{meta.version}
+                mfp v{version}
             </Link>
         </span>
 
@@ -343,19 +390,69 @@
         color: currentColor;
     }
 
-    @media screen and (max-width: 388px) {
-        .rightMenu li {
+    #mobileMenuToggle {
+        display: none;
+    }
+
+    .mobileMenuBackdrop {
+        position: fixed;
+        inset: var(--mfp-header-height) 0 0 0;
+        border: none;
+        margin: 0;
+        padding: 0;
+        background: rgba(0, 0, 0, 0.28);
+        z-index: 10;
+    }
+
+    #mobileMenuPopup {
+        position: fixed;
+        top: var(--mfp-header-height);
+        margin: 0.5rem;
+        width: calc(100% - 1rem);
+        background: transparent;
+        padding: 0.5rem;
+        z-index: 11;
+        box-sizing: border-box;
+    }
+
+    #mobileMenuPopup.scrolled {
+        background: var(--mfp-header-scrolled-bg-color);
+    }
+
+    #mobileMenuPopup ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 0.2rem;
+    }
+
+    #mobileMenuPopup li {
+        font-size: 1.2rem;
+        color: var(--mfp-primary-text-color);
+        padding: 0.25rem 0.35rem;
+    }
+
+    @media screen and (max-width: 780px) {
+        .rightMenu .desktopLink {
             display: none;
         }
 
         #displayToggle {
             display: inline;
         }
+
+        #mobileMenuToggle {
+            display: inline;
+        }
     }
 
-    @media screen and (max-width: 223px) {
-        .rightMenu {
-            display: none;
+    @media screen and (max-width: 232px) {
+        #mobileMenuPopup {
+            right: 0.5rem;
+            width: calc(100vw - 1rem);
         }
     }
 

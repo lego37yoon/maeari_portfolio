@@ -223,6 +223,7 @@
         margin-top: calc(-1 * var(--mfp-header-height));
         height: calc(100vh - 10rem);
         width: 100%;
+        overflow: hidden;
         box-sizing: border-box;
         transition: filter 200ms ease;
     }
@@ -274,7 +275,6 @@
         line-clamp: 3;
         overflow-wrap: anywhere;
         text-overflow: ellipsis;
-        flex-shrink: 1;
         overflow: hidden;
     }
 
