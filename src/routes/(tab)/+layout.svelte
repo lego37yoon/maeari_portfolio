@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "./tab.scss";
     import { fly } from 'svelte/transition';
     import Nav from '../../components/Nav.svelte';
     import Teaser from '../../components/Teaser.svelte';

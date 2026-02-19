@@ -1,5 +1,6 @@
 <script>
     import Card from '../../components/Card.svelte';
+    import Link from '../../components/Link.svelte';
 
     let { data } = $props();
 </script>
@@ -13,13 +14,15 @@
 
 <main>
     <section id="project">
-        <h1>주요 프로젝트 바로가기</h1>
-        <p>
-            취미부터 생활 속 불편함까지, 다양한 개인 및 팀 프로젝트를 기획하고 만들고 있어요.
-            <a href="https://github.com/lego37yoon?tab=repositories" target="_blank">
-                다른 프로젝트 찾아보기
-            </a>
-        </p>
+        <div class="desc">
+            <h1>지금 진행 중</h1>
+            <p>
+                취미부터 생활 속 불편함까지, 다양한 개인 및 팀 프로젝트를 기획하고 만들고 있어요.
+                <Link href="https://github.com/lego37yoon?tab=repositories" external>
+                    다른 프로젝트 찾아보기
+                </Link>
+            </p>
+        </div>
         <div class="list">
             {#each data.project as project}
             <Card icon={project.data.icon}
@@ -28,51 +31,28 @@
             {/each}
         </div>
     </section>
-    <section id="contribution">
-        <h1>오픈소스 기여 활동</h1>
-        <p>번역에서 시작해, 더 다양한 기여를 할 수 있도록 노력하고 있어요.</p>
-        <div class="list">
-            {#each data.contribution as project}
-            <Card icon={project.data.icon}
-                href={project.data.link} title={project.data.title} 
-                desc={[(project.data["end-year"] !== undefined ?
-                    `${project.data["start-year"]} ~ ${project.data["end-year"]}` :
-                    `${project.data["start-year"]} ~ 현재`), project.data.desc]}
-                type={project.data.role}
-            />
-            {/each}
-        </div>
-    </section>
-    <section id="activity">
-        <h1>참여한 활동</h1>
-        <p>다양한 활동에 참여하여 성장하고 있어요.</p>
-        <div class="list">
-            {#each data.activity as act}
-            <Card icon={act.data.icon}
-                href={act.data.link} title={act.data.title} 
-                desc={[act.data.team ? `${act.data.members}명 단체 참여` : "개인 참여",
-                    `주최 | ${act.data.org[0]}`
-                ]} 
-                type={act.data.prize}
-            />
-            {/each}
-        </div>
-    </section>
 </main>
 
 <style>
     main {
-        padding: 0 1rem 0 1rem;
+        padding: 0 2rem;
     }
 
-    h1 {
-        margin-bottom: 0px;
+    section {
+        display: flex;
+    }
+
+    section .desc {
+        width: 24rem;
+    }
+    
+    h1, p {
+        margin: 0;
     }
 
     .list {
         display: flex;
         flex-wrap: wrap;
-        align-items: stretch;
         gap: 1em;
     }
     

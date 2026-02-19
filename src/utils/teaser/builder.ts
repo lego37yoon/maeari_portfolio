@@ -1,6 +1,4 @@
 import type { TeaserBuildInput, TeaserBuildResult, TeaserIntro, TeaserNotice, TeaserNoticeItem } from './types';
-import type { NewsPost } from '../news';
-import { formatKoreanDateLabel } from './meta';
 
 const DEFAULT_TEASER_INTRO: TeaserIntro = {
 	title: '안녕하세요,',

@@ -148,38 +148,3 @@
     </section>
     {/if}
 </main>
-
-<style>
-   
-    main {
-        padding: 0 1rem 0 1rem;
-    }
-
-    h2 {
-        margin-bottom: 0;
-    }
-
-    section {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1em;
-    }
-
-    .list {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: stretch;
-        gap: 1em;
-    }
-
-    @media screen and (max-width: 531px) {
-        .list {
-            justify-content: center;
-        }
-
-        div {
-            width: 100%;
-        }
-    }
-
-</style>
