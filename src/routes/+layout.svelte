@@ -266,7 +266,7 @@
 
 <footer>
     <p>© {currentYear} {admin}</p>
-    <p>
+    <p class="software-info">
         <span>Made with &lt;3 and Svelte. <Link href={`${page.url.origin}/oss`}>OSS Notice</Link></span>
         <span class="mfp-version">
             <Link href="https://github.com/lego37yoon/maeari_portfolio" external={true}>
@@ -329,12 +329,17 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: center;
     }
 
     footer p {
         margin: 0;
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        align-items: center;
     }
-
+    
     .mfp-version {
         padding: 0.25rem 0.5rem;
         background: #d2c77303;
@@ -363,7 +368,7 @@
         color: var(--mfp-primary-text-color);
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
     }
-    
+
     header ul {
         list-style: none;
         display: inline;
@@ -456,6 +461,12 @@
 
         #mobileMenuToggle {
             display: inline;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        .software-info {
+            width: 100%;
         }
     }
 
