@@ -4,7 +4,7 @@
     import { fly, fade } from 'svelte/transition';
     import { onMount } from "svelte";
     import { pickReadableTextColorFromElement } from "../utils/contrast";
-    import { buildTeaserPayload } from "../utils/teaser";
+    import { buildTeaserPayload, buildTeaserMetaLabel } from "../utils/teaser";
 
     const LIGHT_BG_TEXT_COLOR = "#1a1a1a";
     const DARK_BG_TEXT_COLOR = "#ffffff";
@@ -25,6 +25,7 @@
     const currentNotice = $derived(notices[currentNoticeCount - 1] ?? notices[0]);
     const teaserNotice = $derived(currentNotice.text);
     const teaserDesc = $derived(currentNotice.desc);
+    const teaserMeta = $derived(buildTeaserMetaLabel(currentNotice));
     let teaserImageLuminance = $state<number | null>(null);
 	const teaserLinkText = $derived(currentNotice["link-title"] ?? "");
 	const teaserLink = $derived(currentNotice.link ?? "");
@@ -313,8 +314,9 @@
 	>
     <section id="Notice">
         {#if maxNoticeCount > 0}
-        {#key `${teaserNotice}`}
+        {#key teaserNotice}
         <div class="noticeContent" in:fly={{ x: 80, duration: 200, delay: 250 }} out:fly={{ x: -80, duration: 200 }}>
+            <p class="teaserMeta">{teaserMeta}</p>
             <p class="teaserTitle">{teaserNotice}</p>
             <p class="teaserDesc">
                 <span>{teaserDesc}</span>
@@ -406,7 +408,6 @@
 
     #Notice p {
         margin: 0;
-        text-shadow: 3px 3px 3px grey;
     }
 
     .noticeContent {
@@ -415,6 +416,11 @@
         gap: 0.5rem;
         max-width: 50rem;
         min-width: 0;
+    }
+
+    .teaserMeta {
+        font-size: 1rem;
+        font-weight: 600;
     }
 
     #teaserArea p,

@@ -175,14 +175,6 @@ function extractDescription(rawPost: Record<string, unknown>): string {
 	return buildTextPreview(rawDescription);
 }
 
-function parseNewsPostDate(pubDateRaw: string, locale: string): { original: string; timestamp: number | undefined } {
-	const date = new Date(Date.parse(pubDateRaw));
-	if (!Number.isNaN(date.getTime())) {
-		return { original: date.toLocaleString(locale), timestamp: date.getTime() };
-	}
-	return { original: pubDateRaw, timestamp: undefined };
-}
-
 export function parseRssFeed(rawData: string): RSSFeed {
 	return parser.parse(rawData) as RSSFeed;
 }
@@ -197,22 +189,18 @@ export function buildNewsPosts(rawData: RSSFeed, locale = 'ko-KR'): {
 
 	const posts = rawItems.map((item) => {
 		const post = item as Record<string, unknown>;
-		const pubDateRaw = toStringValue(post.pubDate);
-		const { original: postDate, timestamp: pubDateTimestamp } = parseNewsPostDate(pubDateRaw, locale);
-		const categoryRaw = post.category;
-		const category = Array.isArray(categoryRaw)
-			? categoryRaw[0]
-			: typeof categoryRaw === 'string'
-				? categoryRaw
+		const category = Array.isArray(post.category)
+			? post.category[0]
+			: typeof post.category === 'string'
+				? post.category
 				: undefined;
 		const description = extractDescription(post);
 		const thumbnail = extractThumbnail(post);
 
 		return {
 			...(post as NewsPost),
-			pubDate: postDate,
+			pubDate: toStringValue(post.pubDate),
 			category: category,
-			pubDateTimestamp,
 			description,
 			thumbnail,
 			link: toStringValue(post.link)

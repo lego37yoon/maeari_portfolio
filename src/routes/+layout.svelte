@@ -363,11 +363,7 @@
         color: var(--mfp-primary-text-color);
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
     }
-
-    :global(header.with-teaser) {
-        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
-    }
-
+    
     header ul {
         list-style: none;
         display: inline;
@@ -494,17 +490,6 @@
 
     :global(header.with-teaser .mfp-link-nav) {
         color: var(--mfp-header-hero-text-color);
-        text-shadow:
-            0 1px 4px rgba(0, 0, 0, 0.45),
-            0 0 4px rgba(255, 255, 255, 0.08);
-    }
-
-    :global(header.with-teaser .mfp-link-icon) {
-        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
-    }
-
-    :global(header.with-teaser md-icon-button) {
-        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
     }
 
     :global(header.scrolled .mfp-link-nav) {

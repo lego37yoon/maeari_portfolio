@@ -5,6 +5,8 @@ export interface TeaserNoticeItem {
 	background: string;
 	text: string;
 	desc: string;
+	source?: "notice" | "news";
+	date?: string;
 	link?: string;
 	'link-title'?: string;
 }

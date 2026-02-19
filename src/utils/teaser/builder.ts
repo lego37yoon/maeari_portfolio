@@ -1,4 +1,6 @@
 import type { TeaserBuildInput, TeaserBuildResult, TeaserIntro, TeaserNotice, TeaserNoticeItem } from './types';
+import type { NewsPost } from '../news';
+import { formatKoreanDateLabel } from './meta';
 
 const DEFAULT_TEASER_INTRO: TeaserIntro = {
 	title: '안녕하세요,',
@@ -49,6 +51,8 @@ export function buildTeaserPayload(input: TeaserBuildInput = {}): TeaserBuildRes
 				text: post.title,
 				desc: post.description ?? '',
 				link: post.link,
+				source: 'news',
+				date: post.pubDate?.trim(),
 				'link-title': '더 읽어보기',
 				enabled: true
 			});
