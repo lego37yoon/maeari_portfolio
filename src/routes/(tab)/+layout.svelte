@@ -3,11 +3,12 @@
     import Nav from '../../components/Nav.svelte';
     import Teaser from '../../components/Teaser.svelte';
     import { getCurrentPath } from '../../utils/path';
-    
+    import { buildTeaserPayload } from '../../utils/teaser';
 
     let { data, children } = $props();
     let currentPage = $derived(getCurrentPath());
     let pageContentContainer: HTMLElement | undefined = $state(undefined);
+    const teaserData = $derived(buildTeaserPayload(data ?? {}));
 
     function scrollToPageContentTop(): void {
         if (!pageContentContainer || typeof document === "undefined") {
@@ -28,10 +29,7 @@
     }
 </script>
 
-<Teaser teaserData={{
-    intro: data?.intro ?? { title: '', desc: '' },
-    notice: data?.notice ?? { data: [] }
-}} />
+<Teaser teaserData={teaserData} />
 
 <Nav selectedId={currentPage} />
 

@@ -59,7 +59,15 @@ export function pickReadableTextColorForPageTop(
     options: ReadableTextColorOptions
 ): string {
     if (teaserArea && shouldUseTeaser) {
-        return pickReadableTextColorFromElement(teaserArea, options);
+        const configuredColor = getComputedStyle(teaserArea).getPropertyValue("--teaser-text-color").trim();
+        if (configuredColor) {
+            return configuredColor;
+        }
+
+        return pickReadableTextColorFromElement(teaserArea, {
+            ...options,
+            fallback: options.darkBackgroundTextColor ?? options.fallback ?? "#ffffff"
+        });
     }
 
     const fallbackBackground = getPageBackgroundColor();

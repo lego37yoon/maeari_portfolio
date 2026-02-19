@@ -4,29 +4,19 @@
     import { fly, fade } from 'svelte/transition';
     import { onMount } from "svelte";
     import { pickReadableTextColorFromElement } from "../utils/contrast";
+    import { buildTeaserPayload } from "../utils/teaser";
+
+    const LIGHT_BG_TEXT_COLOR = "#1a1a1a";
+    const DARK_BG_TEXT_COLOR = "#ffffff";
+    const IMAGE_BRIGHTNESS_THRESHOLD = 195;
+    const IMAGE_SAMPLE_SIZE = 24;
+    const IMAGE_LUMINANCE_CACHE = new Map<string, number | null>();
+    let textColorRequestId = 0;
 
     const NOTICE_INTERVAL_MS = 5000;
-    const defaultTeaserData = {
-        intro: {
-            title: "안녕하세요,",
-            desc: "포트폴리오 사이트에 오신 것을 환영합니다"
-        },
-        notice: {
-            data: [
-                {
-                    background: "linear-gradient(45deg, cadetblue, cornflowerblue)",
-                    enabled: true,
-                    text: "공지사항을 확인하고 있어요.",
-                    desc: "5초 이상 공지 확인에서 넘어가지 않는 경우, 네트워크 문제가 있거나 코드가 잘못 작성되었을 수 있습니다.",
-                    link: "https://github.com/lego37yoon/maeari_portfolio",
-                    "link-text": "계속 오류가 확인된다면 이슈트래커에 남겨주세요."
-                }
-            ]
-        }
-    };
-
-    let { teaserData = defaultTeaserData } = $props();
-    const notices = $derived(teaserData.notice?.data?.length ? teaserData.notice.data : defaultTeaserData.notice.data);
+    let { teaserData = {} } = $props();
+    const resolvedTeaserData = $derived(buildTeaserPayload(teaserData));
+    const notices = $derived(resolvedTeaserData.notice.data);
     const maxNoticeCount = $derived(notices.length || 1);
     let currentNoticeCount = $state(1);
     let isNoticePlaying = $state(false);
@@ -35,9 +25,144 @@
     const currentNotice = $derived(notices[currentNoticeCount - 1] ?? notices[0]);
     const teaserNotice = $derived(currentNotice.text);
     const teaserDesc = $derived(currentNotice.desc);
-    const teaserLinkText = $derived(currentNotice["link-title"] ?? "");
-    const teaserLink = $derived(currentNotice.link ?? "");
-    const teaserBackground = $derived(currentNotice.background ?? "linear-gradient(45deg, cadetblue, cornflowerblue)");
+    let teaserImageLuminance = $state<number | null>(null);
+	const teaserLinkText = $derived(currentNotice["link-title"] ?? "");
+	const teaserLink = $derived(currentNotice.link ?? "");
+	const teaserBackground = $derived(currentNotice.background ?? "linear-gradient(45deg, cadetblue, cornflowerblue)");
+	const isImageBackground = $derived(
+		typeof teaserBackground === "string" && teaserBackground.trim().toLowerCase().startsWith("url(")
+	);
+
+    function getImageUrlFromBackground(background: string): string {
+        const match = background.match(/url\(\s*['"]?(.*?)['"]?\s*\)/i);
+        return match?.[1]?.trim() ?? "";
+    }
+
+    function parseImageLuminanceFromPixelData(data: ImageData): number {
+        const rgbSamples: Array<number> = [];
+        for (let i = 0; i < data.data.length; i += 4) {
+            const alpha = data.data[i + 3];
+            if (alpha <= 0) {
+                continue;
+            }
+            const luminance = 0.2126 * data.data[i] + 0.7152 * data.data[i + 1] + 0.0722 * data.data[i + 2];
+            rgbSamples.push(luminance);
+        }
+
+        if (rgbSamples.length === 0) {
+            return -1;
+        }
+
+        return rgbSamples.reduce((sum, value) => sum + value, 0) / rgbSamples.length;
+    }
+
+    function getCachedImageLuminance(imageUrl: string): number | null | undefined {
+        return IMAGE_LUMINANCE_CACHE.get(imageUrl);
+    }
+
+    async function fetchImageLuminance(imageUrl: string): Promise<number | null> {
+        if (!imageUrl) {
+            return null;
+        }
+
+        const cachedLuminance = getCachedImageLuminance(imageUrl);
+        if (cachedLuminance !== undefined) {
+            return cachedLuminance;
+        }
+
+        try {
+            const response = await fetch(imageUrl, { mode: "cors" });
+            if (!response.ok) {
+                IMAGE_LUMINANCE_CACHE.set(imageUrl, null);
+                return null;
+            }
+
+            const blob = await response.blob();
+            const imageUrlForBlob = URL.createObjectURL(blob);
+
+            try {
+                const image = new Image();
+                image.crossOrigin = "anonymous";
+                image.referrerPolicy = "no-referrer";
+
+                return await new Promise<number | null>((resolve) => {
+                    image.onload = () => {
+                        const canvas = document.createElement("canvas");
+                        const context = canvas.getContext("2d");
+                        if (!context) {
+                            resolve(null);
+                            return;
+                        }
+
+                        canvas.width = IMAGE_SAMPLE_SIZE;
+                        canvas.height = IMAGE_SAMPLE_SIZE;
+                        context.drawImage(image, 0, 0, IMAGE_SAMPLE_SIZE, IMAGE_SAMPLE_SIZE);
+
+                        try {
+                            const imageData = context.getImageData(0, 0, IMAGE_SAMPLE_SIZE, IMAGE_SAMPLE_SIZE);
+                            const luminance = parseImageLuminanceFromPixelData(imageData);
+                            resolve(luminance < 0 ? null : luminance);
+                        } catch {
+                            resolve(null);
+                        } finally {
+                            URL.revokeObjectURL(imageUrlForBlob);
+                        }
+                    };
+
+                    image.onerror = () => {
+                        resolve(null);
+                        URL.revokeObjectURL(imageUrlForBlob);
+                    };
+
+                    image.src = imageUrlForBlob;
+                });
+            } catch {
+                URL.revokeObjectURL(imageUrlForBlob);
+                return null;
+            }
+        } catch {
+            IMAGE_LUMINANCE_CACHE.set(imageUrl, null);
+            return null;
+        }
+    }
+
+    function getReadableTextByLuminance(luminance: number | null): string {
+        if (luminance === null) {
+            return DARK_BG_TEXT_COLOR;
+        }
+
+        return luminance >= IMAGE_BRIGHTNESS_THRESHOLD ? LIGHT_BG_TEXT_COLOR : DARK_BG_TEXT_COLOR;
+    }
+
+    async function updateTeaserTextColorFromImage(imageUrl: string, requestId: number) {
+        const cachedLuminance = getCachedImageLuminance(imageUrl);
+        if (cachedLuminance !== undefined) {
+            if (requestId === textColorRequestId) {
+                teaserImageLuminance = cachedLuminance;
+                teaserTextColor = getReadableTextByLuminance(cachedLuminance);
+            }
+            return;
+        }
+
+        teaserImageLuminance = null;
+        const luminance = await fetchImageLuminance(imageUrl);
+        if (requestId !== textColorRequestId) {
+            return;
+        }
+
+        IMAGE_LUMINANCE_CACHE.set(imageUrl, luminance);
+        teaserImageLuminance = luminance;
+        if (luminance === null && teaserAreaElement) {
+            teaserTextColor = pickReadableTextColorFromElement(teaserAreaElement, {
+                fallback: DARK_BG_TEXT_COLOR,
+                lightBackgroundTextColor: LIGHT_BG_TEXT_COLOR,
+                darkBackgroundTextColor: DARK_BG_TEXT_COLOR
+            });
+            return;
+        }
+
+        teaserTextColor = getReadableTextByLuminance(luminance);
+    }
 
     let carouselTimeoutId = null;
     let nextTickAt = 0;
@@ -47,10 +172,25 @@
         if (!teaserAreaElement) {
             return;
         }
+        const requestId = ++textColorRequestId;
+        if (isImageBackground && teaserBackground) {
+            const imageUrl = getImageUrlFromBackground(teaserBackground);
+            if (imageUrl) {
+                void updateTeaserTextColorFromImage(imageUrl, requestId);
+                return;
+            }
+        }
+
+        teaserImageLuminance = null;
+
+        if (requestId !== textColorRequestId) {
+            return;
+        }
+
         teaserTextColor = pickReadableTextColorFromElement(teaserAreaElement, {
-            fallback: "#ffffff",
-            lightBackgroundTextColor: "#1a1a1a",
-            darkBackgroundTextColor: "#ffffff"
+            fallback: DARK_BG_TEXT_COLOR,
+            lightBackgroundTextColor: LIGHT_BG_TEXT_COLOR,
+            darkBackgroundTextColor: DARK_BG_TEXT_COLOR
         });
     }
 
@@ -161,14 +301,16 @@
         moveNotice(-1);
     }
 
-    function nextNotice() {
-        moveNotice(1);
-    }
-
+	    function nextNotice() {
+	        moveNotice(1);
+	    }
 </script>
 
-<section id="teaserArea" bind:this={teaserAreaElement}
-    style:background={teaserBackground} style={`--teaser-text-color: ${teaserTextColor};`}>
+	<section
+		id="teaserArea"
+		bind:this={teaserAreaElement}
+		style={`--teaser-background: ${teaserBackground}; --teaser-text-color: ${teaserTextColor};`}
+	>
     <section id="Notice">
         {#if maxNoticeCount > 0}
         {#key `${teaserNotice}`}
@@ -215,23 +357,44 @@
 
 <style>
     /* teaser 공간 CSS */
-    #teaserArea {
-        color: var(--teaser-text-color, #ffffff);
-        padding: calc(1rem + var(--mfp-header-height)) 1rem 1rem 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        word-break: keep-all;
-        margin-top: calc(-1 * var(--mfp-header-height));
-        height: calc(100vh - 10rem);
-        width: 100%;
-        overflow: hidden;
-        box-sizing: border-box;
-        transition: filter 200ms ease;
+	#teaserArea {
+		color: var(--teaser-text-color, #ffffff);
+		position: relative;
+		padding: calc(1rem + var(--mfp-header-height)) 1rem 1rem 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: end;
+		word-break: keep-all;
+		margin-top: calc(-1 * var(--mfp-header-height));
+		height: calc(100vh - 10rem);
+		width: 100%;
+		overflow: hidden;
+		box-sizing: border-box;
+		transition: filter 200ms ease;
+		
+	}
+
+    #teaserArea::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: var(--teaser-background);
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+        z-index: -1;
+
+        filter: brightness(0.5);
     }
 
+	#Notice,
+	#teaserCount {
+		position: relative;
+		z-index: 1;
+	}
+
     :global(body.dark) #teaserArea {
-        filter: brightness(0.72);
+        filter: brightness(0.8);
     }
 
     #Notice {
@@ -243,6 +406,7 @@
 
     #Notice p {
         margin: 0;
+        text-shadow: 3px 3px 3px grey;
     }
 
     .noticeContent {
@@ -262,6 +426,8 @@
         color: currentColor;
         font-size: 2.2rem;
         font-weight: 300;
+        text-align: start;
+        text-wrap: balance;
     }
 
     .teaserDesc {

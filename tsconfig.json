@@ -4,5 +4,12 @@
     "strict": false,
     "allowJs": false
   },
-  "include": ["src/**/*.ts", "src/**/*.svelte"]
+  "include": [
+    ".svelte-kit/ambient.d.ts",
+    ".svelte-kit/non-ambient.d.ts",
+    "src/**/*.ts",
+    "src/**/*.svelte",
+    "tests/**/*.ts",
+    "tests/**/*.svelte"
+  ]
 }
