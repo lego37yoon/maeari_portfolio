@@ -13,16 +13,18 @@
     <meta property="og:description" content="연락 방법을 확인하실 수 있습니다.">
     <meta name="twitter:title" content="연락처 | 종이상자 공간">
     <meta name="twitter:description" content="연락 방법을 확인하실 수 있습니다.">
-    <title>연락처 | 종이상자 공간</title>
+    <title>연락하기: 종이상자 공간</title>  
 </svelte:head>
 
 <main>
     {#if data.social}
-    <h2>소셜 미디어에서 만나보세요</h2>
     <section id="social">
+        <div class="desc">
+            <h1>소셜 미디어</h1>
+        </div>
         {#if data.social.twitter.length > 0}
         <div id="twitter">
-            <h3>트위터</h3>
+            <h2>트위터</h2>
             <div class="list">
             {#each data.social.twitter as account}
                 <Card
@@ -39,7 +41,7 @@
         
         {#if data.social.blog.length > 0}
         <div id="blog">
-            <h3>블로그</h3>
+            <h2>블로그</h2>
             <div class="list">
             {#each data.social.blog as account}
                 <Card
@@ -56,7 +58,7 @@
 
         {#if data.social.fediverse.length > 0}
         <div id="fediverse">
-            <h3>연합우주</h3>
+            <h2>연합우주</h2>
             <div class="list">
             {#each data.social.fediverse as account}
                 <Card
@@ -74,11 +76,13 @@
     {/if}
     
     {#if data.dev}
-    <h2>프로젝트 관련 오류, 개선사항 등은 저장소 이슈트래커에 남겨주세요</h2>
     <section id="dev">
+        <div class="desc">
+            <h1>코드 저장소</h1>
+        </div>
         {#if data.dev.git.length > 0}
         <div id="git">
-            <h3>Git 저장소</h3>
+            <h2>Git</h2>
             <div class="list">
             {#each data.dev.git as account}
                 <Card
@@ -96,11 +100,13 @@
     {/if}
 
     {#if data.email}
-    <h2>이메일로도 문의하실 수 있습니다</h2>
     <section id="email">
+        <div class="desc">
+            <h1>이메일</h1>
+        </div>
         {#if data.email.personal.length > 0}
         <div id="email">
-            <h3>개인</h3>
+            <h2>개인</h2>
             <div class="list">
             {#each data.email.personal as account}
                 <Card href="mailto:{account.address}"
@@ -116,7 +122,7 @@
 
         {#if data.email.school.length > 0}
         <div id="email">
-            <h3>학교</h3>
+            <h2>학교</h2>
             <div class="list">
             {#each data.email.school as account}
                 <Card href="mailto:{account.address}"
@@ -132,7 +138,7 @@
 
         {#if data.email.work.length > 0}
         <div id="email">
-            <h3>직장</h3>
+            <h2>직장</h2>
             <div class="list">
             {#each data.email.work as account}
                 <Card href="mailto:{account.address}"
