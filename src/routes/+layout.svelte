@@ -28,8 +28,8 @@
     const currentYear = new Date().getFullYear();
     let menus = $derived([
         { href: "/", current: !["news", "cv"].includes(currentPage) ? true : false, title: "소개", external: false },
-        { href: "/news", current: currentPage === "news" ? true : false, title: "소식", external: false },
-        { href: "/cv", current: currentPage === "cv" ? true : false, title: "이력서", external: false },
+        // { href: "/news", current: currentPage === "news" ? true : false, title: "소식", external: false },
+        // { href: "/cv", current: currentPage === "cv" ? true : false, title: "이력서", external: false },
         { href: "https://diary.paperbox.pe.kr", current: false, title: "블로그", external: true },
         { href: "https://github.com/lego37yoon", current: false, title: "GitHub", external: true },
         { href: "https://www.linkedin.com/in/jungmin-yoon", current: false, title: "LinkedIn", external: true },
