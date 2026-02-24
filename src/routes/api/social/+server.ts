@@ -1,58 +1,33 @@
 import { error, json } from '@sveltejs/kit';
-import { XMLParser } from 'fast-xml-parser';
 import type { RequestHandler } from './$types';
-
-interface RSSPost {
-	pubDate: string;
-	link: string;
-	[key: string]: unknown;
-}
-
-interface RSSChannel {
-	link: string;
-	item: RSSPost[];
-}
+import { fetchRssNewsFeed } from '../../../utils/news';
 
 export const GET: RequestHandler = async ({ url }) => {
 	const type = url.searchParams.get('type');
+	const maxPostsRaw = Number(url.searchParams.get('maxPosts'));
+	const maxPosts = Number.isFinite(maxPostsRaw) && maxPostsRaw > 0 ? Math.floor(maxPostsRaw) : 5;
+	const maxOpenGraphLookupsRaw = Number(url.searchParams.get('maxOpenGraphLookups'));
+	const maxOpenGraphLookups = Number.isFinite(maxOpenGraphLookupsRaw) && maxOpenGraphLookupsRaw > 0
+		? Math.floor(maxOpenGraphLookupsRaw)
+		: undefined;
 
 	switch (type) {
 		case 'tistory':
 		case 'rss': {
-			const rawData = await fetch(import.meta.env.VITE_RSS_URL).then((res) => res.text());
-			const customDomain = import.meta.env.VITE_RSS_CUSTOM_URL;
-			const parser = new XMLParser();
-			const parsedData = parser.parse(rawData).rss.channel as RSSChannel;
+			const raw = await fetchRssNewsFeed({
+				rssUrl: import.meta.env.VITE_RSS_URL,
+				customDomain: import.meta.env.VITE_RSS_CUSTOM_URL,
+				maxPosts,
+				maxOpenGraphLookups
+			});
 
-			if (parsedData.item.length > 0) {
-				if (customDomain) {
-					parsedData.item.forEach((item) => {
-						item.link = item.link.replace(parsedData.link, customDomain.endsWith('/') ? customDomain : `${customDomain}/`);
-					});
-				}
-
-				const posts = parsedData.item.map((post) => {
-					const postDate = new Date(Date.parse(post.pubDate));
-					const localPostDate = postDate.toLocaleString('ko-KR');
-
-					if (customDomain) {
-						return {
-							...post,
-							pubDate: localPostDate,
-							link: post.link.replace(parsedData.link, customDomain.endsWith('/') ? customDomain : `${customDomain}/`)
-						};
-					}
-
-					return { ...post, pubDate: localPostDate };
-				});
-
-				return json({
-					url: customDomain ?? parsedData.link,
-					posts: posts.slice(0, 5)
-				});
+			if (!raw.posts || raw.posts.length === 0) {
+				error(400, '데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.');
 			}
+
+			return json(raw);
 		}
 	}
-	
+
 	error(400, '데이터 종류 설정이 잘못되었습니다. 관리자에게 문의하세요.');
 };

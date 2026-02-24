@@ -1,35 +1,44 @@
 {
 	"name": "mfp",
-	"version": "2.1.1",
+	"version": "2.1.5",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
+		"test": "vitest",
+		"test:run": "vitest run",
 		"prepare": "svelte-kit sync",
-		"check": "svelte-check",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@material/web": "2.4.1",
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@material/web": "^2.4.1",
 		"@sveltejs/kit": "^2.51.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@testing-library/svelte": "^5.2.4",
+		"@testing-library/user-event": "^14.5.2",
 		"eslint": "^10.0.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.15.0",
 		"firebase": "^12.9.0",
 		"mdsvex": "^0.12.6",
+		"jsdom": "^26.0.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
 		"sass": "^1.97.3",
 		"svelte": "^5.0.0",
 		"typescript": "^5.8.3",
+		"vitest": "^3.0.4",
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
 		"@sveltejs/adapter-vercel": "^6.3.1",
+		"bits-ui": "^2.15.5",
+		"colorjs.io": "^0.6.1",
 		"fast-xml-parser": "^5.3.6"
 	},
 	"packageManager": "pnpm@10.29.3"

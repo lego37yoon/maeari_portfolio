@@ -15,7 +15,10 @@
 
 <main>
     <section id="education">
-        <h1>정규 교육기관</h1>
+        <div class="desc">
+            <h1>정규 교육기관</h1>
+            <p></p>
+        </div>
         <div class="list">
             {#each data.education as school}
             <Card icon={school.id !== "univ" ? "location_city" : "school"}
@@ -32,7 +35,10 @@
         </div>
     </section>
     <section id="certification">
-        <h1>자격증 및 자격시험</h1>
+        <div class="desc">
+            <h1>자격증 및 자격 시험</h1>
+            <p>기한이 만료된 내역은 제외되었어요.</p>
+        </div>
         <div class="list">
             {#each data.certification as cert}
             <Card icon={cert.data.type === "certificate" ? "badge" : 
@@ -46,27 +52,3 @@
         </div>
     </section>
 </main>
-
-<style>
-   
-    main {
-        padding: 0 1rem 0 1rem;
-    }
-
-    .list {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: stretch;
-        gap: 1em;
-    }
-
-    @media screen and (max-width: 531px) {
-        .list {
-            justify-content: center;
-        }
-
-        div {
-            width: 100%;
-        }
-    }
-</style>
