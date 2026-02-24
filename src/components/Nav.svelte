@@ -103,7 +103,6 @@
         width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
-        background: var(--mfp-header-scrolled-bg-color);
     }
 
     ul {

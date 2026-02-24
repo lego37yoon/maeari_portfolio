@@ -33,19 +33,10 @@ body {
     --mfp-primary-text-color: #297A7C;
     --mfp-static-header-text-color: #333333;
     --mfp-link-color: #4072D1;
-}
-
-@media screen and (max-width: 768px) {
-    .svelte-main {
-        margin: 0.5rem;
-    }
+    --mfp-not-current-text-color: #757575;
 }
 
 .dark {
-    .svelte-main {
-        background: #333333;
-        box-shadow: none;
-    }
 
     background: #404040;
     
@@ -70,6 +61,7 @@ body {
     --mfp-primary-text-color: #aad6da;
     --mfp-static-header-text-color: #e0e3e2;
     --mfp-link-color: #6ea1ff;
+    --mfp-not-current-text-color: #bebebe;
 }
 
 a {

@@ -88,7 +88,7 @@
   }
 
   .mfp-link-sub-not-current {
-    color: gray;
+    color: var(--mfp-not-current-text-color);
   }
 
   .mfp-link-nav .mfp-link-icon {
