@@ -17,7 +17,7 @@
     <section id="education">
         <div class="desc">
             <h1>정규 교육기관</h1>
-            <p>부전공 미만은 상세 내역에서 확인하실 수 있어요.</p>
+            <p></p>
         </div>
         <div class="list">
             {#each data.education as school}
