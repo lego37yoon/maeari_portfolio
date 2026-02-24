@@ -22,56 +22,58 @@
         <div class="desc">
             <h1>소셜 미디어</h1>
         </div>
-        {#if data.social.twitter.length > 0}
-        <div id="twitter">
-            <h2>트위터</h2>
-            <div class="list">
-            {#each data.social.twitter as account}
-                <Card
-                    icon="badge"
-                    href="https://twitter.com/{account.handle}"
-                    type={account.type}
-                    title="@{account.handle}"
-                    desc={account.desc}
-                />
-            {/each}
+        <div class="list">
+            {#if data.social.twitter.length > 0}
+            <div id="twitter">
+                <h2>트위터</h2>
+                <div class="list">
+                {#each data.social.twitter as account}
+                    <Card
+                        icon="badge"
+                        href="https://twitter.com/{account.handle}"
+                        type={account.type}
+                        title="@{account.handle}"
+                        desc={account.desc}
+                    />
+                {/each}
+                </div>
             </div>
-        </div>
-        {/if}
-        
-        {#if data.social.blog.length > 0}
-        <div id="blog">
-            <h2>블로그</h2>
-            <div class="list">
-            {#each data.social.blog as account}
-                <Card
-                    icon="edit_note"
-                    href={account.url}
-                    title={account.title}
-                    type={account.provider}
-                    desc={account.desc}
-                />
-            {/each}
+            {/if}
+            
+            {#if data.social.blog.length > 0}
+            <div id="blog">
+                <h2>블로그</h2>
+                <div class="list">
+                {#each data.social.blog as account}
+                    <Card
+                        icon="edit_note"
+                        href={account.url}
+                        title={account.title}
+                        type={account.provider}
+                        desc={account.desc}
+                    />
+                {/each}
+                </div>
             </div>
-        </div>
-        {/if}
+            {/if}
 
-        {#if data.social.fediverse.length > 0}
-        <div id="fediverse">
-            <h2>연합우주</h2>
-            <div class="list">
-            {#each data.social.fediverse as account}
-                <Card
-                    icon="chat_bubble"
-                    href="https://{account.url}/@{account.handle}"
-                    title={`@${account.handle}@${account.url}`}
-                    type={account.type}
-                    desc={account.desc}
-                />
-            {/each}
+            {#if data.social.fediverse.length > 0}
+            <div id="fediverse">
+                <h2>연합우주</h2>
+                <div class="list">
+                {#each data.social.fediverse as account}
+                    <Card
+                        icon="chat_bubble"
+                        href="https://{account.url}/@{account.handle}"
+                        title={`@${account.handle}@${account.url}`}
+                        type={account.type}
+                        desc={account.desc}
+                    />
+                {/each}
+                </div>
             </div>
+            {/if}
         </div>
-        {/if}
     </section>
     {/if}
     

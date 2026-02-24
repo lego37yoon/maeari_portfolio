@@ -22,15 +22,17 @@ main section .list {
     flex-wrap: wrap;
     align-items: stretch;
     gap: 1em;
+    justify-content: start;
 }
 
 @media screen and (max-width: 920px) {
     main section {
         flex-wrap: wrap;
+        flex-direction: column;
     }
 
     main section .list {
-        justify-content: center;
+        justify-content: start;
     }
 
     main section .desc {

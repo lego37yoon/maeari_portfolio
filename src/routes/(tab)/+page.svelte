@@ -97,10 +97,6 @@
     }
     
     @media screen and (max-width: 531px) {
-        .list {
-            justify-content: center;
-        }
-
         div {
             width: 100%;
         }
