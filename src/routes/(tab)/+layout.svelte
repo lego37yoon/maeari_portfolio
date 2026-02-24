@@ -19,9 +19,8 @@
         const mainContent = pageContentContainer.querySelector<HTMLElement>("main") ?? pageContentContainer;
         const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
         const navHeight = document.getElementById("submenu")?.getBoundingClientRect().height ?? 0;
-        const offset = headerHeight + navHeight;
-
-        mainContent.style.scrollMarginTop = `${offset}px`;
+        const offset = Math.round(headerHeight + navHeight);
+        mainContent.style.scrollMarginTop = `${Math.max(0, offset - 1)}px`;
         mainContent.scrollIntoView({
             behavior: "smooth",
             block: "start",
