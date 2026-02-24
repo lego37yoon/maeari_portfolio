@@ -70,6 +70,48 @@
                     <span slot="supporting-text">SIL Open Font License</span>
                 </md-list-item>
             </a>
+            <a href="https://github.com/jsdom/jsdom/blob/main/LICENSE" target="_blank">
+                <md-list-item>
+                    <md-icon slot="start">language</md-icon>
+                    <span slot="headline">jsdom</span>
+                    <span slot="supporting-text">MIT License</span>
+                </md-list-item>
+            </a>
+            <a href="https://github.com/vitest-dev/vitest/blob/main/LICENSE.md" target="_blank">
+                <md-list-item>
+                    <md-icon slot="start">bug_report</md-icon>
+                    <span slot="headline">Vitest</span>
+                    <span slot="supporting-text">MIT License</span>
+                </md-list-item>
+            </a>
+            <a href="https://github.com/microsoft/TypeScript/blob/main/LICENSE.txt" target="_blank">
+                <md-list-item>
+                    <md-icon slot="start">code</md-icon>
+                    <span slot="headline">TypeScript</span>
+                    <span slot="supporting-text">Apache License 2.0</span>
+                </md-list-item>
+            </a>
+            <a href="https://github.com/huntabyte/bits-ui/blob/main/LICENSE" target="_blank">
+                <md-list-item>
+                    <md-icon slot="start">widgets</md-icon>
+                    <span slot="headline">bits-ui</span>
+                    <span slot="supporting-text">MIT License</span>
+                </md-list-item>
+            </a>
+            <a href="https://github.com/color-js/color.js/blob/master/LICENSE" target="_blank">
+                <md-list-item>
+                    <md-icon slot="start">palette</md-icon>
+                    <span slot="headline">colorjs.io</span>
+                    <span slot="supporting-text">MIT License</span>
+                </md-list-item>
+            </a>
+            <a href="https://github.com/NaturalIntelligence/fast-xml-parser/blob/master/LICENSE" target="_blank">
+                <md-list-item>
+                    <md-icon slot="start">dataset</md-icon>
+                    <span slot="headline">fast-xml-parser</span>
+                    <span slot="supporting-text">MIT License</span>
+                </md-list-item>
+            </a>
         </md-list>
     </section>
 </main>
