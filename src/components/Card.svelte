@@ -87,8 +87,7 @@
         text-align: center;
         background: var(--md-sys-color-background);
         border-radius: 24px;
-        padding: 0.5em;
-        width: 100%;
+        padding: 0.5rem 1rem;
     }
 
     .cardTitle {

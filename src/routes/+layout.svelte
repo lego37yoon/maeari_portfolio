@@ -5,6 +5,7 @@
     import '@material/web/progress/circular-progress.js';
     import { onMount, tick } from 'svelte';
     import { fly } from 'svelte/transition';
+    import { afterNavigate } from '$app/navigation';
     import { page, navigating } from '$app/state';
     import { darkMode } from "../components/darkMode"; 
     import { pickReadableTextColorForPageTop } from "../utils/color";
@@ -138,6 +139,45 @@
             attributeFilter: ["style", "class"]
         });
     }
+
+    function syncHeaderState(): void {
+        if (typeof document === "undefined") {
+            return;
+        }
+
+        if (window.scrollY > 0) {
+            window.scrollTo(0, 0);
+        }
+
+        updateHeaderScrollState();
+        refreshHeaderHeroTextColor();
+        connectHeroColorObserver();
+    }
+
+    afterNavigate(({ to }) => {
+        if (typeof document !== "undefined") {
+            window.scrollTo(0, 0);
+            headerAtTop = true;
+            if (to?.url?.pathname === "/oss" || to?.url?.pathname === "/") {
+                headerHeroTextColor = pickReadableTextColorForPageTop(
+                    null,
+                    false,
+                    {
+                        fallback: darkModeState ? "#ffffff" : "var(--mfp-primary-text-color)",
+                        lightBackgroundTextColor: darkModeState ? "#111111" : "var(--mfp-primary-text-color)",
+                        darkBackgroundTextColor: "#ffffff"
+                    }
+                );
+            }
+        }
+
+        requestAnimationFrame(() => {
+            syncHeaderState();
+        });
+        requestAnimationFrame(() => {
+            syncHeaderState();
+        });
+    });
     
     onMount(() => {
         const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -197,7 +237,7 @@
                 return;
             }
 
-            connectHeroColorObserver();
+            syncHeaderState();
         });
 
         return () => {
@@ -208,10 +248,15 @@
     $effect (() => {
         if (navigating.complete !== null && loadingDialog) {
             loadingDialog.showModal();
+            if (typeof document !== "undefined") {
+                window.scrollTo(0, 0);
+                headerAtTop = true;
+            }
         } 
         
         if (navigating.complete === null && loadingDialog) {
             loadingDialog.close();
+            syncHeaderState();
         }
     });
 </script>

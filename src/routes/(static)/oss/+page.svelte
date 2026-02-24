@@ -125,6 +125,8 @@
         background: linear-gradient(45deg, cadetblue, cornflowerblue);
         word-break: keep-all;
         border-radius: 8px;
+        display: flex;
+        flex-direction: column;
     }
 
     .teaserText {
@@ -160,12 +162,15 @@
     }
 
     md-list {
+        display: block;
         border-radius: 8px;
-        border: 1px solid var(--md-sys-color-outline);
         overflow: hidden;
+        width: 100%;
     }
 
     md-list a {
+        width: 100%;
+        display: block;
         text-decoration: none;
         border-radius: 8px;
     }
