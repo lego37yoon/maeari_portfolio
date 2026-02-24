@@ -103,6 +103,7 @@
         width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
+        background: var(--mfp-nav-background);
     }
 
     ul {
