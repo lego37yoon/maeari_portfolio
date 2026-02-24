@@ -13,24 +13,64 @@
 </svelte:head>
 
 <main>
-    <section id="project">
+    {#if data.active.length > 0}
+    <section id="project_active">
         <div class="desc">
             <h1>지금 진행 중</h1>
             <p>
-                취미부터 생활 속 불편함까지, 다양한 개인 및 팀 프로젝트를 기획하고 만들고 있어요.
+                개발과 운영이 활발하게 이뤄지는 프로젝트에요
                 <Link href="https://github.com/lego37yoon?tab=repositories" external>
                     다른 프로젝트 찾아보기
                 </Link>
             </p>
         </div>
         <div class="list">
-            {#each data.project as project}
+            {#each data.active as project}
             <Card icon={project.data.icon}
                 href={project.data.link} title={project.data.title} 
                 desc={project.data.desc} type={project.data.type} />
             {/each}
         </div>
     </section>
+    {/if}
+    {#if data.in_development.length > 0}
+    <section id="project_under_development">
+        <div class="desc">
+            <h1>개발 중</h1>
+            <p>곧 만나보실 수 있어요</p>
+        </div>
+        <div class="list">
+            {#each data.in_development as project}
+            <Card icon={project.data.icon}
+                href={project.data.link} title={project.data.title} 
+                desc={project.data.desc} type={project.data.type} />
+            {/each}
+        </div>
+    </section>
+    {/if}
+    {#if data.maintenance.length > 0}
+    <section id="project_maintenance">
+        <div class="desc">
+            <h1>유지관리 중</h1>
+            <p>활발하게 개발하고 있진 않지만, <br> 데이터 추가와 함께 최소한의 관리를 진행 중인 프로젝트에요</p>
+        </div>
+        <div class="list">
+            {#each data.maintenance as project}
+            <Card icon={project.data.icon}
+                href={project.data.link} title={project.data.title} 
+                desc={project.data.desc} type={project.data.type} />
+            {/each}
+        </div>
+    </section>
+    {/if}
+    {#if data.deprecated.length > 0}
+    <section id="project_deprecated">
+        <div class="desc">
+            <h1>개발 종료</h1>
+            <p>연계 서비스 · 팀 활동 종료 등으로 마무리된 프로젝트에요</p>
+        </div>
+    </section>
+    {/if}
 </main>
 
 <style>
