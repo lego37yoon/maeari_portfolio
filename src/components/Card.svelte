@@ -8,7 +8,13 @@
     <div class="cardProfile">
         <md-icon>{icon}</md-icon>
         <div class="cardMain">
-            <h2 class="cardTitle">{title}</h2>
+            <h2 class="cardTitle">
+            {#if title.includes("@")}
+                {title.split("@")[0]}<wbr />@{title.split("@")[1]}
+            {:else}
+                {title}
+            {/if}
+            </h2>
             {#if type}
             <p class="cardType">{type}</p>
             {/if}
