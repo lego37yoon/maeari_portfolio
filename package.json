@@ -39,5 +39,5 @@
 	"dependencies": {
 		"fast-xml-parser": "^5.3.6"
 	},
-	"packageManager": "yarn@6.0.0-rc.15"
+	"packageManager": "pnpm@10.29.3"
 }
