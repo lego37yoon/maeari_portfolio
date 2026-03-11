@@ -1,0 +1,41 @@
+main {
+    padding: 0 2rem;
+}
+
+main section {
+    display: flex;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+main section .desc {
+    width: 24rem;
+    flex-shrink: 0;
+}
+
+main section h1, p {
+    margin: 0;
+}
+
+main section .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 1em;
+    justify-content: start;
+}
+
+@media screen and (max-width: 920px) {
+    main section {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    main section .list {
+        justify-content: start;
+    }
+
+    main section .desc {
+        width: 100%;
+    }
+}

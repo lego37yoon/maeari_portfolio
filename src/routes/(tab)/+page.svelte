@@ -1,86 +1,102 @@
 <script>
     import Card from '../../components/Card.svelte';
+    import Link from '../../components/Link.svelte';
 
     let { data } = $props();
 </script>
 
 <svelte:head>
-    <meta property="og:title" content="홈 | 종이상자 공간">
-    <meta property="og:description" content="진행 중인 프로젝트, 활동 및 소식을 확인하세요">
-    <meta name="description" content="진행 중인 프로젝트, 활동 및 소식을 확인하세요">
-    <title>홈 | 종이상자 공간</title>
+    <meta property="og:title" content="종이상자 공간">
+    <meta property="og:description" content="진행 중인 프로젝트, 활동 및 소식">
+    <meta name="description" content="진행 중인 프로젝트, 활동 및 소식">
+    <title>종이상자 공간</title>
 </svelte:head>
 
 <main>
-    <section id="project">
-        <h1>주요 프로젝트 바로가기</h1>
-        <p>
-            취미부터 생활 속 불편함까지, 다양한 개인 및 팀 프로젝트를 기획하고 만들고 있어요.
-            <a href="https://github.com/lego37yoon?tab=repositories" target="_blank">
-                다른 프로젝트 찾아보기
-            </a>
-        </p>
+    {#if data.active.length > 0}
+    <section id="project_active">
+        <div class="desc">
+            <h1>지금 진행 중</h1>
+            <p>
+                개발과 운영이 활발하게 이뤄지는 프로젝트에요
+                <Link href="https://github.com/lego37yoon?tab=repositories" external>
+                    다른 프로젝트 찾아보기
+                </Link>
+            </p>
+        </div>
         <div class="list">
-            {#each data.project as project}
+            {#each data.active as project}
             <Card icon={project.data.icon}
                 href={project.data.link} title={project.data.title} 
                 desc={project.data.desc} type={project.data.type} />
             {/each}
         </div>
     </section>
-    <section id="contribution">
-        <h1>오픈소스 기여 활동</h1>
-        <p>번역에서 시작해, 더 다양한 기여를 할 수 있도록 노력하고 있어요.</p>
+    {/if}
+    {#if data.in_development.length > 0}
+    <section id="project_under_development">
+        <div class="desc">
+            <h1>개발 중</h1>
+            <p>곧 만나보실 수 있어요</p>
+        </div>
         <div class="list">
-            {#each data.contribution as project}
+            {#each data.in_development as project}
             <Card icon={project.data.icon}
                 href={project.data.link} title={project.data.title} 
-                desc={[(project.data["end-year"] !== undefined ?
-                    `${project.data["start-year"]} ~ ${project.data["end-year"]}` :
-                    `${project.data["start-year"]} ~ 현재`), project.data.desc]}
-                type={project.data.role}
-            />
+                desc={project.data.desc} type={project.data.type} />
             {/each}
         </div>
     </section>
-    <section id="activity">
-        <h1>참여한 활동</h1>
-        <p>다양한 활동에 참여하여 성장하고 있어요.</p>
+    {/if}
+    {#if data.maintenance.length > 0}
+    <section id="project_maintenance">
+        <div class="desc">
+            <h1>유지관리 중</h1>
+            <p>활발하게 개발하고 있진 않지만, <br> 데이터 추가와 함께 최소한의 관리를 진행 중인 프로젝트에요</p>
+        </div>
         <div class="list">
-            {#each data.activity as act}
-            <Card icon={act.data.icon}
-                href={act.data.link} title={act.data.title} 
-                desc={[act.data.team ? `${act.data.members}명 단체 참여` : "개인 참여",
-                    `주최 | ${act.data.org[0]}`
-                ]} 
-                type={act.data.prize}
-            />
+            {#each data.maintenance as project}
+            <Card icon={project.data.icon}
+                href={project.data.link} title={project.data.title} 
+                desc={project.data.desc} type={project.data.type} />
             {/each}
         </div>
     </section>
+    {/if}
+    {#if data.deprecated.length > 0}
+    <section id="project_deprecated">
+        <div class="desc">
+            <h1>개발 종료</h1>
+            <p>연계 서비스 · 팀 활동 종료 등으로 마무리된 프로젝트에요</p>
+        </div>
+    </section>
+    {/if}
 </main>
 
 <style>
     main {
-        padding: 0 1rem 0 1rem;
+        padding: 0 2rem;
     }
 
-    h1 {
-        margin-bottom: 0px;
+    section {
+        display: flex;
+    }
+
+    section .desc {
+        width: 24rem;
+    }
+    
+    h1, p {
+        margin: 0;
     }
 
     .list {
         display: flex;
         flex-wrap: wrap;
-        align-items: stretch;
         gap: 1em;
     }
     
     @media screen and (max-width: 531px) {
-        .list {
-            justify-content: center;
-        }
-
         div {
             width: 100%;
         }

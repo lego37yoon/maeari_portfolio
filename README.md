@@ -4,7 +4,7 @@
 
 maeari for portfolio is a personal website written with SvelteKit.
 
-Supports TISTORY API to show post list of own blog.
+Supports RSS format to show post list of own blog.
 
 ## How to Customize
 
@@ -36,7 +36,9 @@ Supports TISTORY API to show post list of own blog.
 - [Icon Font] Material Symbols
 - [UI Components] @material/web
 - [Text Font] SUIT
-
-## FAQ
-
-- A11y warning in `Nav.svelte` is actually not an issue. This is because Svelte indicates `md-tab` is not an interactive component, but `md-tab` is a kind of `button`. 
+- [DOM Emulator] jsdom
+- [Testing Framework] Vitest
+- [Programming Language] TypeScript
+- [Svelte UI] bits-ui
+- [Color Library] colorjs.io
+- [XML Parser] fast-xml-parser

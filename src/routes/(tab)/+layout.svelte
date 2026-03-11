@@ -1,155 +1,40 @@
-<script>
-    import "../index.scss";
-    import "@material/web/icon/icon.js";
-    import "@material/web/iconbutton/icon-button.js";
-    import '@material/web/progress/circular-progress.js';
-    import { onMount } from 'svelte';
+<script lang="ts">
+    import "./tab.scss";
     import { fly } from 'svelte/transition';
-    import { page } from '$app/state';
-    import Nav from "../../components/Nav.svelte";
-    import Teaser from "../../components/Teaser.svelte";
-    import { darkMode } from "../../components/darkMode"; 
+    import Nav from '../../components/Nav.svelte';
+    import Teaser from '../../components/Teaser.svelte';
+    import { getCurrentPath } from '../../utils/path';
+    import { buildTeaserPayload } from '../../utils/teaser';
 
     let { data, children } = $props();
-    let currentPage = $derived(page.url.pathname.substr(page.url.pathname.lastIndexOf('/') + 1));
-    let darkModeButton = undefined;
-    let darkModeState = $state(false);
+    let currentPage = $derived(getCurrentPath());
+    let pageContentContainer: HTMLElement | undefined = $state(undefined);
+    const teaserData = $derived(buildTeaserPayload(data ?? {}));
 
-    $effect(() => {
-        const unsubscribe = darkMode.subscribe((value) => {
-            darkModeState = value;
-        });
-
-        return unsubscribe;
-    });
-
-    function darkToggleEvent() {
-        if (darkModeButton.selected) {
-            document.body.classList.add("dark");
-            darkMode.set(true);
-        } else {
-            document.body.classList.remove("dark");
-            darkMode.set(false);
+    function scrollToPageContentTop(): void {
+        if (!pageContentContainer || typeof document === "undefined") {
+            return;
         }
+
+        const mainContent = pageContentContainer.querySelector<HTMLElement>("main") ?? pageContentContainer;
+        const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+        const navHeight = document.getElementById("submenu")?.getBoundingClientRect().height ?? 0;
+        const offset = Math.round(headerHeight + navHeight);
+        mainContent.style.scrollMarginTop = `${Math.max(0, offset - 1)}px`;
+        mainContent.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest"
+        });
     }
-    
-    onMount(async () => {
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            darkModeButton.setAttribute("selected", "");
-            document.body.classList.add("dark");
-            darkMode.set(true);
-        }
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            const colorSet = event.matches ? "dark":"light";
-            if (colorSet === "dark") {
-                darkModeButton.setAttribute("selected", "");
-                document.body.classList.add("dark");
-                darkMode.set(true);
-            } else {
-                darkModeButton.removeAttribute("selected");
-                document.body.classList.remove("dark");
-                darkMode.set(false);
-            }
-        });
-    });
 </script>
 
-<header>
-    <ul>
-        <li><a href={page.url.origin} class="title">paperbox</a></li>
-    </ul>
-    <ul class="rightMenu" role="navigation">
-        <li><a href="https://github.com/lego37yoon" target="_blank">github</a></li>
-        <li><a href="https://www.linkedin.com/in/%EC%A0%95%EB%AF%BC-%EC%9C%A4-216106227/" target="_blank">linkedin</a></li>
-        <li id="displayToggle">
-        <md-icon-button id="darkModeButton" bind:this={darkModeButton} toggle role="switch" aria-checked={darkModeState} tabindex="0" aria-label="toggle dark or light mode" onclick={darkToggleEvent} onkeypress={darkToggleEvent}>
-            <md-icon>dark_mode</md-icon>
-            <md-icon slot="selectedIcon">light_mode</md-icon>
-        </md-icon-button>
-            </li> 
-    </ul>
-</header>
+<Teaser teaserData={teaserData} />
 
-<Teaser teaserData={data}></Teaser>
 <Nav selectedId={currentPage} />
 
 {#key currentPage}
-<div in:fly="{{ x: 200, duration: 1000 }}">
+<div bind:this={pageContentContainer} in:fly="{{ x: 200, duration: 1000 }}" onintroend={scrollToPageContentTop}>
     {@render children()}
 </div>
 {/key}
-
-<style>
-    /* 헤더 부분 UI CSS */
-    header {
-        font-weight: lighter;
-        color: cadetblue;
-        font-size: 1.5rem;
-        height: 4rem;
-        border-bottom: solid 2px cadetblue;
-    }
-
-    header ul {
-        list-style: none;
-        display: inline;
-        padding: 0;
-    }
-
-    header li {
-        font-weight: lighter;
-        color: var(--mfp-primary-text-color);
-    }
-
-    .title {
-        margin: 1.5rem 1rem 0.5rem 1rem;
-        font-weight: 600;
-        float: left;
-        color: cadetblue;
-    }
-    .title {
-        text-decoration: none;
-    }
-    .title:visited {
-        color: cadetblue;
-    }
-    .rightMenu {
-        margin: 1.5rem 0.5rem 0.5rem 1rem;
-        display: inline;
-        float: right;
-    }
-    .rightMenu li {
-        display: inline;
-        font-size: 1.0em;
-    }
-
-    .rightMenu a {
-        color: var(--mfp-primary-text-color);
-        text-decoration: none;
-    }
-
-    @media screen and (max-width: 388px) {
-        .rightMenu li {
-            display: none;
-        }
-
-        #displayToggle {
-            display: inline;
-        }
-    }
-
-    @media screen and (max-width: 223px) {
-        .rightMenu {
-            display: none;
-        }
-    }
-
-    .rightMenu md-icon-button {
-        margin-top: -0.5rem;
-        margin-bottom: -0.5rem;
-        --md-icon-button-unselected-icon-color: #5f9ea0;
-        --md-icon-button-unselected-focus-icon-color: #5f9ea0;
-        --md-icon-button-selected-focus-icon-color: #5f9ea0;
-        --md-icon-button-selected-icon-color: #5f9ea0;
-    }
-</style>
