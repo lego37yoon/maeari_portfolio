@@ -2,7 +2,7 @@
 
 > In shorthand, mfp (maeari-for-portfolio)
 
-maeari for portfolio is a personal website with Firestore database and written with SvelteKit.
+maeari for portfolio is a personal website written with SvelteKit.
 
 Supports RSS format to show post list of own blog.
 
@@ -10,16 +10,27 @@ Supports RSS format to show post list of own blog.
 
 1. Clone repository
 2. Enable corepack: `corepack enable`
-3. Install pnpm binary: `corepack prepare pnpm@10.29.3 --activate`
-4. Install dependencies: `pnpm install`
-5. Start development server: `pnpm run dev`
-6. Use your favorite editor to modfiy pages under `src/routes/`
+3. Install the RC/Yarn canary channel (v6 preview line is not in stable): `corepack prepare yarn@canary --activate`
+4. If you prefer repo-pinned Yarn binary, run `yarn set version canary`
+5. (Optional) Set Node linker for PnP: ensure `.yarnrc.yml` contains `nodeLinker: pnp` (already configured).
+6. Install dependencies: `yarn install`
+7. Copy `.env.example` to `.env` and adjust values as needed.
+8. Update `wrangler.toml`:
+   - Set `database_id` in `[[d1_databases]]`
+   - Set R2 bucket names in `[[r2_buckets]]`
+9. Apply D1 migrations:
+   - local: `yarn d1:migrate:local`
+   - remote: `yarn d1:migrate:remote`
+10. Start Cloudflare local runtime: `yarn dev:cf`
+11. Deploy to Cloudflare Workers: `yarn deploy`
 
-> Please modify `.env` file before run development server to use your own database. there will be a guide who wants to build own data to database in GitHub Wiki.
+> For the API to work in Cloudflare runtime, `DB` (D1) must be bound in `wrangler.toml`.
 
 ## Open Source Software
 
-- [SDK] Firebase SDK
+- [Runtime] Cloudflare Workers
+- [Database] Cloudflare D1
+- [Object Storage] Cloudflare R2
 - [Framework] SvelteKit
 - [Preprocessor] SCSS
 - [Icon Font] Material Symbols

@@ -2,7 +2,7 @@ import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { fetchRssNewsFeed } from '../../../utils/news';
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, platform }) => {
 	const type = url.searchParams.get('type');
 	const maxPostsRaw = Number(url.searchParams.get('maxPosts'));
 	const maxPosts = Number.isFinite(maxPostsRaw) && maxPostsRaw > 0 ? Math.floor(maxPostsRaw) : 5;

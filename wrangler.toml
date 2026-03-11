@@ -1,0 +1,22 @@
+name = "mfp"
+main = ".svelte-kit/cloudflare/_worker.js"
+compatibility_date = "2026-02-15"
+
+[assets]
+binding = "ASSETS"
+directory = ".svelte-kit/cloudflare"
+
+[vars]
+RSS_URL = "https://diary.paperbox.pe.kr/rss"
+RSS_CUSTOM_URL = "https://diary.paperbox.pe.kr/"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mfp"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "ASSETS_BUCKET"
+bucket_name = "mfp-assets"
+preview_bucket_name = "mfp-assets-dev"
