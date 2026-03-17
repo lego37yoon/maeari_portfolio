@@ -23,6 +23,8 @@
     let heroStyleObserver: MutationObserver | undefined;
     let mobileMenuOpen = $state(false);
     let currentPage = $derived(getCurrentPath());
+    const staticPagePaths = new Set(["/news", "/cv", "/oss"]);
+    const mobileMenuHasSolidBackground = $derived(!headerAtTop || staticPagePaths.has(page.url.pathname));
     const headerThemeContext: HeaderThemeContext = {
         getDarkModeState: () => darkModeState,
         getHeaderElement: () => headerElement
@@ -35,6 +37,7 @@
         { href: "/", current: !["news", "cv"].includes(currentPage) ? true : false, title: "소개", external: false },
         // { href: "/news", current: currentPage === "news" ? true : false, title: "소식", external: false },
         // { href: "/cv", current: currentPage === "cv" ? true : false, title: "이력서", external: false },
+        { href: "https://status.paperbox.pe.kr", current: false, title: "서비스 상태", external: true },
         { href: "https://diary.paperbox.pe.kr", current: false, title: "블로그", external: true },
         { href: "https://github.com/lego37yoon", current: false, title: "GitHub", external: true },
         { href: "https://www.linkedin.com/in/jungmin-yoon", current: false, title: "LinkedIn", external: true },
@@ -210,7 +213,13 @@
     </ul>
     {#if mobileMenuOpen}
     <button class="mobileMenuBackdrop" onclick={closeMobileMenu} aria-label="close site menu"></button>
-    <nav id="mobileMenuPopup" transition:fly={{ y: -12, duration: 160 }} aria-label="mobile menu" class:scrolled={!headerAtTop}>
+    <nav
+        id="mobileMenuPopup"
+        transition:fly={{ y: -12, duration: 160 }}
+        aria-label="mobile menu"
+        class:scrolled={!headerAtTop}
+        class:solid={mobileMenuHasSolidBackground}
+    >
         <ul>
             {#each menus as menu}
             <li><Link href={menu.href} onClick={closeMobileMenu} nav current={menu.current} external={menu.external}>{menu.title}</Link></li>
@@ -305,7 +314,7 @@
         border: none;
         margin: 0;
         padding: 0;
-        background: rgba(0, 0, 0, 0.28);
+        background: transparent;
         z-index: 10;
     }
 
@@ -320,12 +329,14 @@
         box-sizing: border-box;
     }
 
-    #mobileMenuPopup .displayToggle {
-        display: none;
+    #mobileMenuPopup.scrolled,
+    #mobileMenuPopup.solid {
+        background: var(--mfp-header-scrolled-bg-color);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.14);
     }
 
-    #mobileMenuPopup.scrolled {
-        background: var(--mfp-header-scrolled-bg-color);
+    #mobileMenuPopup .displayToggle {
+        display: none;
     }
 
     #mobileMenuPopup ul {
