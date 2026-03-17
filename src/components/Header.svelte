@@ -103,6 +103,12 @@
         heroStyleObserver = connectHeaderHeroColorObserver(headerThemeContext, updateHeaderHeroTextColor);
     }
 
+    function handleWindowKeyDown(event: KeyboardEvent) {
+        if (event.key === "Escape") {
+            closeMobileMenu();
+        }
+    };
+
     afterNavigate(({ to }) => {
         resetHeaderStateAfterNavigation(to?.url);
         requestAnimationFrame(() => {
@@ -131,11 +137,6 @@
         };
         const handleViewportChange = (event: MediaQueryListEvent) => {
             if (!event.matches) {
-                closeMobileMenu();
-            }
-        };
-        const handleWindowKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
                 closeMobileMenu();
             }
         };
