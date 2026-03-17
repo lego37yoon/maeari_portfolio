@@ -9,7 +9,7 @@
 
 <style>
     #static-content {
-        padding: 3.4rem 0 0 0;
+        padding: 4rem 0 0 0;
         margin: 0 1rem;
     }
 </style>
