@@ -12,7 +12,7 @@
     const teaserData = $derived(buildTeaserPayload(data ?? {}));
 
     function scrollToPageContentTop(): void {
-        if (!pageContentContainer || typeof document === "undefined") {
+        if (!pageContentContainer || typeof document === "undefined" || typeof window === "undefined") {
             return;
         }
 
@@ -20,11 +20,11 @@
         const headerHeight = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
         const navHeight = document.getElementById("submenu")?.getBoundingClientRect().height ?? 0;
         const offset = Math.round(headerHeight + navHeight);
-        mainContent.style.scrollMarginTop = `${Math.max(0, offset - 1)}px`;
-        mainContent.scrollIntoView({
+        const targetTop = Math.max(0, window.scrollY + mainContent.getBoundingClientRect().top - Math.max(0, offset - 1));
+
+        window.scrollTo({
             behavior: "smooth",
-            block: "start",
-            inline: "nearest"
+            top: targetTop
         });
     }
 </script>

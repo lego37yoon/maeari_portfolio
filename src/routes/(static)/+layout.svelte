@@ -3,12 +3,13 @@
 
 </script>
 
-<main>
+<main id="static-content">
     {@render children()}
 </main>
 
 <style>
-    main {
-        padding-top: 3.4rem; 
+    #static-content {
+        padding: 4rem 0 0 0;
+        margin: 0 1rem;
     }
 </style>

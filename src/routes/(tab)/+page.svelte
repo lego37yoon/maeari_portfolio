@@ -12,7 +12,7 @@
     <title>종이상자 공간</title>
 </svelte:head>
 
-<main>
+<main id="projects">
     {#if data.active.length > 0}
     <section id="project_active">
         <div class="desc">
@@ -74,9 +74,6 @@
 </main>
 
 <style>
-    main {
-        padding: 0 2rem;
-    }
 
     section {
         display: flex;

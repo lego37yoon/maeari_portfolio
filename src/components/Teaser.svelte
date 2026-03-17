@@ -3,7 +3,7 @@
     import "@material/web/iconbutton/icon-button.js";
     import { fly, fade } from 'svelte/transition';
     import { onMount } from "svelte";
-    import { pickReadableTextColorFromElement } from "../utils/contrast";
+    import { pickReadableTextColorFromElement } from "../utils/theme/contrast";
     import { buildTeaserPayload, buildTeaserMetaLabel } from "../utils/teaser";
 
     const LIGHT_BG_TEXT_COLOR = "#1a1a1a";

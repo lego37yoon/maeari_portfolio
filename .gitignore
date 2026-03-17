@@ -9,3 +9,5 @@ past
 .env
 .env.*
 !.env.example
+wrangler.toml
+.wrangler
