@@ -5,6 +5,15 @@
     let { data } = $props();
 </script>
 
+<svelte:head>
+    <meta name="description" content="오픈소스 및 프로젝트 참여 활동에 대해 확인하실 수 있습니다.">
+    <meta property="og:title" content="활동 : 종이상자 공간">
+    <meta property="og:description" content="오픈소스 및 프로젝트 참여 활동에 대해 확인하실 수 있습니다.">
+    <meta name="twitter:title" content="활동 : 종이상자 공간">
+    <meta name="twitter:description" content="오픈소스 및 프로젝트 참여 활동에 대해 확인하실 수 있습니다.">
+    <title>활동 : 종이상자 공간</title>
+</svelte:head>
+
 <main>
     <section id="contribution">
         <div class="desc">
